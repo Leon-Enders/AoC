@@ -27,11 +27,12 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 	void Move(const FInputActionValue& InputActionValue);
-	
+	void CamRot(const FInputActionValue& InputActionValue);
 
 private:
 
-	
+	UPROPERTY(EditAnywhere, Category="Input");
+	TObjectPtr<UInputAction> IA_CamRot;
 	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_Move;

@@ -5,7 +5,6 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "GameFramework/Character.h"
 
 
 AAoCPlayerController::AAoCPlayerController()
@@ -30,9 +29,10 @@ void AAoCPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	check(IA_Move);
+	check(IA_CamRot);
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
-	
+	EnhancedInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
 	
 }
 
@@ -40,18 +40,29 @@ void AAoCPlayerController::SetupInputComponent()
 
 void AAoCPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	FVector2D vel = InputActionValue.Get<FVector2D>();
+	const FVector2D vel = InputActionValue.Get<FVector2D>();
 	
-	FRotator Rotation = GetControlRotation();
-	FRotator YawRotation = FRotator(0.f, Rotation.Yaw,0.f);
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation = FRotator(0.f, Rotation.Yaw,0.f);
 	
-	FVector Forward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X).GetSafeNormal();
-	FVector Right = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y).GetSafeNormal();
-
-	if(ACharacter* AoCCharacter = GetCharacter())
+	const FVector Forward = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector Right = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	
+	if(APawn* ControlledPawn = GetPawn<APawn>())
 	{
-		AoCCharacter->AddMovementInput(Forward, vel.Y);
-		AoCCharacter->AddMovementInput(Right, vel.X);
+		ControlledPawn->AddMovementInput(Forward, vel.Y);
+		ControlledPawn->AddMovementInput(Right, vel.X);
 	}
+	
+}
+
+void AAoCPlayerController::CamRot(const FInputActionValue& InputActionValue)
+{
+	const FVector2D dir = InputActionValue.Get<FVector2D>();
+	FRotator Rotation = GetControlRotation();
+	Rotation.Pitch += dir.Y;
+	Rotation.Yaw += dir.X;
+	SetControlRotation(Rotation);
+	
 	
 }
