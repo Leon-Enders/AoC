@@ -18,17 +18,10 @@ void AAoCCharacterBase::BeginPlay()
 	
 }
 
-// Called every frame
 void AAoCCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-// Called to bind functionality to input
-void AAoCCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
 
