@@ -8,8 +8,10 @@
 
 AAoCPlayerState::AAoCPlayerState()
 {
+	NetUpdateFrequency = 100.f;
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
-	
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	AttributeSet = CreateDefaultSubobject<UAttributeSet>("Attribute Set");
 	
 }

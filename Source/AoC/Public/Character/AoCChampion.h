@@ -13,5 +13,10 @@ UCLASS()
 class AOC_API AAoCChampion : public AAoCCharacterBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AAoCChampion();
+
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 };

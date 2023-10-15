@@ -29,9 +29,6 @@ protected:
 	
 	virtual void BeginPlay() override;
 	
-private:
-
-
 	// Gameplay Ability System
 	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
