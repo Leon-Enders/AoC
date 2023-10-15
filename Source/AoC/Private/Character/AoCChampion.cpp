@@ -14,13 +14,9 @@ void AAoCChampion::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
-	check(PS);
-	
-	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
 
-	AbilitySystemComponent = PS->GetAbilitySystemComponent();
-	AttributeSet = PS->GetAttributeSet();
+	// Init ability actor info for the Server
+	InitAbilityActorInfo();
 	
 }
 
@@ -28,6 +24,12 @@ void AAoCChampion::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 
+	// Init ability actor info for the Client
+	InitAbilityActorInfo();
+}
+
+void AAoCChampion::InitAbilityActorInfo()
+{
 	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
 	check(PS);
 	

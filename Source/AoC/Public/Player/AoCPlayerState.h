@@ -28,12 +28,12 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
 	
-private:
+protected:
 
 	// Gameplay Ability System
-	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
+	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
+	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

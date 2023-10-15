@@ -20,23 +20,23 @@ void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaMax, COND_None, REPNOTIFY_Always);
 }
 
-void UAoCAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
+void UAoCAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Health, OldHealth);
 	
 }
 
-void UAoCAttributeSet::OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax)
+void UAoCAttributeSet::OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, HealthMax, OldHealthMax);
 }
 
-void UAoCAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana)
+void UAoCAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Mana, OldMana);
 }
 
-void UAoCAttributeSet::OnRep_ManaMax(const FGameplayAttributeData& OldManaMax)
+void UAoCAttributeSet::OnRep_ManaMax(const FGameplayAttributeData& OldManaMax) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, ManaMax, OldManaMax);
 }

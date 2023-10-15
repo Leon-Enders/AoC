@@ -30,9 +30,9 @@ protected:
 	virtual void BeginPlay() override;
 	
 	// Gameplay Ability System
-	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
+	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
+	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

@@ -4,15 +4,19 @@
 #include "Player/AoCPlayerState.h"
 
 #include "AbilitySystemComponent.h"
+#include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAttributeSet.h"
 
 
 AAoCPlayerState::AAoCPlayerState()
 {
-	NetUpdateFrequency = 100.f;
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	// ASC and AS Setup
+	AbilitySystemComponent = CreateDefaultSubobject<UAoCAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-	AttributeSet = CreateDefaultSubobject<UAttributeSet>("Attribute Set");
+	AttributeSet = CreateDefaultSubobject<UAoCAttributeSet>("Attribute Set");
+
+	NetUpdateFrequency = 100.f;
 	
 }
 
