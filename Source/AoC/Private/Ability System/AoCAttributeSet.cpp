@@ -3,3 +3,7 @@
 
 #include "Ability System/AoCAttributeSet.h"
 
+UAoCAttributeSet::UAoCAttributeSet()
+{
+	
+}

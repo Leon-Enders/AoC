@@ -33,9 +33,9 @@ private:
 
 
 	// Gameplay Ability System
-	UPROPERTY(BlueprintReadOnly, Category="GameplayAbilitySystem")
+	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY(BlueprintReadOnly, Category="GameplayAbilitySystem")
+	UPROPERTY(EditAnywhere, Category="GameplayAbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

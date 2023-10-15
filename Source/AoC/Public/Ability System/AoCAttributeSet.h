@@ -16,5 +16,9 @@ class AOC_API UAoCAttributeSet : public UAttributeSet
 
 public:
 	UAoCAttributeSet();
-	
+
+private:
+
+	UPROPERTY(BlueprintReadOnly)
+	FGameplayAttributeData Health;
 };
