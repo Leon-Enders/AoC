@@ -13,5 +13,8 @@ UCLASS()
 class AOC_API UAoCAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
+
+public:
+	UAoCAttributeSet();
 	
 };

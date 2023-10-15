@@ -9,6 +9,7 @@
 AAoCPlayerState::AAoCPlayerState()
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	
 	AttributeSet = CreateDefaultSubobject<UAttributeSet>("Attribute Set");
 	
 }
