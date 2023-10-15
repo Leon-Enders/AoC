@@ -6,12 +6,10 @@
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
 void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -22,6 +20,16 @@ void AAoCCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+UAttributeSet* AAoCCharacterBase::GetAttributeSet() const
+{
+	return AttributeSet;
 }
 
 

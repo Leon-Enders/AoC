@@ -3,28 +3,36 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "AoCCharacterBase.generated.h"
 
+// Gameplay Ability System
 class UAbilitySystemComponent;
 class UAttributeSet;
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AAoCCharacterBase();
 	virtual void Tick(float DeltaTime) override;
 
+
+	// Gameplay Ability System
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	UAttributeSet* GetAttributeSet() const;
+	
 protected:
-	// Called when the game starts or when spawned
+	
 	virtual void BeginPlay() override;
 	
 private:
 
+
+	// Gameplay Ability System
 	UPROPERTY(BlueprintReadOnly, Category="GameplayAbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 

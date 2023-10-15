@@ -12,3 +12,13 @@ AAoCPlayerState::AAoCPlayerState()
 	AttributeSet = CreateDefaultSubobject<UAttributeSet>("Attribute Set");
 	
 }
+
+UAbilitySystemComponent* AAoCPlayerState::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+UAttributeSet* AAoCPlayerState::GetAttributeSet() const
+{
+	return AttributeSet;
+}
