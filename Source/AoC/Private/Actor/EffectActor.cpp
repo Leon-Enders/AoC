@@ -3,25 +3,57 @@
 
 #include "Actor/EffectActor.h"
 
+#include "AbilitySystemInterface.h"
+#include "Ability System/AoCAttributeSet.h"
+#include "Components/SphereComponent.h"
+
 // Sets default values
 AEffectActor::AEffectActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+ 	
+	PrimaryActorTick.bCanEverTick = false;
 
-}
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	SetRootComponent(Mesh);
 
-// Called when the game starts or when spawned
-void AEffectActor::BeginPlay()
-{
-	Super::BeginPlay();
+	Sphere = CreateDefaultSubobject<USphereComponent>("Sphere");
+	Sphere->SetupAttachment(Mesh);
 	
 }
 
-// Called every frame
-void AEffectActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
+void AEffectActor::BeginPlay()
+{
+	Super::BeginPlay();
+	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AEffectActor::OnOverlap);
+	Sphere->OnComponentEndOverlap.AddDynamic(this, &AEffectActor::EndOverlap);
+
+	
 }
+
+void AEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
+
+	//TODO: Remove the const hack
+	if(IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
+	{
+		const UAoCAttributeSet* AoCAttributeSet = Cast<UAoCAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAoCAttributeSet::StaticClass()));
+
+		UAoCAttributeSet* MutableAoCAttributeSet = const_cast<UAoCAttributeSet*>(AoCAttributeSet);
+
+		MutableAoCAttributeSet->SetHealth(AoCAttributeSet->GetHealth() + 25.f);
+		Destroy();
+
+	}
+}
+
+void AEffectActor::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	
+}
+
+
 
