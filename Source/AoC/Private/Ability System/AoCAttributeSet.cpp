@@ -2,12 +2,14 @@
 
 
 #include "Ability System/AoCAttributeSet.h"
-#include "AbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 
 UAoCAttributeSet::UAoCAttributeSet()
 {
-	
+	InitHealth(500.f);
+	InitHealthMax(1000.f);
+	InitMana(500.f);
+	InitManaMax(500.f);
 }
 
 void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
