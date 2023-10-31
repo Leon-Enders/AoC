@@ -17,15 +17,16 @@ class AOC_API UAoCUserWidget : public UUserWidget
 
 
 public:
-	
+
+
+	UFUNCTION(BlueprintCallable)
 	void SetWidgetController(UAoCWidgetController* In_WidgetController);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void WidgetControllerSet();
 
-
-protected:
-
+	
+	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UAoCWidgetController> WidgetController;
 
 	
