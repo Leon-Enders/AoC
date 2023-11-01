@@ -2,12 +2,10 @@
 
 
 #include "UI/UserWidget/AoCUserWidget.h"
-#include "UI/WidgetController/AoCWidgetController.h"
 
-
-void UAoCUserWidget::SetWidgetController(UAoCWidgetController* In_WidgetController)
+void UAoCUserWidget::SetWidgetController(UObject* In_WidgetController)
 {
-	check(In_WidgetController);
 	WidgetController = In_WidgetController;
 	WidgetControllerSet();
 }
+

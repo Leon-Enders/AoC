@@ -3,34 +3,42 @@
 
 #include "UI/HUD/AoCHUD.h"
 #include "UI/UserWidget/AocUserWidget.h"
-#include "UI/WidgetController/AoCWidgetController.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
 
-UAoCWidgetController* AAoCHUD::GetWidgetController(APlayerController* PC, APlayerState* PS, UAttributeSet* AS, UAbilitySystemComponent* ASC)
+UOverlayWidgetController* AAoCHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
-	if(WidgetController == nullptr)
+	if(OverlayWidgetController == nullptr)
 	{
-		WidgetController = NewObject<UAoCWidgetController>(this, WidgetControllerClass);
-		FWidgetControllerParams WidgetControllerParams;
-		WidgetControllerParams.PC = PC;
-		WidgetControllerParams.PS = PS;
-		WidgetControllerParams.AS = AS;
-		WidgetControllerParams.ASC = ASC;
-	
-		WidgetController->InitWidgetController(WidgetControllerParams);
-		if(OverlayWidgetClass != nullptr)
-		{
-		
-			OverlayWidget = CreateWidget<UAoCUserWidget>(GetOwningPlayerController(), OverlayWidgetClass);
-			OverlayWidget->AddToViewport();
-			if(WidgetController != nullptr)
-			{
-				OverlayWidget->SetWidgetController(WidgetController);
-			}
-		}
-		WidgetController->BroadcastInitialValues();
-		return WidgetController;
+		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
+		OverlayWidgetController->SetWidgetControllerParams(WCParams);
+		OverlayWidgetController->BindCallbacksToDependencies();
+		return OverlayWidgetController;
 	}
-	return WidgetController;
+
+	return OverlayWidgetController;
 }
 
+void AAoCHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+{
+
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_AuraHUD"));
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
+	
+	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), TSubclassOf<UAoCUserWidget>(OverlayWidgetClass));
+	OverlayWidget = Cast<UAoCUserWidget>(Widget);
+
+	const FWidgetControllerParams WCParams(PC, PS, AS, ASC);
+	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WCParams);
+	
+	OverlayWidget->SetWidgetController(WidgetController);
+	WidgetController->BroadCastInitialValue();
+	Widget->AddToViewport();
+}
+
+void AAoCHUD::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	
+}

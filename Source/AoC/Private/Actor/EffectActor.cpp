@@ -44,6 +44,7 @@ void AEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		UAoCAttributeSet* MutableAoCAttributeSet = const_cast<UAoCAttributeSet*>(AoCAttributeSet);
 
 		MutableAoCAttributeSet->SetHealth(AoCAttributeSet->GetHealth() + 25.f);
+		MutableAoCAttributeSet->SetMana(AoCAttributeSet->GetMana() - 10.f);
 		Destroy();
 
 	}

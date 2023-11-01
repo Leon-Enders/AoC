@@ -6,11 +6,11 @@
 #include "GameFramework/HUD.h"
 #include "AoCHUD.generated.h"
 
-class UAbilitySystemComponent;
 class UAttributeSet;
-struct FWidgetControllerParams;
-class UAoCWidgetController;
+class UAbilitySystemComponent;
+class UOverlayWidgetController;
 class UAoCUserWidget;
+struct FWidgetControllerParams;
 /**
  * 
  */
@@ -22,21 +22,27 @@ class AOC_API AAoCHUD : public AHUD
 	
 
 public:
-	
-	UAoCWidgetController* GetWidgetController(APlayerController* PC, APlayerState* PS, UAttributeSet* AS, UAbilitySystemComponent* ASC);
 
+	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
+
+	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
+	
 	UPROPERTY()
 	TObjectPtr<UAoCUserWidget> OverlayWidget;
+
+	
 protected:
+	virtual void BeginPlay() override;
+
+private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAoCUserWidget> OverlayWidgetClass;
-	
-	UPROPERTY()
-	TObjectPtr<UAoCWidgetController> WidgetController;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UAoCWidgetController> WidgetControllerClass;
+	UPROPERTY()
+	TObjectPtr<UOverlayWidgetController> OverlayWidgetController;
 	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
 	
 };
