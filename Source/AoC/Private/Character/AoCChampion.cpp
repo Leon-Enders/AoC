@@ -5,6 +5,8 @@
 
 #include "AbilitySystemComponent.h"
 #include "Player/AoCPlayerState.h"
+#include "UI/HUD/AoCHUD.h"
+#include "UI/WidgetController/AoCWidgetController.h"
 
 AAoCChampion::AAoCChampion()
 {
@@ -37,5 +39,18 @@ void AAoCChampion::InitAbilityActorInfo()
 
 	AbilitySystemComponent = PS->GetAbilitySystemComponent();
 	AttributeSet = PS->GetAttributeSet();
+//TODO: Debug time brotha. check params durch
+	if(APlayerController* APC = Cast<APlayerController>(GetController()))
+	{
+		if(AAoCHUD* AoCHUD = Cast<AAoCHUD>(APC->GetHUD()))
+		{
+			if(UAoCWidgetController* WidgetController = AoCHUD->GetWidgetController
+			(APC, GetPlayerState(), AttributeSet, AbilitySystemComponent))
+			{
+				
+			}
+		}
+		
+	}
 }
 

@@ -29,6 +29,5 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UAoCWidgetController> WidgetController;
-
 	
 };

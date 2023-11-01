@@ -6,6 +6,9 @@
 #include "GameFramework/HUD.h"
 #include "AoCHUD.generated.h"
 
+class UAbilitySystemComponent;
+class UAttributeSet;
+struct FWidgetControllerParams;
 class UAoCWidgetController;
 class UAoCUserWidget;
 /**
@@ -17,15 +20,14 @@ class AOC_API AAoCHUD : public AHUD
 	GENERATED_BODY()
 
 	
-//TODO Create Reference Pointers for Widget and Widget Controller and add Widget to Viewport
-public:
 
-	virtual void BeginPlay() override;
+public:
 	
-	
+	UAoCWidgetController* GetWidgetController(APlayerController* PC, APlayerState* PS, UAttributeSet* AS, UAbilitySystemComponent* ASC);
+
 	UPROPERTY()
 	TObjectPtr<UAoCUserWidget> OverlayWidget;
-
+protected:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAoCUserWidget> OverlayWidgetClass;
@@ -35,4 +37,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAoCWidgetController> WidgetControllerClass;
+	
+	
 };
