@@ -28,7 +28,7 @@ protected:
 	virtual void SetupInputComponent() override;
 	void Move(const FInputActionValue& InputActionValue);
 	void CamRot(const FInputActionValue& InputActionValue);
-
+	void OnJump(const FInputActionValue& InputActionValue);
 private:
 
 	UPROPERTY(EditAnywhere, Category="Input");
@@ -36,6 +36,10 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_Move;
+
+
+	UPROPERTY(EditAnywhere, Category="Input");
+	TObjectPtr<UInputAction> IA_Jump;
 
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputMappingContext> IMC_Move;

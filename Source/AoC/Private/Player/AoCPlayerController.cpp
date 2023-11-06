@@ -5,6 +5,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "GameFramework/Character.h"
 
 
 AAoCPlayerController::AAoCPlayerController()
@@ -33,6 +34,7 @@ void AAoCPlayerController::SetupInputComponent()
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
 	EnhancedInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
+	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
 	
 }
 
@@ -65,4 +67,12 @@ void AAoCPlayerController::CamRot(const FInputActionValue& InputActionValue)
 	SetControlRotation(Rotation);
 	
 	
+}
+
+void AAoCPlayerController::OnJump(const FInputActionValue& InputActionValue)
+{
+	if(ACharacter* ControlledPawn = GetPawn<ACharacter>())
+	{
+		ControlledPawn->Jump();
+	}
 }
