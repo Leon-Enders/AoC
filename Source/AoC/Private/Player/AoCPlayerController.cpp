@@ -20,8 +20,10 @@ void AAoCPlayerController::BeginPlay()
 	check(IMC_Move);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-	Subsystem->AddMappingContext(IMC_Move,0);
+	if(Subsystem)
+	{
+		Subsystem->AddMappingContext(IMC_Move,0);
+	}
 	
 }
 
