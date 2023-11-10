@@ -1,4 +1,4 @@
-// Created by Leon Enders
+// Copyright by Leon Enders ©, All Rights Reserved.
 
 
 #include "UI/HUD/AoCHUD.h"

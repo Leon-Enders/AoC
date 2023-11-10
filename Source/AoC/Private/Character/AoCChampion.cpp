@@ -1,4 +1,4 @@
-// Created by Leon Enders
+// Copyright by Leon Enders ©, All Rights Reserved.
 
 
 #include "Character/AoCChampion.h"
