@@ -6,8 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "EffectActor.generated.h"
 
-class USphereComponent;
-class UStaticMeshComponent;
+class UGameplayEffect;
+
 
 UCLASS()
 class AOC_API AEffectActor : public AActor
@@ -23,17 +23,15 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-    UFUNCTION()
-	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
-	
-	UFUNCTION()
-	void EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
 private:
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> Sphere;
+	UPROPERTY(EditAnywhere, Category="Applied Effects")
+	TObjectPtr<UGameplayEffect> InstantGameplayEffect;
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> Mesh;
+
+	UPROPERTY(EditAnywhere, Category="Applied Effects")
+	TObjectPtr<UGameplayEffect> DurationGameplayEffect;
+
+	UPROPERTY(EditAnywhere, Category="Applied Effects")
+	TObjectPtr<UGameplayEffect> InfiniteGameplayEffect;
 };
