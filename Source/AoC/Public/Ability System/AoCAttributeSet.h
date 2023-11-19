@@ -16,7 +16,40 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+USTRUCT()
+struct FEffectProperties
+{
+	GENERATED_BODY()
 
+	FEffectProperties(){};
+	
+	FGameplayEffectContextHandle GameplayEffectContextHandle;
+
+	UPROPERTY()
+	UAbilitySystemComponent* SourceASC = nullptr;
+	
+	UPROPERTY()
+	AActor* SourceAvatarActor = nullptr;
+
+	UPROPERTY()
+	ACharacter* SourceCharacter = nullptr;
+
+	UPROPERTY()
+	AController* SourceController = nullptr;
+
+	UPROPERTY()
+	UAbilitySystemComponent* TargetASC = nullptr;
+	
+	UPROPERTY()
+	AActor* TargetAvatarActor = nullptr;
+
+	UPROPERTY()
+	ACharacter* TargetCharacter = nullptr;
+
+	UPROPERTY()
+	AController* TargetController = nullptr;
+	
+};
 
 UCLASS()
 class AOC_API UAoCAttributeSet : public UAttributeSet
@@ -27,6 +60,9 @@ public:
 	UAoCAttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
+	void SetupEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 	
 	// RepNotify Functions
 	UFUNCTION()
