@@ -26,7 +26,7 @@ class AOC_API UAoCAttributeSet : public UAttributeSet
 public:
 	UAoCAttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	
 	// RepNotify Functions
 	UFUNCTION()

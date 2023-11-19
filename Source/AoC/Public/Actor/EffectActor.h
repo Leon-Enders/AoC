@@ -38,7 +38,7 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
-
+	
 	
 	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor* TargetActor);
