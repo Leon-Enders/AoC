@@ -13,21 +13,21 @@ void UAoCAbilitySystemComponent::GameplayEffectApplied(UAbilitySystemComponent* 
 {
 
 	
-	FGameplayTagContainer ActiveTags;
-	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
-
-	for(auto Tag : ActiveTags)
-	{
-
-		FString DisplayText = FString::Printf(TEXT("GameplayTag applied: "));
-		FString Display = DisplayText + Tag.ToString();
-		
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, Display);
-		}
-	}
-
+//	FGameplayTagContainer ActiveTags;
+//	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
+//
+//	for(auto Tag : ActiveTags)
+//	{
+//
+//		FString DisplayText = FString::Printf(TEXT("GameplayTag applied: "));
+//		FString Display = DisplayText + Tag.ToString();
+//		
+//		if(GEngine)
+//		{
+//			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, Display);
+//		}
+//	}
+//
 }
 
 

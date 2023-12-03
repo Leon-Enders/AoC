@@ -33,6 +33,27 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		AoCAs->GetManaMaxAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
 }
 
+void UOverlayWidgetController::FindRowByTag(const FGameplayEffectSpec& GameplayEffectSpec)
+{
+
+	
+	FGameplayTagContainer ActiveTags;
+	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
+
+	for(auto Tag : ActiveTags)
+	{
+
+		FString DisplayText = FString::Printf(TEXT("GameplayTag applied: "));
+		FString Display = DisplayText + Tag.ToString();
+		
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, Display);
+		}
+	}
+
+}
+
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
 {
 	OnHealthChanged.Broadcast(Data.NewValue);

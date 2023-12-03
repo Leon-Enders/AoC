@@ -12,6 +12,8 @@
 
 struct FOnAttributeChangeData;
 // Delegates
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameplayTagApplied, const FGameplayEffectSpec&, GameplayEffectSpec);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, Health);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, MaxHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, Mana);
@@ -27,6 +29,9 @@ public:
 
 	virtual void BroadCastInitialValue() override;
 	virtual void BindCallbacksToDependencies() override;
+
+	UPROPERTY(BlueprintAssignable, Category="GameplayTags")
+	FOnGameplayTagApplied OnGameplayTagApplied;
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnHealthChangedSignature OnHealthChanged;
@@ -40,9 +45,13 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnMaxManaChangedSignature OnMaxManaChanged;
 
-	
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UDataTable> UIMessageDt;
 	
 protected:
+
+	void FindRowByTag(const FGameplayEffectSpec& GameplayEffectSpec);
+	
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
 	void ManaChanged(const FOnAttributeChangeData& Data) const;

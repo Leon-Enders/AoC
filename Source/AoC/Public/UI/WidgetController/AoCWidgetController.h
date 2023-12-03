@@ -10,8 +10,28 @@
 /**
  * 
  */
-class UAbilitySystemComponent;
+
 class UAttributeSet;
+
+USTRUCT(BlueprintType)
+struct FGameplayTagUIRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	FName MessageTagName;
+
+	UPROPERTY(EditAnywhere)
+	FText MessageText;
+
+	UPROPERTY(EditAnywhere)
+	UTexture2D* Image;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> MessageWidget;
+};
+
+
 
 USTRUCT(BlueprintType)
 struct FWidgetControllerParams
