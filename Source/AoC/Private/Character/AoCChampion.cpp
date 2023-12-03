@@ -3,7 +3,8 @@
 
 #include "Character/AoCChampion.h"
 
-#include "AbilitySystemComponent.h"
+
+#include "Ability System/AoCAbilitySystemComponent.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 
@@ -38,6 +39,13 @@ void AAoCChampion::InitAbilityActorInfo()
 
 	AbilitySystemComponent = PS->GetAbilitySystemComponent();
 	AttributeSet = PS->GetAttributeSet();
+
+
+	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent);
+	if(AoCASC)
+	{
+		AoCASC->InitAoCASC();
+	}
 	
 	if(APlayerController* APC = Cast<APlayerController>(GetController()))
 	{
