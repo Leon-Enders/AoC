@@ -22,8 +22,6 @@ void AEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	
 }
 
 
