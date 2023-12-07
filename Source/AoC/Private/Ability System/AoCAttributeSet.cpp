@@ -46,6 +46,16 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 {
 	Super::PostGameplayEffectExecute(Data);
 
+	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
+	}
+
+	if(Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetHealth(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
+	}
+	
 	FEffectProperties Props;
 	SetupEffectProperties(Data, Props);
 }
