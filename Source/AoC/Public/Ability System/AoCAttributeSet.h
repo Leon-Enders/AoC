@@ -77,7 +77,7 @@ public:
 	UFUNCTION()
 	void OnRep_ManaMax(const FGameplayAttributeData& OldManaMax) const;
 
-	// AttributeData
+	// AttributeDatayyyyyyyyy
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Health", Category="Vital Attributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Health);

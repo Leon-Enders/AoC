@@ -12,12 +12,11 @@
 
 struct FOnAttributeChangeData;
 // Delegates
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameplayTagApplied, FGameplayTagUIRow, GameplayTagUIRow);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, Health);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, MaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, Mana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, MaxMana);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameplayTagApplied, FGameplayTagUIRow, GameplayTagUIRow);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, Value);
+
 
 
 UCLASS(BlueprintType, Blueprintable)
@@ -34,17 +33,18 @@ public:
 	FOnGameplayTagApplied OnGameplayTagApplied;
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnHealthChangedSignature OnHealthChanged;
+	FOnAttributeChangedSignature OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnMaxHealthChangedSignature OnMaxHealthChanged;
+	FOnAttributeChangedSignature OnMaxHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnManaChangedSignature OnManaChanged;
+	FOnAttributeChangedSignature OnManaChanged;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnMaxManaChangedSignature OnMaxManaChanged;
-
+	FOnAttributeChangedSignature OnMaxManaChanged;
+	
+	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UDataTable> UIMessageDt;
 

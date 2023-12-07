@@ -53,7 +53,7 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 
 	if(Data.EvaluatedData.Attribute == GetManaAttribute())
 	{
-		SetHealth(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
 	}
 	
 	FEffectProperties Props;

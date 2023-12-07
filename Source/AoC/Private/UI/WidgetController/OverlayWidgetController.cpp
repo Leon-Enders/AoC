@@ -24,16 +24,36 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetHealthAttribute()).AddUObject(this, &UOverlayWidgetController::HealthChanged);
+	AoCAs->GetHealthAttribute()).AddLambda(
+	[this](const FOnAttributeChangeData& Data)
+	{
+		OnHealthChanged.Broadcast(Data.NewValue);
+	}
+	);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetHealthMaxAttribute()).AddUObject(this, &UOverlayWidgetController::MaxHealthChanged);
+	AoCAs->GetHealthMaxAttribute()).AddLambda(
+	[this](const FOnAttributeChangeData& Data)
+	{
+		OnMaxHealthChanged.Broadcast(Data.NewValue);
+	}
+	);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetManaAttribute()).AddUObject(this, &UOverlayWidgetController::ManaChanged);
+	AoCAs->GetManaAttribute()).AddLambda(
+	[this](const FOnAttributeChangeData& Data)
+	{
+		OnManaChanged.Broadcast(Data.NewValue);
+	}
+	);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetManaMaxAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+		AoCAs->GetManaMaxAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			OnMaxManaChanged.Broadcast(Data.NewValue);
+		}
+		);
 
 	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent);
 	if(AoCASC)
@@ -56,24 +76,4 @@ void UOverlayWidgetController::FindRowByTag(const FGameplayEffectSpec& GameplayE
 		
 	}
 	
-}
-
-void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::MaxHealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnManaChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxManaChanged.Broadcast(Data.NewValue);
 }
