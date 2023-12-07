@@ -10,7 +10,7 @@
  * 
  */
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FGameplayTagsAppliedSignature, const FGameplayEffectSpec&, GameplayEffectSpec);
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectDelegate, const FGameplayTagContainer& EffectAssetTags);
 
 UCLASS()
 class AOC_API UAoCAbilitySystemComponent : public UAbilitySystemComponent
@@ -18,10 +18,10 @@ class AOC_API UAoCAbilitySystemComponent : public UAbilitySystemComponent
 	GENERATED_BODY()
 
 public:
+	
 	void InitAoCASC();
-	
 
-	FGameplayTagsAppliedSignature GameplayTagsAppliedDelegate;
+	FEffectDelegate EffectDelegate;
 	
-	void GameplayEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
+	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
 };

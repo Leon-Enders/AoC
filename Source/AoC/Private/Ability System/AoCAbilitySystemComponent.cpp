@@ -5,29 +5,19 @@
 
 void UAoCAbilitySystemComponent::InitAoCASC()
 {
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAoCAbilitySystemComponent::GameplayEffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAoCAbilitySystemComponent::EffectApplied);
 }
 
-void UAoCAbilitySystemComponent::GameplayEffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
+void UAoCAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
 	const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
 {
 
-	GameplayTagsAppliedDelegate.Broadcast(GameplayEffectSpec);
-//	FGameplayTagContainer ActiveTags;
-//	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
-//
-//	for(auto Tag : ActiveTags)
-//	{
-//
-//		FString DisplayText = FString::Printf(TEXT("GameplayTag applied: "));
-//		FString Display = DisplayText + Tag.ToString();
-//		
-//		if(GEngine)
-//		{
-//			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, Display);
-//		}
-//	}
-//
+	
+	FGameplayTagContainer AssetTags;
+	GameplayEffectSpec.GetAllAssetTags(AssetTags);
+
+	EffectDelegate.Broadcast(AssetTags);
+
 }
 
 

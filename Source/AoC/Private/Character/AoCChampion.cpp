@@ -36,16 +36,14 @@ void AAoCChampion::InitAbilityActorInfo()
 	check(PS);
 	
 	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
-
-	AbilitySystemComponent = PS->GetAbilitySystemComponent();
-	AttributeSet = PS->GetAttributeSet();
-
-
-	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent);
+	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	if(AoCASC)
 	{
 		AoCASC->InitAoCASC();
 	}
+	AbilitySystemComponent = PS->GetAbilitySystemComponent();
+	AttributeSet = PS->GetAttributeSet();
+	
 	
 	if(APlayerController* APC = Cast<APlayerController>(GetController()))
 	{

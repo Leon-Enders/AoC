@@ -11,11 +11,32 @@
  */
 
 struct FOnAttributeChangeData;
+
+
+USTRUCT(BlueprintType)
+struct FGameplayTagUIRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag MessageTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText MessageText = FText();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* Image = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<class UAoCUserWidget> MessageWidget;
+};
+
 // Delegates
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameplayTagApplied, FGameplayTagUIRow, GameplayTagUIRow);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWidgetMessageSignature, FGameplayTagUIRow, GameplayTagUIRow);
 
 
 
@@ -30,7 +51,7 @@ public:
 	virtual void BindCallbacksToDependencies() override;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnGameplayTagApplied OnGameplayTagApplied;
+	FWidgetMessageSignature WidgetMessageDelegate;
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnHealthChanged;
@@ -43,22 +64,22 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnMaxManaChanged;
-	
-	
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UDataTable> UIMessageDt;
 
-	UFUNCTION()
-	void FindRowByTag(const FGameplayEffectSpec& GameplayEffectSpec);
 	
 protected:
 
-	
-	
-	void HealthChanged(const FOnAttributeChangeData& Data) const;
-	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
-	void ManaChanged(const FOnAttributeChangeData& Data) const;
-	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
+	TObjectPtr<UDataTable> MessageWidgetDataTable;
+
+	template<typename T>
+	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 };
 
+//TODO: Having to match Tag.GetTagName() with the name of the Row in the Data Table is prone to errors, find better solution
+
+template<typename T>
+T* UOverlayWidgetController::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag)
+{
+	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
+}
 

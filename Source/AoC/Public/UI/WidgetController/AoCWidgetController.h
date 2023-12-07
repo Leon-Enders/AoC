@@ -13,25 +13,6 @@
 
 class UAttributeSet;
 
-USTRUCT(BlueprintType, Blueprintable)
-struct FGameplayTagUIRow : public FTableRowBase
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FName MessageTagName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FText MessageText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UTexture2D* Image;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<UUserWidget> MessageWidget;
-};
-
-
 
 USTRUCT(BlueprintType)
 struct FWidgetControllerParams

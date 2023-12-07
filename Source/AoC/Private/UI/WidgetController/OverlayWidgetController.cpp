@@ -55,25 +55,25 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		}
 		);
 
-	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent);
-	if(AoCASC)
+	Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent)->EffectDelegate.AddLambda(
+	[this](const FGameplayTagContainer& AssetTags)
 	{
-		AoCASC->GameplayTagsAppliedDelegate.AddDynamic(this, &UOverlayWidgetController::FindRowByTag);
-	}
-}
-
-void UOverlayWidgetController::FindRowByTag(const FGameplayEffectSpec& GameplayEffectSpec)
-{
-	FGameplayTagContainer ActiveTags;
-	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
-
-	for(auto Tag : ActiveTags)
-	{
+		for(const auto Tag : AssetTags)
+		{
 		
-		auto messagerow = UIMessageDt->FindRow<FGameplayTagUIRow>(Tag.GetTagName(),FString());
-
-		OnGameplayTagApplied.Broadcast(*messagerow);
+			auto MessageTag = FGameplayTag::RequestGameplayTag("Message");
+			if(Tag.MatchesTag(MessageTag))
+			{
+				const FGameplayTagUIRow* Row = GetDataTableRowByTag<FGameplayTagUIRow>(MessageWidgetDataTable, Tag);
+				WidgetMessageDelegate.Broadcast(*Row);
+			}
+			
+		
+		}
 		
 	}
+	);
+	
+		
 	
 }
