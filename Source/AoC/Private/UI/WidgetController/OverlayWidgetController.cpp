@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 
+#include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
 
 
@@ -20,6 +21,8 @@ void UOverlayWidgetController::BroadCastInitialValue()
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
+	
+	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		AoCAs->GetHealthAttribute()).AddUObject(this, &UOverlayWidgetController::HealthChanged);
 	
@@ -31,27 +34,28 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		AoCAs->GetManaMaxAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+
+	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent);
+	if(AoCASC)
+	{
+		AoCASC->GameplayTagsAppliedDelegate.AddDynamic(this, &UOverlayWidgetController::FindRowByTag);
+	}
 }
 
 void UOverlayWidgetController::FindRowByTag(const FGameplayEffectSpec& GameplayEffectSpec)
 {
-
-	
 	FGameplayTagContainer ActiveTags;
 	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
 
 	for(auto Tag : ActiveTags)
 	{
-
-		FString DisplayText = FString::Printf(TEXT("GameplayTag applied: "));
-		FString Display = DisplayText + Tag.ToString();
 		
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, Display);
-		}
-	}
+		auto messagerow = UIMessageDt->FindRow<FGameplayTagUIRow>(Tag.GetTagName(),FString());
 
+		OnGameplayTagApplied.Broadcast(*messagerow);
+		
+	}
+	
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const

@@ -12,7 +12,7 @@ void UAoCAbilitySystemComponent::GameplayEffectApplied(UAbilitySystemComponent* 
 	const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
 {
 
-	
+	GameplayTagsAppliedDelegate.Broadcast(GameplayEffectSpec);
 //	FGameplayTagContainer ActiveTags;
 //	GameplayEffectSpec.GetAllGrantedTags(ActiveTags);
 //
