@@ -27,8 +27,8 @@ public:
 	// Gameplay Ability System
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
-
-	FORCEINLINE float GetPlayerLevel()const{return PlayerLevel;}
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	FORCEINLINE int32 GetPlayerLevel()const{return PlayerLevel;}
 	
 protected:
 
@@ -41,5 +41,9 @@ protected:
 
 private:
 
-	float PlayerLevel = 1.f;
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_PlayerLevel)
+	int32 PlayerLevel = 1;
+
+	UFUNCTION()
+	void OnRep_PlayerLevel(int32 OldPlayerLevel);
 };

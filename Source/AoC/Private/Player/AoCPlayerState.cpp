@@ -3,9 +3,9 @@
 
 #include "Player/AoCPlayerState.h"
 
-#include "AbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 
 AAoCPlayerState::AAoCPlayerState()
@@ -28,4 +28,15 @@ UAbilitySystemComponent* AAoCPlayerState::GetAbilitySystemComponent() const
 UAttributeSet* AAoCPlayerState::GetAttributeSet() const
 {
 	return AttributeSet;
+}
+
+void AAoCPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AAoCPlayerState, PlayerLevel);
+}
+
+void AAoCPlayerState::OnRep_PlayerLevel(int32 OldPlayerLevel)
+{
 }

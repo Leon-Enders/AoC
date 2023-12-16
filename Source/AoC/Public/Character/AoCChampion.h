@@ -22,9 +22,9 @@ public:
 
 	/* Combat Interface*/
 
-	virtual float GetPlayerLevel() override;
+	virtual int32 GetPlayerLevel() override;
 	/* End Combat Interface*/
-
-private:
-	void InitAbilityActorInfo();
+protected:
+	virtual void InitAbilityActorInfo() override;
+	
 };

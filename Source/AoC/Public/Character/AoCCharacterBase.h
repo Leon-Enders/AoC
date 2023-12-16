@@ -29,6 +29,7 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo();
 	
 	// Gameplay Ability System
 	UPROPERTY()
@@ -37,9 +38,8 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	void InitializeAttributes();
 
-	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffect);
+	
 	// Attribute Setters
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
@@ -49,5 +49,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+
+	void InitializeAttributes() const;
+
+	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
 	
 };
