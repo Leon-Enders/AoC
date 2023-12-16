@@ -27,6 +27,8 @@ public:
 	// Gameplay Ability System
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
+
+	FORCEINLINE float GetPlayerLevel()const{return PlayerLevel;}
 	
 protected:
 
@@ -36,4 +38,8 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+private:
+
+	float PlayerLevel = 1.f;
 };
