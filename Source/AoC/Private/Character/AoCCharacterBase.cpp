@@ -3,6 +3,8 @@
 
 #include "Character/AoCCharacterBase.h"
 
+#include "AbilitySystemComponent.h"
+
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
 {
@@ -16,11 +18,8 @@ void AAoCCharacterBase::BeginPlay()
 	
 }
 
-void AAoCCharacterBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
-}
+
 
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
@@ -33,3 +32,21 @@ UAttributeSet* AAoCCharacterBase::GetAttributeSet() const
 }
 
 
+
+
+void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffect)
+{
+	FGameplayEffectContextHandle EffectContext = GetAbilitySystemComponent()->MakeEffectContext();
+	
+	
+	const FGameplayEffectSpecHandle EffectSpec = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffect, Level, EffectContext);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*EffectSpec.Data.Get(), GetAbilitySystemComponent());
+}
+
+
+
+void AAoCCharacterBase::InitializeAttributes()
+{
+	ApplyGameplayEffectToSelf(1.f, DefaultPrimaryAttributes);
+	ApplyGameplayEffectToSelf(1.f, DefaultSecondaryAttributes);
+}

@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "AoCCharacterBase.generated.h"
 
+class UGameplayEffect;
 // Gameplay Ability System
 class UAbilitySystemComponent;
 class UAttributeSet;
@@ -18,8 +19,6 @@ class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterf
 
 public:
 	AAoCCharacterBase();
-	virtual void Tick(float DeltaTime) override;
-
 
 	// Gameplay Ability System
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -35,4 +34,17 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	void InitializeAttributes();
+
+	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffect);
+	// Attribute Setters
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
+	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
+	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 };

@@ -91,6 +91,13 @@ public:
 	FGameplayAttributeData Dexterity;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Dexterity);
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Armor", Category="Secondary Attributes")
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Armor);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicResistance", Category="Secondary Attributes")
+	FGameplayAttributeData MagicResistance;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicResistance);
 	
 
 	
@@ -157,13 +164,7 @@ public:
 	FGameplayAttributeData Tenacity;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Tenacity);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Armor", Category="Secondary Attributes")
-	FGameplayAttributeData Armor;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Armor);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicResistance", Category="Secondary Attributes")
-	FGameplayAttributeData MagicResistance;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicResistance);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_HealthMax", Category="Secondary Attributes")
 	FGameplayAttributeData HealthMax;
@@ -227,7 +228,11 @@ public:
 	UFUNCTION()
 	void OnRep_Dexterity(const FGameplayAttributeData& OldDexterity) const;
 	
+	UFUNCTION()
+	void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
 	
+	UFUNCTION()
+	void OnRep_MagicResistance(const FGameplayAttributeData& OldMagicResistance) const;
 
 
 	/* Secondary*/
@@ -277,11 +282,7 @@ public:
 	UFUNCTION()
 	void OnRep_Tenacity(const FGameplayAttributeData& OldTenacity) const;
 
-	UFUNCTION()
-	void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
 	
-	UFUNCTION()
-	void OnRep_MagicResistance(const FGameplayAttributeData& OldMagicResistance) const;
 	
 	UFUNCTION()
 	void OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const;

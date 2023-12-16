@@ -53,5 +53,8 @@ void AAoCChampion::InitAbilityActorInfo()
 		}
 		
 	}
+
+	// Initializes Attributes for this character with GameplayEffects
+	InitializeAttributes();
 }
 
