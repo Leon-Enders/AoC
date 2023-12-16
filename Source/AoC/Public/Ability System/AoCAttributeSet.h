@@ -64,35 +64,252 @@ public:
 
 	void SetupEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 	
-	// RepNotify Functions
-	UFUNCTION()
-	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 
-	UFUNCTION()
-	void OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const;
-	
-	UFUNCTION()
-	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
-	
-	UFUNCTION()
-	void OnRep_ManaMax(const FGameplayAttributeData& OldManaMax) const;
+	/* Primary Attributes*/ 
 
-	// AttributeData
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Strength", Category="Primary Attributes")
+	FGameplayAttributeData Strength;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Strength);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Agility", Category="Primary Attributes")
+	FGameplayAttributeData Agility;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Agility);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Intelligence", Category="Primary Attributes")
+	FGameplayAttributeData Intelligence;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Intelligence);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Vitality", Category="Primary Attributes")
+	FGameplayAttributeData Vitality;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Vitality);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Willpower", Category="Primary Attributes")
+	FGameplayAttributeData Willpower;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Willpower);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Dexterity", Category="Primary Attributes")
+	FGameplayAttributeData Dexterity;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Dexterity);
+
+	
+
+	
+
+	/* Secondary Attributes*/ 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_PhysicalCritChance", Category="Secondary Attributes")
+	FGameplayAttributeData PhysicalCritChance;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, PhysicalCritChance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicCritChance", Category="Secondary Attributes")
+	FGameplayAttributeData MagicCritChance;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicCritChance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_CritDamage", Category="Secondary Attributes")
+	FGameplayAttributeData CritDamage;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, CritDamage);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_AttackSpeed", Category="Secondary Attributes")
+	FGameplayAttributeData AttackSpeed;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, AttackSpeed);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_CastSpeed", Category="Secondary Attributes")
+	FGameplayAttributeData CastSpeed;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, CastSpeed);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_ArmorPenetration", Category="Secondary Attributes")
+	FGameplayAttributeData ArmorPenetration;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, ArmorPenetration);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicPenetration", Category="Secondary Attributes")
+	FGameplayAttributeData MagicPenetration;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicPenetration);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_PhysicalDamageReduction", Category="Secondary Attributes")
+	FGameplayAttributeData PhysicalDamageReduction;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, PhysicalDamageReduction);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicDamageReduction", Category="Secondary Attributes")
+	FGameplayAttributeData MagicDamageReduction;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicDamageReduction);
+	
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_CooldownReduction", Category="Secondary Attributes")
+	FGameplayAttributeData CooldownReduction;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, CooldownReduction);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MovementSpeed", Category="Secondary Attributes")
+	FGameplayAttributeData MovementSpeed;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MovementSpeed);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_AirControl", Category="Secondary Attributes")
+	FGameplayAttributeData AirControl;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, AirControl);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_KnockbackResistance", Category="Secondary Attributes")
+	FGameplayAttributeData KnockbackResistance;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, KnockbackResistance);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_KnockbackPenetration", Category="Secondary Attributes")
+	FGameplayAttributeData KnockbackPenetration;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, KnockbackPenetration);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Tenacity", Category="Secondary Attributes")
+	FGameplayAttributeData Tenacity;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Tenacity);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Armor", Category="Secondary Attributes")
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Armor);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicResistance", Category="Secondary Attributes")
+	FGameplayAttributeData MagicResistance;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicResistance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_HealthMax", Category="Secondary Attributes")
+	FGameplayAttributeData HealthMax;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, HealthMax);
+	
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_ManaMax", Category="Secondary Attributes")
+	FGameplayAttributeData ManaMax;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, ManaMax);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_EnergyMax", Category="Secondary Attributes")
+	FGameplayAttributeData EnergyMax;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, EnergyMax);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_RageMax", Category="Secondary Attributes")
+	FGameplayAttributeData RageMax;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, RageMax);
+
+	
+
+	
+	
+	/* Vital Attributes*/ 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Health", Category="Vital Attributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Health);
-
-	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_HealthMax", Category="Vital Attributes")
-	FGameplayAttributeData HealthMax;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, HealthMax);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Mana", Category="Vital Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Mana);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_ManaMax", Category="Vital Attributes")
-	FGameplayAttributeData ManaMax;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, ManaMax);
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Energy", Category="Vital Attributes")
+	FGameplayAttributeData Energy;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Energy);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Rage", Category="Vital Attributes")
+	FGameplayAttributeData Rage;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Rage);
+
+	
+
+	/* RepNotify Functions*/
+
+
+	/* Primary */
+	UFUNCTION()
+	void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
+
+	UFUNCTION()
+	void OnRep_Agility(const FGameplayAttributeData& OldAgility) const;
+
+	UFUNCTION()
+	void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
+	
+	UFUNCTION()
+	void OnRep_Vitality(const FGameplayAttributeData& OldVitality) const;
+
+	UFUNCTION()
+	void OnRep_Willpower(const FGameplayAttributeData& OldWillpower) const;
+	
+	UFUNCTION()
+	void OnRep_Dexterity(const FGameplayAttributeData& OldDexterity) const;
+	
+	
+
+
+	/* Secondary*/
+
+	UFUNCTION()
+	void OnRep_PhysicalCritChance(const FGameplayAttributeData& OldPhysicalCritChance) const;
+
+	UFUNCTION()
+	void OnRep_MagicCritChance(const FGameplayAttributeData& OldMagicCritChance) const;
+
+	UFUNCTION()
+	void OnRep_CritDamage(const FGameplayAttributeData& OldCritDamage) const;
+
+	UFUNCTION()
+	void OnRep_AttackSpeed(const FGameplayAttributeData& OldAttackSpeed) const;
+
+	UFUNCTION()
+	void OnRep_CastSpeed(const FGameplayAttributeData& OldCastSpeed) const;
+
+	UFUNCTION()
+	void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
+	
+	UFUNCTION()
+	void OnRep_MagicPenetration(const FGameplayAttributeData& OldMagicPenetration) const;
+
+	UFUNCTION()
+	void OnRep_PhysicalDamageReduction(const FGameplayAttributeData& OldPhysicalDamageReduction) const;
+
+	UFUNCTION()
+	void OnRep_MagicDamageReduction(const FGameplayAttributeData& OldMagicDamageReduction) const;
+
+	UFUNCTION()
+	void OnRep_CooldownReduction(const FGameplayAttributeData& OldCooldownReduction) const;
+
+	UFUNCTION()
+	void OnRep_MovementSpeed(const FGameplayAttributeData& OldMovementSpeed) const;
+
+	UFUNCTION()
+	void OnRep_AirControl(const FGameplayAttributeData& OldAirControl) const;
+	
+	UFUNCTION()
+	void OnRep_KnockbackPenetration(const FGameplayAttributeData& OldKnockbackPenetration) const;
+
+	UFUNCTION()
+	void OnRep_KnockbackResistance(const FGameplayAttributeData& OldKnockbackResistance) const;
+
+	UFUNCTION()
+	void OnRep_Tenacity(const FGameplayAttributeData& OldTenacity) const;
+
+	UFUNCTION()
+	void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
+	
+	UFUNCTION()
+	void OnRep_MagicResistance(const FGameplayAttributeData& OldMagicResistance) const;
+	
+	UFUNCTION()
+	void OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const;
+	
+	UFUNCTION()
+	void OnRep_ManaMax(const FGameplayAttributeData& OldManaMax) const;
+
+	UFUNCTION()
+	void OnRep_EnergyMax(const FGameplayAttributeData& OldEnergyMax) const;
+
+	UFUNCTION()
+	void OnRep_RageMax(const FGameplayAttributeData& OldRageMax) const;
+
+	/* Vital Attributes*/
+	
+	UFUNCTION()
+	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
+	
+	
+	UFUNCTION()
+	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
+
+	
+	UFUNCTION()
+	void OnRep_Energy(const FGameplayAttributeData& OldEnergy) const;
+
+	UFUNCTION()
+	void OnRep_Rage(const FGameplayAttributeData& OldRage) const;
+	
 	
 };
