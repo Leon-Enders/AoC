@@ -10,10 +10,8 @@
 
 UAoCAttributeSet::UAoCAttributeSet()
 {
-	InitHealth(50.f);
-	InitHealthMax(100.f);
-	InitMana(50.f);
-	InitManaMax(100.f);
+
+	
 }
 
 void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

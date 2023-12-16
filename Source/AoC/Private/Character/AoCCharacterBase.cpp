@@ -33,11 +33,10 @@ UAttributeSet* AAoCCharacterBase::GetAttributeSet() const
 
 
 
-
 void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffect)
 {
 	FGameplayEffectContextHandle EffectContext = GetAbilitySystemComponent()->MakeEffectContext();
-	
+	EffectContext.AddSourceObject(this);
 	
 	const FGameplayEffectSpecHandle EffectSpec = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffect, Level, EffectContext);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*EffectSpec.Data.Get(), GetAbilitySystemComponent());
@@ -49,4 +48,5 @@ void AAoCCharacterBase::InitializeAttributes()
 {
 	ApplyGameplayEffectToSelf(1.f, DefaultPrimaryAttributes);
 	ApplyGameplayEffectToSelf(1.f, DefaultSecondaryAttributes);
+	ApplyGameplayEffectToSelf(1.f, DefaultVitalAttributes);
 }

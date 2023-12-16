@@ -30,6 +30,13 @@ void AAoCChampion::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
+float AAoCChampion::GetPlayerLevel()
+{
+	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
+	check(PS);
+	return PS->GetPlayerLevel();
+}
+
 void AAoCChampion::InitAbilityActorInfo()
 {
 	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();

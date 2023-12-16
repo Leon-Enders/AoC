@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
 class UGameplayEffect;
@@ -13,7 +14,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -23,6 +24,7 @@ public:
 	// Gameplay Ability System
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
+
 	
 protected:
 	
@@ -47,4 +49,5 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+	
 };
