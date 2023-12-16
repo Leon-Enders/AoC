@@ -18,8 +18,9 @@ void AAoCCharacterBase::BeginPlay()
 	
 }
 
-
-
+void AAoCCharacterBase::InitAbilityActorInfo()
+{
+}
 
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
@@ -33,18 +34,23 @@ UAttributeSet* AAoCCharacterBase::GetAttributeSet() const
 
 
 
-void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffect)
+void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const
 {
+	check(IsValid(GetAbilitySystemComponent()));
+	check(GameplayEffectToApply);
+	
 	FGameplayEffectContextHandle EffectContext = GetAbilitySystemComponent()->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
 	
-	const FGameplayEffectSpecHandle EffectSpec = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffect, Level, EffectContext);
+	const FGameplayEffectSpecHandle EffectSpec = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectToApply, Level, EffectContext);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*EffectSpec.Data.Get(), GetAbilitySystemComponent());
+
+	
 }
 
 
 
-void AAoCCharacterBase::InitializeAttributes()
+void AAoCCharacterBase::InitializeAttributes() const
 {
 	ApplyGameplayEffectToSelf(1.f, DefaultPrimaryAttributes);
 	ApplyGameplayEffectToSelf(1.f, DefaultSecondaryAttributes);
