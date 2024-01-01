@@ -164,7 +164,13 @@ public:
 	FGameplayAttributeData Tenacity;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Tenacity);
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_HealthRegeneration", Category="Secondary Attributes")
+	FGameplayAttributeData HealthRegeneration;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, HealthRegeneration);
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_ManaRegeneration", Category="Secondary Attributes")
+	FGameplayAttributeData ManaRegeneration;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, ManaRegeneration);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_HealthMax", Category="Secondary Attributes")
 	FGameplayAttributeData HealthMax;
@@ -282,7 +288,11 @@ public:
 	UFUNCTION()
 	void OnRep_Tenacity(const FGameplayAttributeData& OldTenacity) const;
 
-	
+	UFUNCTION()
+	void OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const;
+
+	UFUNCTION()
+	void OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const;
 	
 	UFUNCTION()
 	void OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const;
@@ -295,6 +305,8 @@ public:
 
 	UFUNCTION()
 	void OnRep_RageMax(const FGameplayAttributeData& OldRageMax) const;
+
+	
 
 	/* Vital Attributes*/
 	

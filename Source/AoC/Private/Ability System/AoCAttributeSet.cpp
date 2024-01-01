@@ -30,8 +30,6 @@ void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 	// Secondary Attributes
 	
-	
-	
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, PhysicalCritChance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MagicCritChance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, CritDamage, COND_None, REPNOTIFY_Always);
@@ -47,14 +45,16 @@ void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, KnockbackPenetration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, KnockbackResistance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Tenacity, COND_None, REPNOTIFY_Always);
-	
-	
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealthMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaMax, COND_None, REPNOTIFY_Always);
 
 	// Vital Attributes
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Health, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealthMax, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Mana, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Energy, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Rage, COND_None, REPNOTIFY_Always);
 }
 
 void UAoCAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -247,6 +247,16 @@ void UAoCAttributeSet::OnRep_KnockbackResistance(const FGameplayAttributeData& O
 void UAoCAttributeSet::OnRep_Tenacity(const FGameplayAttributeData& OldTenacity) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Tenacity, OldTenacity);
+}
+
+void UAoCAttributeSet::OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, HealthRegeneration, OldHealthRegeneration);
+}
+
+void UAoCAttributeSet::OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, ManaRegeneration, OldManaRegeneration);
 }
 
 void UAoCAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
