@@ -91,11 +91,11 @@ public:
 	FGameplayAttributeData Dexterity;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Dexterity);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Armor", Category="Secondary Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Armor", Category="Primary Attributes")
 	FGameplayAttributeData Armor;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Armor);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicResistance", Category="Secondary Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MagicResistance", Category="Primary Attributes")
 	FGameplayAttributeData MagicResistance;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MagicResistance);
 	
