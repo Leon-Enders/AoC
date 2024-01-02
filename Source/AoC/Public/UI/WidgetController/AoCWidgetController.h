@@ -44,7 +44,11 @@ class AOC_API UAoCWidgetController : public UObject
 
 public:
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
+
+
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadCastInitialValue();
+	
 	virtual void BindCallbacksToDependencies();
 
 	

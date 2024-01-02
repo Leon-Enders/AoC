@@ -4,13 +4,50 @@
 #include "Ability System/AoCAttributeSet.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AoCGameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "Net/UnrealNetwork.h"
 
 UAoCAttributeSet::UAoCAttributeSet()
 {
+	const FAoCGameplayTags& GameplayTags = FAoCGameplayTags::Get();
 
+	// Primary Attributes
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Agility, GetAgilityAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Vitality, GetVitalityAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Willpower, GetWillpowerAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Dexterity, GetDexterityAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Armor, GetArmorAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_MagicResistance, GetMagicResistanceAttribute);
+
+
+	// Secondary Attributes
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_PhysicalCritChance, GetPhysicalCritChanceAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MagicCritChance, GetMagicCritChanceAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CritDamage, GetCritDamageAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_AttackSpeed, GetAttackSpeedAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CastSpeed, GetCastSpeedAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ArmorPenetration, GetArmorPenetrationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MagicPenetration, GetMagicPenetrationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_PhysicalDamageReduction, GetPhysicalDamageReductionAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MagicDamageReduction, GetMagicDamageReductionAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CooldownReduction, GetCooldownReductionAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MovementSpeed, GetMovementSpeedAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_AirControl, GetAirControlAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_KnockbackResistance, GetKnockbackResistanceAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_KnockbackPenetration, GetKnockbackPenetrationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Tenacity, GetTenacityAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_HealthRegeneration, GetHealthRegenerationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ManaRegeneration, GetManaRegenerationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_HealthMax, GetHealthMaxAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ManaMax, GetManaMaxAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_EnergyMax, GetEnergyMaxAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_RageMax, GetRageMaxAttribute);
+
+	
 	
 }
 

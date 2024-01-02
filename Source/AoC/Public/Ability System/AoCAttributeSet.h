@@ -10,11 +10,20 @@
 /**
  * 
  */
+
+
+
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+
+
+template<class T>
+using TFuncPtr = typename  TBaseStaticDelegateInstance< T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
+
 
 USTRUCT()
 struct FEffectProperties
@@ -63,8 +72,11 @@ public:
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
 	void SetupEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
-	
 
+	//Map GameplayTag to Attribute
+	TMap<FGameplayTag, TFuncPtr<FGameplayAttribute()>> TagsToAttribute;
+	
+	
 	/* Primary Attributes*/ 
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Strength", Category="Primary Attributes")
