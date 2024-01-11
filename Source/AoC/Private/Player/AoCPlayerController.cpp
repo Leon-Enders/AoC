@@ -5,8 +5,10 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Ability System/AoCAbilitySystemComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
+#include "Player/AoCPlayerState.h"
 
 
 AAoCPlayerController::AAoCPlayerController()
@@ -90,15 +92,45 @@ void AAoCPlayerController::OnJump(const FInputActionValue& InputActionValue)
 
 void AAoCPlayerController::ActivateInputPressed(FGameplayTag GameplayTag)
 {
-	GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Green, GameplayTag.ToString());
+	
 }
 
 void AAoCPlayerController::ActivateInputReleased(FGameplayTag GameplayTag)
 {
-	GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, GameplayTag.ToString());
+	if(!GetASC())
+	{
+		return;
+	}
+
+	GetASC()->ActivateInputReleased(GameplayTag);
 }
 
 void AAoCPlayerController::ActivateInputHeld(FGameplayTag GameplayTag)
 {
-	GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, GameplayTag.ToString());
+	if(!GetASC())
+	{
+		return;
+	}
+
+	GetASC()->ActivateInputHeld(GameplayTag);
+}
+
+UAoCAbilitySystemComponent* AAoCPlayerController::GetASC()
+{
+
+	if(ASC == nullptr)
+	{
+		if(AAoCPlayerState* AoCPlayerState = GetPlayerState<AAoCPlayerState>())
+		{
+			if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AoCPlayerState->GetAbilitySystemComponent()))
+			{
+				ASC = AoCAbilitySystemComponent;
+			}
+		}
+	}
+	return ASC;
+	
+	
+
+	
 }

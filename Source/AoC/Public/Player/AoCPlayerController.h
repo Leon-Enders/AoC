@@ -8,6 +8,7 @@
 #include "GameFramework/PlayerController.h"
 #include "AoCPlayerController.generated.h"
 
+class UAoCAbilitySystemComponent;
 class UAoCInputConfig;
 /**
  * 
@@ -53,4 +54,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	TObjectPtr<UAoCInputConfig> AoCInputConfig;
+
+
+	UAoCAbilitySystemComponent* GetASC();
+
+	UPROPERTY()
+	UAoCAbilitySystemComponent* ASC;
 };
