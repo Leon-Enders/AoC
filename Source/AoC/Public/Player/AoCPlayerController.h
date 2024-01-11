@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "InputActionValue.h"
 #include "GameFramework/PlayerController.h"
 #include "AoCPlayerController.generated.h"
 
+class UAoCInputConfig;
 /**
  * 
  */
@@ -43,4 +45,12 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputMappingContext> IMC_Move;
+
+
+	void ActivateInputPressed(FGameplayTag GameplayTag);
+	void ActivateInputReleased(FGameplayTag GameplayTag);
+	void ActivateInputHeld(FGameplayTag GameplayTag);
+
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	TObjectPtr<UAoCInputConfig> AoCInputConfig;
 };

@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/Character.h"
+#include "Input/AoCInputComponent.h"
 
 
 AAoCPlayerController::AAoCPlayerController()
@@ -33,10 +34,18 @@ void AAoCPlayerController::SetupInputComponent()
 
 	check(IA_Move);
 	check(IA_CamRot);
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-	EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
-	EnhancedInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
-	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
+	check(AoCInputConfig);
+	if(UAoCInputComponent* AoCInputComponent = CastChecked<UAoCInputComponent>(InputComponent))
+	{
+		AoCInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
+		AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
+		AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
+
+		AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::ActivateInputPressed, &ThisClass::ActivateInputReleased, &ThisClass::ActivateInputHeld);
+		
+	}
+	
+	
 	
 }
 
@@ -77,4 +86,19 @@ void AAoCPlayerController::OnJump(const FInputActionValue& InputActionValue)
 	{
 		ControlledPawn->Jump();
 	}
+}
+
+void AAoCPlayerController::ActivateInputPressed(FGameplayTag GameplayTag)
+{
+	GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Green, GameplayTag.ToString());
+}
+
+void AAoCPlayerController::ActivateInputReleased(FGameplayTag GameplayTag)
+{
+	GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, GameplayTag.ToString());
+}
+
+void AAoCPlayerController::ActivateInputHeld(FGameplayTag GameplayTag)
+{
+	GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, GameplayTag.ToString());
 }

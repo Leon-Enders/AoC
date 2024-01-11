@@ -8,7 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
-class UAoCInputConfig;
+
 class UGameplayAbility;
 class UGameplayEffect;
 // Gameplay Ability System
@@ -61,9 +61,6 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
-
-	UPROPERTY(EditDefaultsOnly, Category="Input")
-	TObjectPtr<UAoCInputConfig> AoCInputConfig;
 	
 	
 };
