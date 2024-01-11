@@ -11,7 +11,6 @@
 
 class UGameplayAbility;
 class UGameplayEffect;
-// Gameplay Ability System
 class UAbilitySystemComponent;
 class UAttributeSet;
 
@@ -25,8 +24,8 @@ public:
 
 	// Gameplay Ability System
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const;
-
+	UAttributeSet* GetAttributeSet() const{return AttributeSet;}
+	
 	
 protected:
 	
@@ -44,10 +43,10 @@ protected:
 	virtual FVector GetCombatSocketLocation() override;
 	
 	// Gameplay Ability System
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 
@@ -71,6 +70,8 @@ protected:
 	// Gameplay Abilities
 	
 	void AddCharacterAbilities();
+
+private:
 	
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;

@@ -9,8 +9,7 @@
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
-
+	PrimaryActorTick.bCanEverTick = false;
 	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
 	AttackComponent->SetupAttachment(GetMesh(),"Hand_Right_Socket");
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -30,21 +29,15 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 
 FVector AAoCCharacterBase::GetCombatSocketLocation()
 {
-
-	const FVector SocketLocation = AttackComponent->GetSocketLocation(AttackSocketName);
-	return SocketLocation;
+	check(AttackComponent);
+	return AttackComponent->GetSocketLocation(AttackSocketName);
+	
 }
 
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
 }
-
-UAttributeSet* AAoCCharacterBase::GetAttributeSet() const
-{
-	return AttributeSet;
-}
-
 
 
 void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const
@@ -63,10 +56,14 @@ void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGame
 
 void AAoCCharacterBase::AddCharacterAbilities() 
 {
-	if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent))
+	if(!HasAuthority())
 	{
-		AoCAbilitySystemComponent->AddCharacterAbilities(StartUpAbilities);
+		return;
 	}
+	
+	UAoCAbilitySystemComponent* AoCAbilitySystemComponent = CastChecked<UAoCAbilitySystemComponent>(AbilitySystemComponent);
+	AoCAbilitySystemComponent->AddCharacterAbilities(StartUpAbilities);
+	
 }
 
 

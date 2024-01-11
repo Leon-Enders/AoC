@@ -25,10 +25,6 @@ UAbilitySystemComponent* AAoCPlayerState::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-UAttributeSet* AAoCPlayerState::GetAttributeSet() const
-{
-	return AttributeSet;
-}
 
 void AAoCPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {

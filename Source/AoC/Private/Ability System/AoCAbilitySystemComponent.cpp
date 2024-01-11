@@ -5,12 +5,12 @@
 
 #include "Ability System/Abilities/AoCGameplayAbility.h"
 
-void UAoCAbilitySystemComponent::InitAoCASC()
+void UAoCAbilitySystemComponent::InitAoCAbilityComponent()
 {
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAoCAbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAoCAbilitySystemComponent::ClientEffectApplied);
 }
 
-void UAoCAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
+void UAoCAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent,
 	const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
 {
 
@@ -27,42 +27,49 @@ void UAoCAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<
 	for(const auto& Ability : StartUpAbilities)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Ability);
-		const UAoCGameplayAbility* AoCGameplayAbility = Cast<UAoCGameplayAbility>(AbilitySpec.Ability);
-		AbilitySpec.DynamicAbilityTags.AddTag(AoCGameplayAbility->InputTag);
-		GiveAbility(AbilitySpec);
+		if(const UAoCGameplayAbility* AoCGameplayAbility = Cast<UAoCGameplayAbility>(AbilitySpec.Ability))
+		{
+			AbilitySpec.DynamicAbilityTags.AddTag(AoCGameplayAbility->InputTag);
+			GiveAbility(AbilitySpec);
+		}
+		
 	}
 }
 
-void UAoCAbilitySystemComponent::ActivateInputPressed(const FGameplayTag& InputTag)
-{
-	
-	
-}
+
 
 void UAoCAbilitySystemComponent::ActivateInputReleased(const FGameplayTag& InputTag)
 {
-	for(auto& GameplayAbilitySpec:GetActivatableAbilities())
+	if(!InputTag.IsValid())
 	{
-		if(GameplayAbilitySpec.IsActive())
+		return;
+	}
+	
+	for(auto& ActivatableAbility : GetActivatableAbilities())
+	{
+		if(ActivatableAbility.DynamicAbilityTags.HasTagExact(InputTag))
 		{
-			if(GameplayAbilitySpec.DynamicAbilityTags.HasTag(InputTag))
-			{
-				GameplayAbilitySpec.InputPressed = false;
-			}
+			ActivatableAbility.InputPressed = false;
 		}
 	}
 }
 
 void UAoCAbilitySystemComponent::ActivateInputHeld(const FGameplayTag& InputTag)
 {
-	for(auto& GameplayAbilitySpec:GetActivatableAbilities())
+	if(!InputTag.IsValid())
 	{
-		if(!GameplayAbilitySpec.IsActive())
+		return;
+	}
+	
+	for(auto& ActivatableAbility : GetActivatableAbilities())
+	{
+		if(ActivatableAbility.DynamicAbilityTags.HasTagExact(InputTag))
 		{
-			if(GameplayAbilitySpec.DynamicAbilityTags.HasTag(InputTag))
+			if(!ActivatableAbility.IsActive())
 			{
-				GameplayAbilitySpec.InputPressed = true;
-				TryActivateAbility(GameplayAbilitySpec.Handle);
+			
+				ActivatableAbility.InputPressed = true;
+				TryActivateAbility(ActivatableAbility.Handle);
 			}
 		}
 	}

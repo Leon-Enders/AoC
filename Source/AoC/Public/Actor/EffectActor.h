@@ -52,20 +52,20 @@ protected:
 	bool bDestroyOnEffectRemoval = false;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
-	TSubclassOf<UGameplayEffect> InstantGameplayEffect;
+	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
 	EEffectApplicationPolicy InstantEffectApplyPolicy = EEffectApplicationPolicy::DoNotApply;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
-	TSubclassOf<UGameplayEffect> DurationGameplayEffect;
+	TSubclassOf<UGameplayEffect> DurationGameplayEffectClass;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
 	EEffectApplicationPolicy DurationEffectApplyPolicy = EEffectApplicationPolicy::DoNotApply;
 
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
-	TSubclassOf<UGameplayEffect> InfiniteGameplayEffect;
+	TSubclassOf<UGameplayEffect> InfiniteGameplayEffectClass;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
 	EEffectApplicationPolicy InfiniteEffectApplyPolicy = EEffectApplicationPolicy::DoNotApply;
@@ -73,9 +73,10 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
 
+	
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveHandles;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Applied Effects")
 	float EffectLevel = 1.f;
 	
-	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveHandles;
 };

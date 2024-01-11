@@ -3,6 +3,7 @@
 
 #include "Player/AoCPlayerController.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
@@ -37,15 +38,14 @@ void AAoCPlayerController::SetupInputComponent()
 	check(IA_Move);
 	check(IA_CamRot);
 	check(AoCInputConfig);
-	if(UAoCInputComponent* AoCInputComponent = CastChecked<UAoCInputComponent>(InputComponent))
-	{
-		AoCInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
-		AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
-		AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
-
-		AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::ActivateInputPressed, &ThisClass::ActivateInputReleased, &ThisClass::ActivateInputHeld);
+	UAoCInputComponent* AoCInputComponent = CastChecked<UAoCInputComponent>(InputComponent);
+	
+	AoCInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
+	AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
+	AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
+	AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 		
-	}
+	
 	
 	
 	
@@ -90,29 +90,28 @@ void AAoCPlayerController::OnJump(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AAoCPlayerController::ActivateInputPressed(FGameplayTag GameplayTag)
+void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {
 	
 }
 
-void AAoCPlayerController::ActivateInputReleased(FGameplayTag GameplayTag)
+void AAoCPlayerController::AbilityInputTagReleased(FGameplayTag GameplayTag)
 {
-	if(!GetASC())
+	if(GetASC())
 	{
-		return;
+		GetASC()->ActivateInputReleased(GameplayTag);
 	}
 
-	GetASC()->ActivateInputReleased(GameplayTag);
+	
 }
 
-void AAoCPlayerController::ActivateInputHeld(FGameplayTag GameplayTag)
+void AAoCPlayerController::AbilityInputTagHeld(FGameplayTag GameplayTag)
 {
-	if(!GetASC())
+	if(GetASC())
 	{
-		return;
+		GetASC()->ActivateInputHeld(GameplayTag);
 	}
-
-	GetASC()->ActivateInputHeld(GameplayTag);
+	
 }
 
 UAoCAbilitySystemComponent* AAoCPlayerController::GetASC()
@@ -120,17 +119,8 @@ UAoCAbilitySystemComponent* AAoCPlayerController::GetASC()
 
 	if(ASC == nullptr)
 	{
-		if(AAoCPlayerState* AoCPlayerState = GetPlayerState<AAoCPlayerState>())
-		{
-			if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AoCPlayerState->GetAbilitySystemComponent()))
-			{
-				ASC = AoCAbilitySystemComponent;
-			}
-		}
+		ASC = Cast<UAoCAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
 	}
 	return ASC;
-	
-	
 
-	
 }

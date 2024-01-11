@@ -19,7 +19,8 @@ void AAoCChampion::PossessedBy(AController* NewController)
 
 	// Init ability actor info for the Server
 	InitAbilityActorInfo();
-	
+
+	AddCharacterAbilities();
 }
 
 void AAoCChampion::OnRep_PlayerState()
@@ -46,7 +47,7 @@ void AAoCChampion::InitAbilityActorInfo()
 	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	if(AoCASC)
 	{
-		AoCASC->InitAoCASC();
+		AoCASC->InitAoCAbilityComponent();
 	}
 	AbilitySystemComponent = PS->GetAbilitySystemComponent();
 	AttributeSet = PS->GetAttributeSet();
@@ -63,6 +64,5 @@ void AAoCChampion::InitAbilityActorInfo()
 
 	// Initializes Attributes for this character with GameplayEffects
 	InitializeAttributes();
-	AddCharacterAbilities();
 }
 

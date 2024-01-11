@@ -19,15 +19,16 @@ class AOC_API UAoCAbilitySystemComponent : public UAbilitySystemComponent
 
 public:
 	
-	void InitAoCASC();
+	void InitAoCAbilityComponent();
 
 	FEffectDelegate EffectDelegate;
-	
-	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
+
+	UFUNCTION(Client, Reliable)
+	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
 
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartUpAbilities);
 
-	void ActivateInputPressed(const FGameplayTag& InputTag);
+	
 	void ActivateInputReleased(const FGameplayTag& InputTag);
 	void ActivateInputHeld(const FGameplayTag& InputTag);
 	

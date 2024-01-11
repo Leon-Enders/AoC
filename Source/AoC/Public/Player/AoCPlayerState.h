@@ -26,17 +26,17 @@ public:
 
 	// Gameplay Ability System
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const;
+	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	FORCEINLINE int32 GetPlayerLevel()const{return PlayerLevel;}
 	
 protected:
 
 	// Gameplay Ability System
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 private:

@@ -57,15 +57,15 @@ void AEffectActor::OnOverlap(AActor* TargetActor)
 
 	if(InstantEffectApplyPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyGameplayEffect(InstantGameplayEffect, TargetActor);
+		ApplyGameplayEffect(InstantGameplayEffectClass, TargetActor);
 	}
 	if(DurationEffectApplyPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyGameplayEffect(DurationGameplayEffect, TargetActor);
+		ApplyGameplayEffect(DurationGameplayEffectClass, TargetActor);
 	}
 	if(InfiniteEffectApplyPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyGameplayEffect(InfiniteGameplayEffect, TargetActor);
+		ApplyGameplayEffect(InfiniteGameplayEffectClass, TargetActor);
 	}
 }
 
@@ -74,15 +74,15 @@ void AEffectActor::EndOverlap(AActor* TargetActor)
 
 	if(InstantEffectApplyPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyGameplayEffect(InstantGameplayEffect, TargetActor);
+		ApplyGameplayEffect(InstantGameplayEffectClass, TargetActor);
 	}
 	if(DurationEffectApplyPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyGameplayEffect(DurationGameplayEffect, TargetActor);
+		ApplyGameplayEffect(DurationGameplayEffectClass, TargetActor);
 	}
 	if(InfiniteEffectApplyPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyGameplayEffect(InfiniteGameplayEffect, TargetActor);
+		ApplyGameplayEffect(InfiniteGameplayEffectClass, TargetActor);
 	}
 
 	
