@@ -8,6 +8,8 @@
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
+class UAoCInputConfig;
+class UGameplayAbility;
 class UGameplayEffect;
 // Gameplay Ability System
 class UAbilitySystemComponent;
@@ -53,5 +55,15 @@ protected:
 	void InitializeAttributes() const;
 
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
+
+
+	void AddCharacterAbilities();
+	
+	UPROPERTY(EditDefaultsOnly, Category="Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	TObjectPtr<UAoCInputConfig> AoCInputConfig;
+	
 	
 };

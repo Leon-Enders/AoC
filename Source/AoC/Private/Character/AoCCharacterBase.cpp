@@ -4,6 +4,7 @@
 #include "Character/AoCCharacterBase.h"
 
 #include "AbilitySystemComponent.h"
+#include "Ability System/AoCAbilitySystemComponent.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -48,6 +49,13 @@ void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGame
 	
 }
 
+void AAoCCharacterBase::AddCharacterAbilities() 
+{
+	if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		AoCAbilitySystemComponent->AddCharacterAbilities(StartUpAbilities);
+	}
+}
 
 
 void AAoCCharacterBase::InitializeAttributes() const

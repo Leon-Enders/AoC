@@ -20,4 +20,13 @@ void UAoCAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilityS
 
 }
 
+void UAoCAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartUpAbilities)
+{
+	for(const auto& Ability : StartUpAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Ability);
+		GiveAbilityAndActivateOnce(AbilitySpec);
+	}
+}
+
 
