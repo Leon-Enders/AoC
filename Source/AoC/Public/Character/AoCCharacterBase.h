@@ -33,6 +33,16 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	
+	//	Combat
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<USkeletalMeshComponent> AttackComponent;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	FName AttackSocketName;
+
+	virtual FVector GetCombatSocketLocation() override;
+	
 	// Gameplay Ability System
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
@@ -57,6 +67,9 @@ protected:
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
 
 
+
+	// Gameplay Abilities
+	
 	void AddCharacterAbilities();
 	
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")
