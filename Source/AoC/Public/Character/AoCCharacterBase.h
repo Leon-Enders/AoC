@@ -33,7 +33,9 @@ protected:
 	virtual void InitAbilityActorInfo();
 	
 	//	Combat
-
+	UPROPERTY(EditAnywhere, Category="Combat")
+	bool bHasWeapon = false;
+	
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> AttackComponent;
 

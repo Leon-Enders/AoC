@@ -11,7 +11,7 @@ AAoCCharacterBase::AAoCCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
-	AttackComponent->SetupAttachment(GetMesh(),"Hand_Right_Socket");
+	AttackComponent->SetupAttachment(GetMesh(),"Weapon_RSocket");
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
 	
@@ -30,6 +30,10 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 FVector AAoCCharacterBase::GetCombatSocketLocation()
 {
 	check(AttackComponent);
+	if(!bHasWeapon)
+	{
+		return AttackComponent->GetComponentLocation();
+	}
 	return AttackComponent->GetSocketLocation(AttackSocketName);
 	
 }
