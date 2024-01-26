@@ -37,6 +37,7 @@ struct FGameplayTagUIRow : public FTableRowBase
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, Value);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWidgetMessageSignature, FGameplayTagUIRow, GameplayTagUIRow);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeMenuOpenSignature, bool, bOpened);
 
 
 
@@ -52,6 +53,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FWidgetMessageSignature WidgetMessageDelegate;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FAttributeMenuOpenSignature AttributeOpenDelegate;
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnHealthChanged;

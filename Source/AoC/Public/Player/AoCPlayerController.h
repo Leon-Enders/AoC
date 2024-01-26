@@ -32,25 +32,35 @@ protected:
 	
 private:
 
-	
+
+	// Input Actions
 	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_CamRot;
 	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_Move;
-
-
+	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_Jump;
+	
+	UPROPERTY(EditAnywhere, Category="Input");
+	TObjectPtr<UInputAction> IA_OpenMenu;
+
+
+	// InputMappingContext
 
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputMappingContext> IMC_Move;
+
+
+	
 
 	//Input Callbacks
 	void Move(const FInputActionValue& InputActionValue);
 	void CamRot(const FInputActionValue& InputActionValue);
 	void OnJump(const FInputActionValue& InputActionValue);
+	void OnOpenMenu(const FInputActionValue& InputActionValue);
 	
 	//GAS-Inputs
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
@@ -64,4 +74,10 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UAoCAbilitySystemComponent> ASC;
+
+
+
+	//Attribute Menu
+
+	bool bShowMouse = false;
 };

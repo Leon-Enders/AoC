@@ -7,8 +7,10 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
 
 AAoCPlayerController::AAoCPlayerController()
@@ -38,10 +40,16 @@ void AAoCPlayerController::SetupInputComponent()
 	check(IA_CamRot);
 	check(AoCInputConfig);
 	UAoCInputComponent* AoCInputComponent = CastChecked<UAoCInputComponent>(InputComponent);
+
 	
+	//Inputs
 	AoCInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered,this, &AAoCPlayerController::Move);
 	AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
 	AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
+	AoCInputComponent->BindAction(IA_OpenMenu, ETriggerEvent::Completed, this, &AAoCPlayerController::OnOpenMenu);
+
+
+	// GAS - Inputs
 	AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 		
 	
@@ -86,6 +94,33 @@ void AAoCPlayerController::OnJump(const FInputActionValue& InputActionValue)
 	if(ACharacter* ControlledPawn = GetPawn<ACharacter>())
 	{
 		ControlledPawn->Jump();
+	}
+}
+
+void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
+{
+
+	const UOverlayWidgetController* OverlayWidgetController = UAoCAbilitySystemLibrary::GetOverlayWidgetController(this);
+	
+	if(!bShowMouse)
+	{
+		bShowMouse=true;
+		SetInputMode(FInputModeGameAndUI());
+		SetShowMouseCursor(true);
+		if(OverlayWidgetController)
+		{
+			OverlayWidgetController->AttributeOpenDelegate.Broadcast(true);
+		}
+	}
+	else
+	{
+		bShowMouse=false;
+		SetShowMouseCursor(false);
+		SetInputMode(FInputModeGameOnly());
+		if(OverlayWidgetController)
+		{
+			OverlayWidgetController->AttributeOpenDelegate.Broadcast(false);
+		}
 	}
 }
 
