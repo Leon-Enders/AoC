@@ -116,9 +116,14 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 {
 	Super::PostGameplayEffectExecute(Data);
 
+	FEffectProperties Props;
+	SetupEffectProperties(Data, Props);
+	
 	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
+		
+		UE_LOG(LogTemp,Warning,TEXT("Health Changed on: %s, health: %f"), *Props.TargetCharacter->GetName(), GetHealth());
 	}
 
 	if(Data.EvaluatedData.Attribute == GetManaAttribute())
@@ -126,8 +131,7 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
 	}
 	
-	FEffectProperties Props;
-	SetupEffectProperties(Data, Props);
+	
 }
 
 void UAoCAttributeSet::SetupEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props)
