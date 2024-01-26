@@ -5,6 +5,8 @@
 
 #include "AbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
+#include "AoC/AoC.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -13,6 +15,11 @@ AAoCCharacterBase::AAoCCharacterBase()
 	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
 	AttackComponent->SetupAttachment(GetMesh(),"Weapon_RSocket");
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetCapsuleComponent()->SetGenerateOverlapEvents(true);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 	
 	
 }
