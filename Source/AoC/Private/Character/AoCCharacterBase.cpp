@@ -17,9 +17,12 @@ AAoCCharacterBase::AAoCCharacterBase()
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	//We have to Overlap Capsule for now since its a modular character
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(true);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
-	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
+	//no need to overlap with mesh yet
+	//GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 	
 	
 }
