@@ -6,6 +6,7 @@
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 #include "AoCCharacterBase.generated.h"
 
 
@@ -13,6 +14,7 @@ class UGameplayAbility;
 class UGameplayEffect;
 class UAbilitySystemComponent;
 class UAttributeSet;
+class UWidgetComponent;
 
 UCLASS()
 class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -32,7 +34,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	
-	//	Combat
+	/*Combat Start*/
 	UPROPERTY(EditAnywhere, Category="Combat")
 	bool bHasWeapon = false;
 	
@@ -43,6 +45,9 @@ protected:
 	FName AttackSocketName;
 
 	virtual FVector GetCombatSocketLocation() override;
+
+	/*Combat End*/
+
 	
 	// Gameplay Ability System
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
@@ -50,7 +55,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
-
+	
 
 	
 	// Attribute Setters
@@ -63,12 +68,26 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
+	
+	/*Floating Health Bar Start*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBarWidget;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FOnAttributeChangedSignature OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FOnAttributeChangedSignature OnMaxHealthChanged;
+
+	void InitializeHealthBar();
+
+	/*Floating Health Bar End*/
 	void InitializeAttributes() const;
 
+	
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
 
-
-
+	
 	// Gameplay Abilities
 	
 	void AddCharacterAbilities();
@@ -77,6 +96,8 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
+
+
 	
 	
 };

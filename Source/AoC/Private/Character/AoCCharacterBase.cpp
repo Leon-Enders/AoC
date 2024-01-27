@@ -5,8 +5,11 @@
 
 #include "AbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAttributeSet.h"
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
+#include "UI/UserWidget/AoCUserWidget.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -23,13 +26,20 @@ AAoCCharacterBase::AAoCCharacterBase()
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//no need to overlap with mesh yet
 	//GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
-	
+
+	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>("HealthBarWidget");
+	HealthBarWidget->SetupAttachment(RootComponent);
 	
 }
 
 void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(IsLocallyControlled())
+	{
+		HealthBarWidget->bHiddenInGame = true;
+	}
 	
 }
 
@@ -86,4 +96,37 @@ void AAoCCharacterBase::InitializeAttributes() const
 	ApplyGameplayEffectToSelf(1.f, DefaultPrimaryAttributes);
 	ApplyGameplayEffectToSelf(1.f, DefaultSecondaryAttributes);
 	ApplyGameplayEffectToSelf(1.f, DefaultVitalAttributes);
+}
+
+void AAoCCharacterBase::InitializeHealthBar()
+{
+	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
+
+	if(UAoCUserWidget* AoCHealthBar = Cast<UAoCUserWidget>(HealthBarWidget->GetWidget()))
+	{
+		AoCHealthBar->SetWidgetController(this);
+	}
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+	AoCAs->GetHealthAttribute()).AddLambda(
+	[this](const FOnAttributeChangeData& Data)
+	{
+		OnHealthChanged.Broadcast(Data.NewValue);
+	}
+	);
+	
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+	AoCAs->GetHealthMaxAttribute()).AddLambda(
+	[this](const FOnAttributeChangeData& Data)
+	{
+		OnMaxHealthChanged.Broadcast(Data.NewValue);
+	}
+	);
+	
+	OnHealthChanged.Broadcast(AoCAs->GetHealth());
+	OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
+
+	
+
+
 }
