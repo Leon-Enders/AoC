@@ -36,7 +36,7 @@ void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if(IsLocallyControlled())
+	if(IsPlayerControlled())
 	{
 		HealthBarWidget->bHiddenInGame = true;
 	}
