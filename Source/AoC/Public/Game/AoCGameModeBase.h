@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "AoCGameModeBase.generated.h"
 
+class UCharacterClassInfo;
 /**
  * 
  */
@@ -14,4 +15,8 @@ class AOC_API AAoCGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+
+	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
+	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "Ability System/Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
@@ -59,14 +60,8 @@ protected:
 
 	
 	// Attribute Setters
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
-	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
-	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Attributes")
-	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
+	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
 
 	
 	/*Floating Health Bar Start*/
@@ -82,7 +77,9 @@ protected:
 	void InitializeHealthBar();
 
 	/*Floating Health Bar End*/
-	void InitializeAttributes() const;
+
+	//Initialize Attributes in child because of different level location
+	virtual void InitializeAttributes();
 
 	
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;

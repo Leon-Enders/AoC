@@ -5,6 +5,7 @@
 
 
 #include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 
@@ -36,6 +37,12 @@ int32 AAoCChampion::GetPlayerLevel()
 	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
 	check(PS);
 	return PS->GetPlayerLevel();
+}
+
+void AAoCChampion::InitializeAttributes()
+{
+	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
+
 }
 
 void AAoCChampion::InitAbilityActorInfo()

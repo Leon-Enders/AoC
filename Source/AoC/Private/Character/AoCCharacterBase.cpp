@@ -5,6 +5,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
@@ -91,11 +92,9 @@ void AAoCCharacterBase::AddCharacterAbilities()
 }
 
 
-void AAoCCharacterBase::InitializeAttributes() const
+void AAoCCharacterBase::InitializeAttributes()
 {
-	ApplyGameplayEffectToSelf(1.f, DefaultPrimaryAttributes);
-	ApplyGameplayEffectToSelf(1.f, DefaultSecondaryAttributes);
-	ApplyGameplayEffectToSelf(1.f, DefaultVitalAttributes);
+	
 }
 
 void AAoCCharacterBase::InitializeHealthBar()
