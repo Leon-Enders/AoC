@@ -16,6 +16,7 @@ class UGameplayEffect;
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UWidgetComponent;
+struct FOnAttributeChangeData;
 
 UCLASS()
 class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -65,8 +66,8 @@ protected:
 
 	
 	/*Floating Health Bar Start*/
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<UWidgetComponent> HealthBarWidget;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBar;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnHealthChanged;
@@ -88,6 +89,13 @@ protected:
 	// Gameplay Abilities
 	
 	void AddCharacterAbilities();
+
+
+	
+	void OnHealthChangedCallback(const FOnAttributeChangeData& Data) const;
+
+	
+	void OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data) const;
 
 private:
 	

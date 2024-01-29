@@ -5,7 +5,6 @@
 
 #include "AbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
-#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
@@ -28,19 +27,14 @@ AAoCCharacterBase::AAoCCharacterBase()
 	//no need to overlap with mesh yet
 	//GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 
-	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>("HealthBarWidget");
-	HealthBarWidget->SetupAttachment(RootComponent);
 	
+	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
+	HealthBar->SetupAttachment(GetRootComponent());
 }
 
 void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if(IsPlayerControlled())
-	{
-		HealthBarWidget->bHiddenInGame = true;
-	}
 	
 }
 
@@ -91,6 +85,22 @@ void AAoCCharacterBase::AddCharacterAbilities()
 	
 }
 
+void AAoCCharacterBase::OnHealthChangedCallback(const FOnAttributeChangeData& Data) const
+{
+	
+		OnHealthChanged.Broadcast(Data.NewValue);
+	
+	
+}
+
+void AAoCCharacterBase::OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data) const
+{
+	
+		OnMaxHealthChanged.Broadcast(Data.NewValue);
+	
+	
+}
+
 
 void AAoCCharacterBase::InitializeAttributes()
 {
@@ -101,26 +111,18 @@ void AAoCCharacterBase::InitializeHealthBar()
 {
 	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
 
-	if(UAoCUserWidget* AoCHealthBar = Cast<UAoCUserWidget>(HealthBarWidget->GetWidget()))
+	HealthBar->InitWidget();
+	if(UAoCUserWidget* AoCHealthBar = Cast<UAoCUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
 		AoCHealthBar->SetWidgetController(this);
 	}
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetHealthAttribute()).AddLambda(
-	[this](const FOnAttributeChangeData& Data)
-	{
-		OnHealthChanged.Broadcast(Data.NewValue);
-	}
-	);
+	AoCAs->GetHealthAttribute()).AddUObject(this, &AAoCCharacterBase::OnHealthChangedCallback);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetHealthMaxAttribute()).AddLambda(
-	[this](const FOnAttributeChangeData& Data)
-	{
-		OnMaxHealthChanged.Broadcast(Data.NewValue);
-	}
-	);
+	AoCAs->GetHealthMaxAttribute()).AddUObject(this, &AAoCCharacterBase::OnMaxHealthChangedCallback);
+	
 	
 	OnHealthChanged.Broadcast(AoCAs->GetHealth());
 	OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());

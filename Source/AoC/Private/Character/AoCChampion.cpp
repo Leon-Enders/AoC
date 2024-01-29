@@ -13,6 +13,8 @@ AAoCChampion::AAoCChampion()
 {
 }
 
+
+
 void AAoCChampion::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -20,7 +22,8 @@ void AAoCChampion::PossessedBy(AController* NewController)
 
 	// Init ability actor info for the Server
 	InitAbilityActorInfo();
-
+	InitializeAttributes();
+	InitializeHealthBar();
 	AddCharacterAbilities();
 }
 
@@ -30,6 +33,7 @@ void AAoCChampion::OnRep_PlayerState()
 
 	// Init ability actor info for the Client
 	InitAbilityActorInfo();
+	InitializeHealthBar();
 }
 
 int32 AAoCChampion::GetPlayerLevel()
@@ -69,8 +73,6 @@ void AAoCChampion::InitAbilityActorInfo()
 		
 	}
 
-	// Initializes Attributes for this character with GameplayEffects
-	InitializeAttributes();
-	InitializeHealthBar();	
+	
 }
 
