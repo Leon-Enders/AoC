@@ -123,7 +123,6 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
 		
-		UE_LOG(LogTemp,Warning,TEXT("Health Changed on: %s, health: %f"), *Props.TargetCharacter->GetName(), GetHealth());
 	}
 
 	if(Data.EvaluatedData.Attribute == GetManaAttribute())

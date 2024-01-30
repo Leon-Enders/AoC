@@ -74,9 +74,9 @@ protected:
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnMaxHealthChanged;
-
+	
 	void InitializeHealthBar();
-
+	
 	/*Floating Health Bar End*/
 
 	//Initialize Attributes in child because of different level location
@@ -92,10 +92,10 @@ protected:
 
 
 	
-	void OnHealthChangedCallback(const FOnAttributeChangeData& Data) const;
+	void OnHealthChangedCallback(const FOnAttributeChangeData& Data);
 
 	
-	void OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data) const;
+	void OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data);
 
 private:
 	

@@ -9,11 +9,13 @@
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "UI/UserWidget/AoCUserWidget.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
 {
+	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
 	AttackComponent->SetupAttachment(GetMesh(),"Weapon_RSocket");
@@ -41,6 +43,7 @@ void AAoCCharacterBase::BeginPlay()
 void AAoCCharacterBase::InitAbilityActorInfo()
 {
 }
+
 
 FVector AAoCCharacterBase::GetCombatSocketLocation()
 {
@@ -85,21 +88,28 @@ void AAoCCharacterBase::AddCharacterAbilities()
 	
 }
 
-void AAoCCharacterBase::OnHealthChangedCallback(const FOnAttributeChangeData& Data) const
+void AAoCCharacterBase::OnHealthChangedCallback(const FOnAttributeChangeData& Data)
 {
-	
-		OnHealthChanged.Broadcast(Data.NewValue);
+	OnHealthChanged.Broadcast(Data.NewValue);
 	
 	
 }
 
-void AAoCCharacterBase::OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data) const
+void AAoCCharacterBase::OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data)
 {
-	
+	const UAoCAttributeSet* AoCAs = Cast<UAoCAttributeSet>(AttributeSet);
+	if(HasAuthority())
+	{
 		OnMaxHealthChanged.Broadcast(Data.NewValue);
+	}
+	else
+	{
+		OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
+	}
 	
 	
 }
+
 
 
 void AAoCCharacterBase::InitializeAttributes()
@@ -109,25 +119,24 @@ void AAoCCharacterBase::InitializeAttributes()
 
 void AAoCCharacterBase::InitializeHealthBar()
 {
-	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
+		const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
 
-	HealthBar->InitWidget();
-	if(UAoCUserWidget* AoCHealthBar = Cast<UAoCUserWidget>(HealthBar->GetUserWidgetObject()))
-	{
-		AoCHealthBar->SetWidgetController(this);
-	}
+		HealthBar->InitWidget();
+		if(UAoCUserWidget* AoCHealthBar = Cast<UAoCUserWidget>(HealthBar->GetUserWidgetObject()))
+		{
+			AoCHealthBar->SetWidgetController(this);
+		}
 	
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetHealthAttribute()).AddUObject(this, &AAoCCharacterBase::OnHealthChangedCallback);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		AoCAs->GetHealthAttribute()).AddUObject(this, &AAoCCharacterBase::OnHealthChangedCallback);
 	
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetHealthMaxAttribute()).AddUObject(this, &AAoCCharacterBase::OnMaxHealthChangedCallback);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		AoCAs->GetHealthMaxAttribute()).AddUObject(this, &AAoCCharacterBase::OnMaxHealthChangedCallback);
 	
 	
-	OnHealthChanged.Broadcast(AoCAs->GetHealth());
-	OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
-
+		OnHealthChanged.Broadcast(AoCAs->GetHealth());
+		OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
 	
-
+	
 
 }

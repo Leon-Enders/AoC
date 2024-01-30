@@ -34,6 +34,7 @@ void AAoCChampion::OnRep_PlayerState()
 	// Init ability actor info for the Client
 	InitAbilityActorInfo();
 	InitializeHealthBar();
+	
 }
 
 int32 AAoCChampion::GetPlayerLevel()
@@ -72,7 +73,6 @@ void AAoCChampion::InitAbilityActorInfo()
 		}
 		
 	}
-
 	
 }
 
