@@ -1,27 +1,27 @@
 [
 	{
 		"Name": "Attributes.Primary.Strength",
-		"1": 15,
-		"4": 21,
-		"7": 26
+		"1": 30,
+		"4": 38,
+		"7": 52
 	},
 	{
 		"Name": "Attributes.Primary.Agility",
-		"1": 15,
-		"4": 21,
-		"7": 26
+		"1": 19,
+		"4": 24,
+		"7": 32
 	},
 	{
 		"Name": "Attributes.Primary.Intelligence",
-		"1": 15,
-		"4": 21,
-		"7": 26
+		"1": 10,
+		"4": 15,
+		"7": 22
 	},
 	{
 		"Name": "Attributes.Primary.Vitality",
-		"1": 15,
-		"4": 21,
-		"7": 26
+		"1": 27,
+		"4": 36,
+		"7": 50
 	},
 	{
 		"Name": "Attributes.Primary.Willpower",
@@ -31,20 +31,20 @@
 	},
 	{
 		"Name": "Attributes.Primary.Dexterity",
-		"1": 15,
-		"5": 21,
-		"7": 26
+		"1": 22,
+		"5": 31,
+		"7": 41
 	},
 	{
 		"Name": "Attributes.Primary.Armor",
-		"1": 15,
-		"4": 21,
-		"7": 26
+		"1": 30,
+		"4": 38,
+		"7": 70
 	},
 	{
 		"Name": "Attributes.Primary.MagicResistance",
-		"1": 15,
-		"4": 21,
-		"7": 26
+		"1": 18,
+		"4": 24,
+		"7": 31
 	}
 ]
