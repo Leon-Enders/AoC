@@ -7,6 +7,7 @@
 #include "AoCGameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
+#include "Interaction/CombatInterface.h"
 #include "Net/UnrealNetwork.h"
 
 UAoCAttributeSet::UAoCAttributeSet()
@@ -142,7 +143,10 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			const bool bIsFatal = NewHealth<=0.f;
 			if(bIsFatal)
 			{
-				
+				if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
+				{
+					CombatInterface->die();
+				}
 			}
 			else
 			{

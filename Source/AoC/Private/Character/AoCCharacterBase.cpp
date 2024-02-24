@@ -10,7 +10,6 @@
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
-#include "Net/UnrealNetwork.h"
 #include "UI/UserWidget/AoCUserWidget.h"
 
 // Sets default values
@@ -46,7 +45,7 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 }
 
 
-FVector AAoCCharacterBase::GetCombatSocketLocation()
+FVector AAoCCharacterBase::GetAttackSocketLocation()
 {
 	check(AttackComponent);
 	if(!bHasWeapon)
@@ -59,7 +58,30 @@ FVector AAoCCharacterBase::GetCombatSocketLocation()
 
 void AAoCCharacterBase::die()
 {
+	SetLifeSpan(LifeSpan);
 	
+	if(bHasWeapon)
+	{
+		AttackComponent->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
+	}
+	MultiCastHandleDeath();
+	
+}
+
+void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
+{
+
+	
+	AttackComponent->SetSimulatePhysics(true);
+	AttackComponent->SetEnableGravity(true);
+	AttackComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetEnableGravity(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+
+	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()

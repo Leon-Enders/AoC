@@ -48,9 +48,15 @@ protected:
 
 	//Combat Interface
 	
-	virtual FVector GetCombatSocketLocation() override;
+	virtual FVector GetAttackSocketLocation() override;
 
 	virtual void die() override;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastHandleDeath();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float LifeSpan = 5.f;
 	
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 
