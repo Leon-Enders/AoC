@@ -37,7 +37,11 @@ AAoCCharacterBase::AAoCCharacterBase()
 void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if(IsLocallyControlled())
+	{
+		HealthBar->SetHiddenInGame(true);
+	}
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()
@@ -126,26 +130,7 @@ void AAoCCharacterBase::AddCharacterAbilities()
 	
 }
 
-void AAoCCharacterBase::OnHealthChangedCallback(const FOnAttributeChangeData& Data)
-{
-	OnHealthChanged.Broadcast(Data.NewValue);
-	
-}
 
-void AAoCCharacterBase::OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data)
-{
-	const UAoCAttributeSet* AoCAs = Cast<UAoCAttributeSet>(AttributeSet);
-	if(HasAuthority())
-	{
-		OnMaxHealthChanged.Broadcast(Data.NewValue);
-	}
-	else
-	{
-		OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
-	}
-	
-	
-}
 
 
 
@@ -165,10 +150,27 @@ void AAoCCharacterBase::InitializeHealthBar()
 		}
 	
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetHealthAttribute()).AddUObject(this, &AAoCCharacterBase::OnHealthChangedCallback);
-	
+		AoCAs->GetHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+		{
+			OnHealthChanged.Broadcast(Data.NewValue);
+		}
+		);
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetHealthMaxAttribute()).AddUObject(this, &AAoCCharacterBase::OnMaxHealthChangedCallback);
+		AoCAs->GetHealthMaxAttribute()).AddLambda(
+		[this, AoCAs](const FOnAttributeChangeData& Data)
+		{
+			
+			if(HasAuthority())
+			{
+				OnMaxHealthChanged.Broadcast(Data.NewValue);
+			}
+			else
+			{
+				OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
+			}
+	
+		});
 	
 	
 		OnHealthChanged.Broadcast(AoCAs->GetHealth());

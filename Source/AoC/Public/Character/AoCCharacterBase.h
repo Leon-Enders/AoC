@@ -100,10 +100,6 @@ protected:
 	
 	// Gameplay Abilities
 	void AddCharacterAbilities();
-	
-	void OnHealthChangedCallback(const FOnAttributeChangeData& Data);
-	
-	void OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data);
 
 private:
 	
