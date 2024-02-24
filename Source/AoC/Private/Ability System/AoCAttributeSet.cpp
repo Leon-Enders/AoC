@@ -130,6 +130,26 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
 	}
 	
+	if(Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
+	{
+		const float InDamage = GetIncomingDamage();
+		SetIncomingDamage(0.f);
+		if(InDamage > 0.f )
+		{
+			const float NewHealth = GetHealth() - InDamage;
+			SetHealth(FMath::Clamp(NewHealth, 0.f, GetHealthMax()));
+			
+			const bool bIsFatal = NewHealth<0.f ? true : false;
+			if(bIsFatal)
+			{
+				
+			}
+		}
+		
+
+		
+		
+	}
 	
 }
 

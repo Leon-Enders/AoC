@@ -76,6 +76,13 @@ public:
 	//Map GameplayTag to Attribute
 	TMap<FGameplayTag, TFuncPtr<FGameplayAttribute()>> TagsToAttribute;
 	
+
+
+	/* Meta Attributes*/
+
+	UPROPERTY(BlueprintReadOnly, Category="Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, IncomingDamage);
 	
 	/* Primary Attributes*/ 
 
