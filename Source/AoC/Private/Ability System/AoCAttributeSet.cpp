@@ -139,9 +139,18 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			const float NewHealth = GetHealth() - InDamage;
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetHealthMax()));
 			
-			const bool bIsFatal = NewHealth<0.f ? true : false;
+			const bool bIsFatal = NewHealth<=0.f;
 			if(bIsFatal)
 			{
+				
+			}
+			else
+			{
+				
+				const FGameplayTagContainer GameplayTagContainer= FGameplayTagContainer(FAoCGameplayTags::Get().Effects_HitReact);
+				Props.TargetASC->TryActivateAbilitiesByTag(GameplayTagContainer);
+
+				
 				
 			}
 		}

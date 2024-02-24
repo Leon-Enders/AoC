@@ -5,6 +5,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
@@ -56,6 +57,21 @@ FVector AAoCCharacterBase::GetCombatSocketLocation()
 	
 }
 
+void AAoCCharacterBase::die()
+{
+	
+}
+
+UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
+{
+	if(HitReactMontage)
+	{
+		return HitReactMontage;
+	}
+
+	return nullptr;
+}
+
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
@@ -92,7 +108,6 @@ void AAoCCharacterBase::OnHealthChangedCallback(const FOnAttributeChangeData& Da
 {
 	OnHealthChanged.Broadcast(Data.NewValue);
 	
-	
 }
 
 void AAoCCharacterBase::OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data)
@@ -114,7 +129,7 @@ void AAoCCharacterBase::OnMaxHealthChangedCallback(const FOnAttributeChangeData&
 
 void AAoCCharacterBase::InitializeAttributes()
 {
-	
+	UAoCAbilitySystemLibrary::InitializeCommonAbilities(this, AbilitySystemComponent);
 }
 
 void AAoCCharacterBase::InitializeHealthBar()

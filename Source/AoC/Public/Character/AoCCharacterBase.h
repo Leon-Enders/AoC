@@ -46,19 +46,26 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	FName AttackSocketName;
 
+	//Combat Interface
+	
 	virtual FVector GetCombatSocketLocation() override;
+
+	virtual void die() override;
+	
+	virtual UAnimMontage* GetHitMontage_Implementation() override;
+
+	UPROPERTY(EditAnywhere, Category="Animation")
+	TObjectPtr<UAnimMontage> HitReactMontage;
 
 	/*Combat End*/
 
 	
-	// Gameplay Ability System
+	// Gameplay Ability System Data
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
-	
-
 	
 	// Attribute Setters
 	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
@@ -79,21 +86,16 @@ protected:
 	
 	/*Floating Health Bar End*/
 
-	//Initialize Attributes in child because of different level location
+	//Initialize Attributes in child because of different level locations
 	virtual void InitializeAttributes();
-
 	
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
 
 	
 	// Gameplay Abilities
-	
 	void AddCharacterAbilities();
-
-
 	
 	void OnHealthChangedCallback(const FOnAttributeChangeData& Data);
-
 	
 	void OnMaxHealthChangedCallback(const FOnAttributeChangeData& Data);
 

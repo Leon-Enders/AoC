@@ -46,6 +46,8 @@ int32 AAoCChampion::GetPlayerLevel()
 
 void AAoCChampion::InitializeAttributes()
 {
+	Super::InitializeAttributes();
+	
 	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
 
 }
