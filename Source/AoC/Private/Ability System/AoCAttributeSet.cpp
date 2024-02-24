@@ -159,9 +159,6 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 				
 				const FGameplayTagContainer GameplayTagContainer= FGameplayTagContainer(FAoCGameplayTags::Get().Effects_HitReact);
 				Props.TargetASC->TryActivateAbilitiesByTag(GameplayTagContainer);
-
-				
-				
 				
 			}
 		}
