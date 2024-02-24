@@ -8,14 +8,26 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
+#include "UI/Widget/DamageTextComponent.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 
 
 AAoCPlayerController::AAoCPlayerController()
 {
 	bReplicates = true;
+}
+
+void AAoCPlayerController::ShowDamageText_Implementation(float Damage, ACharacter* TargetCharacter)
+{
+	UDamageTextComponent* DamageTextWidget = NewObject<UDamageTextComponent>(TargetCharacter,DamageTextWidgetComponentClass);
+	DamageTextWidget->RegisterComponent();
+	DamageTextWidget->AttachToComponent(TargetCharacter->GetRootComponent(),FAttachmentTransformRules::KeepRelativeTransform);
+	DamageTextWidget->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	DamageTextWidget->UpdateDamageText(Damage);
+	
 }
 
 void AAoCPlayerController::BeginPlay()

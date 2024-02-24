@@ -8,7 +8,9 @@
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/AoCPlayerController.h"
 
 UAoCAttributeSet::UAoCAttributeSet()
 {
@@ -141,6 +143,10 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetHealthMax()));
 			
 			const bool bIsFatal = NewHealth<=0.f;
+			if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter,0 )))
+			{
+				APC->ShowDamageText(InDamage, Props.TargetCharacter);
+			}
 			if(bIsFatal)
 			{
 				if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
@@ -154,6 +160,7 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 				const FGameplayTagContainer GameplayTagContainer= FGameplayTagContainer(FAoCGameplayTags::Get().Effects_HitReact);
 				Props.TargetASC->TryActivateAbilitiesByTag(GameplayTagContainer);
 
+				
 				
 				
 			}

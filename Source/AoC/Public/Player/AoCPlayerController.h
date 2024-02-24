@@ -8,6 +8,7 @@
 #include "GameFramework/PlayerController.h"
 #include "AoCPlayerController.generated.h"
 
+class UWidgetComponent;
 class UAoCAbilitySystemComponent;
 class UAoCInputConfig;
 /**
@@ -25,6 +26,10 @@ class AOC_API AAoCPlayerController : public APlayerController
 
 public:
 	AAoCPlayerController();
+
+	UFUNCTION(Client, Unreliable)
+	void ShowDamageText(float Damage, ACharacter* TargetActor);
+
 	
 protected:
 	virtual void BeginPlay() override;
@@ -74,10 +79,13 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UAoCAbilitySystemComponent> ASC;
-
-
+	
 
 	//Attribute Menu
-
 	bool bShowMouse = false;
+
+	//ShowDamage Text
+
+	UPROPERTY(EditDefaultsOnly, Category="UI")
+	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
 };
