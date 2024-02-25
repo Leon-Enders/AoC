@@ -157,7 +157,7 @@ void AAoCCharacterBase::InitializeHealthBar()
 		}
 		);
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetHealthMaxAttribute()).AddLambda(
+		AoCAs->GetMaxHealthAttribute()).AddLambda(
 		[this, AoCAs](const FOnAttributeChangeData& Data)
 		{
 			
@@ -167,14 +167,14 @@ void AAoCCharacterBase::InitializeHealthBar()
 			}
 			else
 			{
-				OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
+				OnMaxHealthChanged.Broadcast(AoCAs->GetMaxHealth());
 			}
 	
 		});
 	
 	
 		OnHealthChanged.Broadcast(AoCAs->GetHealth());
-		OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
+		OnMaxHealthChanged.Broadcast(AoCAs->GetMaxHealth());
 	
 	
 

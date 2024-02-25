@@ -45,10 +45,11 @@ UAoCAttributeSet::UAoCAttributeSet()
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Tenacity, GetTenacityAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_HealthRegeneration, GetHealthRegenerationAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ManaRegeneration, GetManaRegenerationAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_HealthMax, GetHealthMaxAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ManaMax, GetManaMaxAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_EnergyMax, GetEnergyMaxAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_RageMax, GetRageMaxAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Vampirism, GetManaRegenerationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MaxHealth, GetMaxHealthAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MaxMana, GetMaxManaAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MaxEnergy, GetMaxEnergyAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MaxRage, GetMaxRageAttribute);
 
 	
 	
@@ -87,16 +88,17 @@ void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Tenacity, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealthMax, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Vampirism, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
 
 	// Vital Attributes
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Mana, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Energy, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Rage, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, RageMax, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, EnergyMax, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MaxRage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MaxEnergy, COND_None, REPNOTIFY_Always);
 }
 
 void UAoCAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -105,11 +107,11 @@ void UAoCAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, f
 
 	if(Attribute == GetHealthAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f , GetHealthMax());
+		NewValue = FMath::Clamp(NewValue, 0.f , GetMaxHealth());
 	}
 	if(Attribute == GetManaAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 0.f , GetManaMax());
+		NewValue = FMath::Clamp(NewValue, 0.f , GetMaxMana());
 	}
 	
 	
@@ -124,13 +126,13 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	
 	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
-		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
+		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
 		
 	}
 
 	if(Data.EvaluatedData.Attribute == GetManaAttribute())
 	{
-		SetMana(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
 	
 	if(Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
@@ -140,7 +142,7 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 		if(InDamage > 0.f )
 		{
 			const float NewHealth = GetHealth() - InDamage;
-			SetHealth(FMath::Clamp(NewHealth, 0.f, GetHealthMax()));
+			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
 			
 			const bool bIsFatal = NewHealth<=0.f;
 			if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter,0 )))
@@ -338,6 +340,11 @@ void UAoCAttributeSet::OnRep_ManaRegeneration(const FGameplayAttributeData& OldM
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, ManaRegeneration, OldManaRegeneration);
 }
 
+void UAoCAttributeSet::OnRep_Vampirism(const FGameplayAttributeData& OldVampirism) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Vampirism, OldVampirism);
+}
+
 void UAoCAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Armor, OldArmor);
@@ -349,24 +356,24 @@ void UAoCAttributeSet::OnRep_MagicResistance(const FGameplayAttributeData& OldMa
 }
 
 
-void UAoCAttributeSet::OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const
+void UAoCAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, HealthMax, OldHealthMax);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MaxHealth, OldMaxHealth);
 }
 
-void UAoCAttributeSet::OnRep_ManaMax(const FGameplayAttributeData& OldManaMax) const
+void UAoCAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, ManaMax, OldManaMax);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MaxMana, OldMaxMana);
 }
 
-void UAoCAttributeSet::OnRep_EnergyMax(const FGameplayAttributeData& OldEnergyMax) const
+void UAoCAttributeSet::OnRep_MaxEnergy(const FGameplayAttributeData& OldMaxEnergy) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, EnergyMax, OldEnergyMax);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MaxEnergy, OldMaxEnergy);
 }
 
-void UAoCAttributeSet::OnRep_RageMax(const FGameplayAttributeData& OldRageMax) const
+void UAoCAttributeSet::OnRep_MaxRage(const FGameplayAttributeData& OldMaxRage) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, RageMax, OldRageMax);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MaxRage, OldMaxRage);
 }
 
 

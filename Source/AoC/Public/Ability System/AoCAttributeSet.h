@@ -191,22 +191,27 @@ public:
 	FGameplayAttributeData ManaRegeneration;
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, ManaRegeneration);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_HealthMax", Category="Secondary Attributes")
-	FGameplayAttributeData HealthMax;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, HealthMax);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_Vampirism", Category="Secondary Attributes")
+	FGameplayAttributeData Vampirism;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, Vampirism);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MaxHealth", Category="Secondary Attributes")
+	FGameplayAttributeData MaxHealth;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MaxHealth);
 	
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_ManaMax", Category="Secondary Attributes")
-	FGameplayAttributeData ManaMax;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, ManaMax);
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MaxMana", Category="Secondary Attributes")
+	FGameplayAttributeData MaxMana;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MaxMana);
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_EnergyMax", Category="Secondary Attributes")
-	FGameplayAttributeData EnergyMax;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, EnergyMax);
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MaxEnergy", Category="Secondary Attributes")
+	FGameplayAttributeData MaxEnergy;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MaxEnergy);
 	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_RageMax", Category="Secondary Attributes")
-	FGameplayAttributeData RageMax;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, RageMax);
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing="OnRep_MaxRage", Category="Secondary Attributes")
+	FGameplayAttributeData MaxRage;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, MaxRage);
 
 	
 
@@ -314,16 +319,19 @@ public:
 	void OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const;
 	
 	UFUNCTION()
-	void OnRep_HealthMax(const FGameplayAttributeData& OldHealthMax) const;
+	void OnRep_Vampirism(const FGameplayAttributeData& OldVampirism) const;
 	
 	UFUNCTION()
-	void OnRep_ManaMax(const FGameplayAttributeData& OldManaMax) const;
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+	
+	UFUNCTION()
+	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 
 	UFUNCTION()
-	void OnRep_EnergyMax(const FGameplayAttributeData& OldEnergyMax) const;
+	void OnRep_MaxEnergy(const FGameplayAttributeData& OldMaxEnergy) const;
 
 	UFUNCTION()
-	void OnRep_RageMax(const FGameplayAttributeData& OldRageMax) const;
+	void OnRep_MaxRage(const FGameplayAttributeData& OldMaxRage) const;
 
 	
 

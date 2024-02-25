@@ -12,10 +12,10 @@ void UOverlayWidgetController::BroadCastInitialValue()
 	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
 	
 	OnHealthChanged.Broadcast(AoCAs->GetHealth());
-	OnMaxHealthChanged.Broadcast(AoCAs->GetHealthMax());
+	OnMaxHealthChanged.Broadcast(AoCAs->GetMaxHealth());
 
 	OnManaChanged.Broadcast(AoCAs->GetMana());
-	OnMaxManaChanged.Broadcast(AoCAs->GetManaMax());
+	OnMaxManaChanged.Broadcast(AoCAs->GetMaxMana());
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
@@ -32,7 +32,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetHealthMaxAttribute()).AddLambda(
+	AoCAs->GetMaxHealthAttribute()).AddLambda(
 	[this](const FOnAttributeChangeData& Data)
 	{
 		OnMaxHealthChanged.Broadcast(Data.NewValue);
@@ -48,7 +48,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetManaMaxAttribute()).AddLambda(
+		AoCAs->GetMaxManaAttribute()).AddLambda(
 		[this](const FOnAttributeChangeData& Data)
 		{
 			OnMaxManaChanged.Broadcast(Data.NewValue);
