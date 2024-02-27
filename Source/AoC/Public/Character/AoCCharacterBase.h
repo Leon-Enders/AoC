@@ -44,11 +44,16 @@ protected:
 	TObjectPtr<USkeletalMeshComponent> AttackComponent;
 
 	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<USkeletalMeshComponent> OffhandComponent;
+	
+	UPROPERTY(EditAnywhere, Category="Combat")
 	FName AttackSocketName;
 
 	//Combat Interface
 	
 	virtual FVector GetAttackSocketLocation() override;
+
+	virtual FVector GetOffHandSocketLocation() override;
 
 	virtual void die() override;
 

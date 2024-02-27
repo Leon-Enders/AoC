@@ -21,6 +21,11 @@ AAoCCharacterBase::AAoCCharacterBase()
 	AttackComponent->SetupAttachment(GetMesh(),"Weapon_RSocket");
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	OffhandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("OffhandComponent");
+	OffhandComponent->SetupAttachment(GetMesh(),"Weapon_LSocket");
+	OffhandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//We have to Overlap Capsule for now since its a modular character
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
@@ -58,6 +63,13 @@ FVector AAoCCharacterBase::GetAttackSocketLocation()
 	}
 	return AttackComponent->GetSocketLocation(AttackSocketName);
 	
+}
+
+FVector AAoCCharacterBase::GetOffHandSocketLocation()
+{
+	check(OffhandComponent);
+	
+	return OffhandComponent->GetComponentLocation();
 }
 
 void AAoCCharacterBase::die()
