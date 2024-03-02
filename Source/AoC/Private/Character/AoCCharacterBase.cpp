@@ -4,6 +4,7 @@
 #include "Character/AoCCharacterBase.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemGlobals.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
@@ -37,6 +38,8 @@ AAoCCharacterBase::AAoCCharacterBase()
 	
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetRootComponent());
+	
+	
 }
 
 void AAoCCharacterBase::BeginPlay()
