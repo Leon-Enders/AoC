@@ -113,6 +113,18 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 	return nullptr;
 }
 
+FMeleeComboData AAoCCharacterBase::GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag)
+{
+	if(MeleeComboInfo)
+	{
+		return MeleeComboInfo->GetMeleeComboInfoByTag(ComboTag);
+	}
+
+	return FMeleeComboData();
+}
+
+
+
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
