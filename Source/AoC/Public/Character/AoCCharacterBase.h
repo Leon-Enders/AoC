@@ -74,9 +74,9 @@ protected:
 
 	virtual FMeleeComboData GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag) override;
 	
+	
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UMeleeComboInfo> MeleeComboInfo;
-
+	TArray<UMeleeComboInfo*>MeleeComboInfos;
 	/*Combat End*/
 
 	

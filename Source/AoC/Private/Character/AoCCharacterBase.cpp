@@ -5,6 +5,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
+#include "AoCGameplayTags.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
@@ -115,11 +116,31 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 
 FMeleeComboData AAoCCharacterBase::GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag)
 {
-	if(MeleeComboInfo && ComboTag.IsValid())
+	const FAoCGameplayTags& AoCGameplayTags = FAoCGameplayTags::Get();
+	FGameplayTagContainer GameplayTagContainer;
+	AbilitySystemComponent->GetOwnedGameplayTags(GameplayTagContainer);
+	
+		for(const auto GameplayTag : GameplayTagContainer)
+		{
+		
+				
+				
+			
+			if(GameplayTag.MatchesTagExact(AoCGameplayTags.Abilities_FireMonk_BasicAttack3))
+			{
+				return MeleeComboInfos[2]->GetMeleeComboInfoByTag(ComboTag);
+			}
+			if(GameplayTag.MatchesTagExact(AoCGameplayTags.Abilities_FireMonk_BasicAttack2))
+			{
+				return MeleeComboInfos[1]->GetMeleeComboInfoByTag(ComboTag);
+			}
+		}
+	if(ComboTag.IsValid())
 	{
-		return MeleeComboInfo->GetMeleeComboInfoByTag(ComboTag);
+		return MeleeComboInfos[0]->GetMeleeComboInfoByTag(ComboTag);
 	}
-
+	
+	
 	return FMeleeComboData();
 }
 
