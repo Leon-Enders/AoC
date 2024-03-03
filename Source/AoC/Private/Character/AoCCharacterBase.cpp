@@ -115,7 +115,7 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 
 FMeleeComboData AAoCCharacterBase::GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag)
 {
-	if(MeleeComboInfo)
+	if(MeleeComboInfo && ComboTag.IsValid())
 	{
 		return MeleeComboInfo->GetMeleeComboInfoByTag(ComboTag);
 	}
