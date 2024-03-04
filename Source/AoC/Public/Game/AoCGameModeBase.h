@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "AoCGameModeBase.generated.h"
 
+class UGameplayTagForEffectInfo;
 class UCharacterClassInfo;
 /**
  * 
@@ -19,4 +20,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
 	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
+
+	UPROPERTY(EditDefaultsOnly, Category="GameplayTags")
+	TObjectPtr<UGameplayTagForEffectInfo> GameplayTagForEffectInfo;
 };

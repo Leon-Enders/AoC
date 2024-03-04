@@ -6,9 +6,11 @@
 #include "Character/AoCCharacterBase.h"
 #include "AoCChampion.generated.h"
 
+
 /**
  * 
  */
+class UMeleeComboInfo;
 UCLASS()
 class AOC_API AAoCChampion : public AAoCCharacterBase
 {
@@ -25,6 +27,8 @@ public:
 	/* End Combat Interface*/
 protected:
 	virtual void InitAbilityActorInfo() override;
-	virtual FMeleeComboData GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag) override;
-	
+	virtual FAnimationDataForBasicAttack GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag) override;
+
+	UPROPERTY(EditDefaultsOnly, Category="Combat")
+	TObjectPtr<UMeleeComboInfo>MeleeComboInfo;
 };

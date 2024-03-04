@@ -11,7 +11,7 @@
 #include "AoCCharacterBase.generated.h"
 
 
-class UMeleeComboInfo;
+
 class UGameplayAbility;
 class UGameplayEffect;
 class UAbilitySystemComponent;
@@ -68,14 +68,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Animation")
 	TObjectPtr<UAnimMontage> HitReactMontage;
-
-
-	// Melee Combo
-
 	
 	
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TArray<UMeleeComboInfo*>MeleeComboInfos;
 	/*Combat End*/
 
 	

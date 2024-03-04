@@ -7,6 +7,7 @@
 #include "AoCGameplayTags.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
+#include "Ability System/Data/MeleeComboInfo.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 
@@ -79,32 +80,7 @@ void AAoCChampion::InitAbilityActorInfo()
 	
 }
 
-FMeleeComboData AAoCChampion::GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag)
+FAnimationDataForBasicAttack AAoCChampion::GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag)
 {
-	const FAoCGameplayTags& AoCGameplayTags = FAoCGameplayTags::Get();
-	FGameplayTagContainer GameplayTagContainer;
-	AbilitySystemComponent->GetOwnedGameplayTags(GameplayTagContainer);
-	
-	for(const auto GameplayTag : GameplayTagContainer)
-	{
-		
-				
-				
-			
-		if(GameplayTag.MatchesTagExact(AoCGameplayTags.Abilities_FireMonk_BasicAttack3))
-		{
-			return MeleeComboInfos[2]->GetMeleeComboInfoByTag(ComboTag);
-		}
-		if(GameplayTag.MatchesTagExact(AoCGameplayTags.Abilities_FireMonk_BasicAttack2))
-		{
-			return MeleeComboInfos[1]->GetMeleeComboInfoByTag(ComboTag);
-		}
-	}
-	if(ComboTag.IsValid())
-	{
-		return MeleeComboInfos[0]->GetMeleeComboInfoByTag(ComboTag);
-	}
-	
-	
-	return FMeleeComboData();
+	return MeleeComboInfo->GetAnimationDataForTag(ComboTag);
 }
