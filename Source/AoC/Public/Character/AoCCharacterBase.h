@@ -72,7 +72,6 @@ protected:
 
 	// Melee Combo
 
-	virtual FMeleeComboData GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag) override;
 	
 	
 	UPROPERTY(EditDefaultsOnly, Category="Combat")

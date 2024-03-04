@@ -25,5 +25,6 @@ public:
 	/* End Combat Interface*/
 protected:
 	virtual void InitAbilityActorInfo() override;
+	virtual FMeleeComboData GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag) override;
 	
 };
