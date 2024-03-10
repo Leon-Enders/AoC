@@ -8,9 +8,12 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
+#include "Character/AoCCharacterBase.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "UI/Widget/DamageTextComponent.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 
@@ -59,17 +62,26 @@ void AAoCPlayerController::SetupInputComponent()
 	AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
 	AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
 	AoCInputComponent->BindAction(IA_OpenMenu, ETriggerEvent::Completed, this, &AAoCPlayerController::OnOpenMenu);
+	AoCInputComponent->BindAction(IA_SetTarget, ETriggerEvent::Completed, this, &AAoCPlayerController::OnSetTargetMenu);
 
 
 	// GAS - Inputs
 	AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
-		
-	
 	
 	
 	
 }
 
+void AAoCPlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if(TargetEnemy!= nullptr)
+	{
+		SetTargetRotation();
+	}
+	
+}
 
 
 void AAoCPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -136,6 +148,48 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 	}
 }
 
+void AAoCPlayerController::OnSetTargetMenu(const FInputActionValue& InputActionValue)
+{
+
+	if(TargetEnemy)
+	{
+		TargetEnemy = nullptr;
+		return;
+	}
+	
+	TArray<AActor*> Enemies;
+	UGameplayStatics::GetAllActorsOfClass(this,AAoCCharacterBase::StaticClass(),Enemies);
+	if(!HasAuthority())
+	{
+		Enemies.Remove(GetPawn());
+	}
+	
+	const FVector PlayerLocation = GetPawn()->GetActorLocation();
+	AActor* ClosestEnemy = Enemies[0];
+	
+	auto DistanceComparator = [&PlayerLocation, &ClosestEnemy](AActor* NextEnemy) {
+		if (NextEnemy == nullptr)
+			{
+			return false;
+		}
+		const float DistanceA = FVector::Distance(PlayerLocation, NextEnemy->GetActorLocation());
+		const float DistanceB = FVector::Distance(PlayerLocation, ClosestEnemy->GetActorLocation());
+		return DistanceA < DistanceB;
+	};
+	
+	for(const auto Enemy : Enemies)
+	{
+		if(DistanceComparator(Enemy))
+		{
+			ClosestEnemy = Enemy;
+		}
+	}
+	
+	TargetEnemy = ClosestEnemy;
+
+	
+}
+
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {
 	
@@ -169,4 +223,16 @@ UAoCAbilitySystemComponent* AAoCPlayerController::GetASC()
 	}
 	return ASC;
 
+}
+
+
+
+void AAoCPlayerController::SetTargetRotation()
+{
+	const FVector PlayerLocation = GetPawn()->GetActorLocation();
+	const FVector TargetLocation = TargetEnemy->GetActorLocation();
+	const FRotator LookAtTargetRotation = UKismetMathLibrary::FindLookAtRotation(PlayerLocation, TargetLocation);
+
+	SetControlRotation(LookAtTargetRotation);
+	
 }

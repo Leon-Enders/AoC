@@ -34,12 +34,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
-	
+	virtual void Tick(float DeltaSeconds) override;
 private:
 
 
 	// Input Actions
-	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_CamRot;
 	
@@ -52,9 +51,11 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_OpenMenu;
 
+	UPROPERTY(EditAnywhere, Category="Input");
+	TObjectPtr<UInputAction> IA_SetTarget;
+
 
 	// InputMappingContext
-
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputMappingContext> IMC_Move;
 
@@ -66,6 +67,7 @@ private:
 	void CamRot(const FInputActionValue& InputActionValue);
 	void OnJump(const FInputActionValue& InputActionValue);
 	void OnOpenMenu(const FInputActionValue& InputActionValue);
+	void OnSetTargetMenu(const FInputActionValue& InputActionValue);
 	
 	//GAS-Inputs
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
@@ -85,7 +87,13 @@ private:
 	bool bShowMouse = false;
 
 	//ShowDamage Text
-
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
+
+
+	//Target System
+	UPROPERTY()
+	TObjectPtr<AActor> TargetEnemy;
+	void SetTargetRotation();
+
 };
