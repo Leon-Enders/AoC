@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
+#include "Ability System/TargetSystem/TargetComponent.h"
 #include "Character/AoCCharacterBase.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
@@ -44,6 +45,11 @@ void AAoCPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(IMC_Move,0);
 	}
+
+	if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetPawn()))
+	{
+		PlayerTargetComponent = CombatInterface->GetTargetComponent();
+	}
 	
 }
 
@@ -76,10 +82,14 @@ void AAoCPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if(TargetEnemy!= nullptr)
+	if(PlayerTargetComponent != nullptr)
 	{
-		SetTargetRotation();
+		if(PlayerTargetComponent->GetTargetEnemy()!=nullptr)
+		{
+			SetTargetRotation();
+		}
 	}
+	
 	
 }
 
@@ -150,10 +160,12 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 
 void AAoCPlayerController::OnSetTargetMenu(const FInputActionValue& InputActionValue)
 {
-
-	if(TargetEnemy)
+	
+	
+	if(PlayerTargetComponent->GetTargetEnemy())
 	{
-		TargetEnemy = nullptr;
+		PlayerTargetComponent->SetTargetEnemy(nullptr);
+		SetTargetComponentServer(PlayerTargetComponent);
 		return;
 	}
 	
@@ -185,7 +197,8 @@ void AAoCPlayerController::OnSetTargetMenu(const FInputActionValue& InputActionV
 		}
 	}
 	
-	TargetEnemy = ClosestEnemy;
+	PlayerTargetComponent->SetTargetEnemy(ClosestEnemy);
+	SetTargetComponentServer(PlayerTargetComponent);
 
 	
 }
@@ -226,13 +239,16 @@ UAoCAbilitySystemComponent* AAoCPlayerController::GetASC()
 }
 
 
+void AAoCPlayerController::SetTargetComponentServer_Implementation(UTargetComponent* TargetComponent)
+{
+	PlayerTargetComponent = TargetComponent;
+}
 
 void AAoCPlayerController::SetTargetRotation()
 {
 	const FVector PlayerLocation = GetPawn()->GetActorLocation();
-	const FVector TargetLocation = TargetEnemy->GetActorLocation();
+	const FVector TargetLocation = PlayerTargetComponent->GetTargetEnemy()->GetActorLocation();
 	const FRotator LookAtTargetRotation = UKismetMathLibrary::FindLookAtRotation(PlayerLocation, TargetLocation);
-
 	SetControlRotation(LookAtTargetRotation);
 	
 }

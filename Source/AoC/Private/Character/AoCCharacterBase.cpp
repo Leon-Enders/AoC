@@ -8,6 +8,7 @@
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "Ability System/TargetSystem/TargetComponent.h"
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
@@ -26,6 +27,8 @@ AAoCCharacterBase::AAoCCharacterBase()
 	OffhandComponent->SetupAttachment(GetMesh(),"Weapon_LSocket");
 	OffhandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+
+	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//We have to Overlap Capsule for now since its a modular character
@@ -113,8 +116,14 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 	return nullptr;
 }
 
-
-
+UTargetComponent* AAoCCharacterBase::GetTargetComponent()
+{
+	if(TargetComponent != nullptr)
+	{
+		return TargetComponent;
+	}
+	return nullptr;
+}
 
 
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const

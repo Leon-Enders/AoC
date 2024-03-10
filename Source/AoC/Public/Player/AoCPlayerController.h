@@ -8,6 +8,7 @@
 #include "GameFramework/PlayerController.h"
 #include "AoCPlayerController.generated.h"
 
+class UTargetComponent;
 class UWidgetComponent;
 class UAoCAbilitySystemComponent;
 class UAoCInputConfig;
@@ -92,8 +93,12 @@ private:
 
 
 	//Target System
+	UFUNCTION(Client, Reliable)
+	void SetTargetComponentServer(UTargetComponent* TargetComponent);
+	
+	
 	UPROPERTY()
-	TObjectPtr<AActor> TargetEnemy;
+	UTargetComponent* PlayerTargetComponent;
 	void SetTargetRotation();
 
 };

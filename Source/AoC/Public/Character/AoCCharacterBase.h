@@ -68,6 +68,16 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Animation")
 	TObjectPtr<UAnimMontage> HitReactMontage;
+
+	/*TargetSystem*/
+
+	UPROPERTY()
+	TObjectPtr<UTargetComponent> TargetComponent;
+	
+	virtual UTargetComponent* GetTargetComponent() override;
+
+
+	/*TargetSystem End*/
 	
 	
 	/*Combat End*/
