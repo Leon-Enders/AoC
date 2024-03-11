@@ -50,30 +50,26 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	FName AttackSocketName;
 
-	//Combat Interface
-	
-	virtual FVector GetAttackSocketLocation() override;
-
-	virtual FVector GetOffHandSocketLocation() override;
-
-	virtual void die() override;
-
+	// Handle Character Death for Client and Server
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float LifeSpan = 5.f;
-	
-	virtual UAnimMontage* GetHitMontage_Implementation() override;
 
 	UPROPERTY(EditAnywhere, Category="Animation")
 	TObjectPtr<UAnimMontage> HitReactMontage;
 
+	//Combat Interface Overrides
+	virtual FVector GetAttackSocketLocation() override;
+	virtual FVector GetOffHandSocketLocation() override;
+	virtual UAnimMontage* GetHitMontage_Implementation() override;
+	virtual void die() override;
+	
 	/*TargetSystem*/
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly, Category="TargetSystem")
 	TObjectPtr<UTargetComponent> TargetComponent;
-	
 	virtual UTargetComponent* GetTargetComponent() override;
 
 

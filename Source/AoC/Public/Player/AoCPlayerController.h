@@ -35,7 +35,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
-	virtual void Tick(float DeltaSeconds) override;
 private:
 
 
@@ -53,7 +52,7 @@ private:
 	TObjectPtr<UInputAction> IA_OpenMenu;
 
 	UPROPERTY(EditAnywhere, Category="Input");
-	TObjectPtr<UInputAction> IA_SetTarget;
+	TObjectPtr<UInputAction> IA_SetSoftTarget;
 
 
 	// InputMappingContext
@@ -68,7 +67,7 @@ private:
 	void CamRot(const FInputActionValue& InputActionValue);
 	void OnJump(const FInputActionValue& InputActionValue);
 	void OnOpenMenu(const FInputActionValue& InputActionValue);
-	void OnSetTargetMenu(const FInputActionValue& InputActionValue);
+	void OnSetSoftTarget(const FInputActionValue& InputActionValue);
 	
 	//GAS-Inputs
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
@@ -90,15 +89,7 @@ private:
 	//ShowDamage Text
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
-
-
-	//Target System
-	UFUNCTION(Client, Reliable)
-	void SetTargetComponentServer(UTargetComponent* TargetComponent);
 	
-	
-	UPROPERTY()
-	UTargetComponent* PlayerTargetComponent;
-	void SetTargetRotation();
-
+	//Soft Target System
+	TObjectPtr<UTargetComponent> PlayerTargetComponent;
 };
