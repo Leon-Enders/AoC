@@ -20,7 +20,6 @@ AAoCCharacterBase::AAoCCharacterBase()
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
-	AttackComponent->SetupAttachment(GetMesh(),"Weapon_RSocket");
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	OffhandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("OffhandComponent");
@@ -53,6 +52,8 @@ void AAoCCharacterBase::BeginPlay()
 	{
 		HealthBar->SetHiddenInGame(true);
 	}
+	
+	AttackComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()
