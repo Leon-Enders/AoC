@@ -10,6 +10,7 @@
 #include "Ability System/Data/MeleeComboInfo.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
+#include "Components/CombatComponent.h"
 
 AAoCChampion::AAoCChampion()
 {
@@ -67,6 +68,7 @@ void AAoCChampion::InitAbilityActorInfo()
 	}
 	AbilitySystemComponent = PS->GetAbilitySystemComponent();
 	AttributeSet = PS->GetAttributeSet();
+	CombatComponent->InitCombatComponent(AbilitySystemComponent);
 	
 	
 	if(APlayerController* APC = Cast<APlayerController>(GetController()))

@@ -65,13 +65,19 @@ protected:
 	virtual FVector GetOffHandSocketLocation() override;
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual void die() override;
+
+
+	UPROPERTY(EditDefaultsOnly, Category="Combat")
+	TObjectPtr<UCombatComponent> CombatComponent;
+	virtual UCombatComponent* GetCombatComponent_Implementation() override;
+	
 	
 	/*TargetSystem*/
 
 	UPROPERTY(EditDefaultsOnly, Category="TargetSystem")
 	TObjectPtr<UTargetComponent> TargetComponent;
 	virtual UTargetComponent* GetTargetComponent() override;
-
+	
 
 	/*TargetSystem End*/
 	

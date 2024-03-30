@@ -11,6 +11,7 @@
 #include "Ability System/TargetSystem/TargetComponent.h"
 #include "AoC/AoC.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/CombatComponent.h"
 #include "Components/WidgetComponent.h"
 #include "UI/UserWidget/AoCUserWidget.h"
 
@@ -28,6 +29,7 @@ AAoCCharacterBase::AAoCCharacterBase()
 
 
 	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
+	CombatComponent = CreateDefaultSubobject<UCombatComponent>("CombatComponent");
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//We have to Overlap Capsule for now since its a modular character
@@ -91,6 +93,16 @@ void AAoCCharacterBase::die()
 	
 }
 
+UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
+{
+	if(CombatComponent)
+	{
+		return CombatComponent;
+	}
+	return nullptr;
+}
+
+
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 {
 
@@ -113,17 +125,13 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 	{
 		return HitReactMontage;
 	}
-
 	return nullptr;
 }
 
 UTargetComponent* AAoCCharacterBase::GetTargetComponent()
 {
-	if(TargetComponent != nullptr)
-	{
-		return TargetComponent;
-	}
-	return nullptr;
+	if(!TargetComponent) return nullptr;
+	return TargetComponent;
 }
 
 
