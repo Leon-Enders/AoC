@@ -82,7 +82,7 @@ void AAoCChampion::InitAbilityActorInfo()
 	
 }
 
-FAnimationDataForBasicAttack AAoCChampion::GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag)
+float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
 {
-	return MeleeComboInfo->GetAnimationDataForTag(ComboTag);
+	return MeleeComboInfo->GetAttackDistanceForTag(ComboTag);
 }

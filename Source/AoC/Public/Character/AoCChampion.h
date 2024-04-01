@@ -27,7 +27,7 @@ public:
 	/* End Combat Interface*/
 protected:
 	virtual void InitAbilityActorInfo() override;
-	virtual FAnimationDataForBasicAttack GetMeleeComboInfo_Implementation(const FGameplayTag& ComboTag) override;
+	virtual float GetDashDistanceForTag(const FGameplayTag& ComboTag) override;
 
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UMeleeComboInfo>MeleeComboInfo;
