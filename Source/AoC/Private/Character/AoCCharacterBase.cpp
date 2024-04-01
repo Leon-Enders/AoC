@@ -22,11 +22,12 @@ AAoCCharacterBase::AAoCCharacterBase()
 	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
 	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	//TODO:: Update OffhandComponent Logic
 	OffhandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("OffhandComponent");
 	OffhandComponent->SetupAttachment(GetMesh(),"Weapon_LSocket");
 	OffhandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-
+	
 	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
 	CombatComponent = CreateDefaultSubobject<UCombatComponent>("CombatComponent");
 	
@@ -75,9 +76,10 @@ FVector AAoCCharacterBase::GetAttackSocketLocation()
 
 FVector AAoCCharacterBase::GetOffHandSocketLocation()
 {
+	// TODO: Properly implement OffhandSocket
 	check(OffhandComponent);
 	
-	return OffhandComponent->GetComponentLocation();
+	return GetMesh()->GetSocketLocation("Weapon_LSocket");
 }
 
 void AAoCCharacterBase::die()
