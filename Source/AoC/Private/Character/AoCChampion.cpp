@@ -10,7 +10,7 @@
 #include "Ability System/Data/MeleeComboInfo.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
-#include "Components/CombatComponent.h"
+#include "AoCComponents/CombatComponent.h"
 
 AAoCChampion::AAoCChampion()
 {

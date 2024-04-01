@@ -2,16 +2,15 @@
 
 
 #include "Character/AoCCharacterBase.h"
-
+#include "AoC/AoC.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
-#include "Ability System/TargetSystem/TargetComponent.h"
-#include "AoC/AoC.h"
+#include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/CombatComponent.h"
+#include "AoCComponents/CombatComponent.h"
 #include "Components/WidgetComponent.h"
 #include "UI/UserWidget/AoCUserWidget.h"
 
