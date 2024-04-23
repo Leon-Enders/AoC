@@ -11,8 +11,12 @@ struct FAoCGameplayEffectContext : public FGameplayEffectContext
 
 
 public:
+	/*Getter and Setters*/
 	bool GetIsCriticalHit()const  {return bIsCriticalHit;}
+	void SetIsCriticalHit(bool IsCriticalHit){bIsCriticalHit = IsCriticalHit;}
 
+
+	/*Overrides*/
 	virtual UScriptStruct* GetScriptStruct() const override
 	{
 		return StaticStruct();

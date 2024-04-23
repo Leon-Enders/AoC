@@ -6,6 +6,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AoCGameplayTags.h"
 #include "GameplayEffectExtension.h"
+#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
@@ -144,11 +145,11 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			const float NewHealth = GetHealth() - InDamage;
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
 			
+			const bool bIsCriticalHit = UAoCAbilitySystemLibrary::GetIsCriticalHit(Data.EffectSpec.GetEffectContext());
+			SetFloatingText(Props,InDamage,bIsCriticalHit);
+
+
 			const bool bIsFatal = NewHealth<=0.f;
-			if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter,0 )))
-			{
-				APC->ShowDamageText(InDamage, Props.TargetCharacter);
-			}
 			if(bIsFatal)
 			{
 				if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
@@ -170,6 +171,13 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 		
 	}
 	
+}
+void UAoCAttributeSet::SetFloatingText(const FEffectProperties& Props, const float Damage, const bool IsCriticalHit)
+{
+	if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(Props.SourceCharacter->Controller))
+	{
+		APC->ShowDamageText(Damage, Props.TargetCharacter, IsCriticalHit);
+	}
 }
 
 void UAoCAttributeSet::SetupEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props)
@@ -399,6 +407,8 @@ void UAoCAttributeSet::OnRep_Rage(const FGameplayAttributeData& OldRage) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Rage, OldRage);
 }
+
+
 
 
 

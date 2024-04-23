@@ -350,6 +350,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_Rage(const FGameplayAttributeData& OldRage) const;
-	
+
+private:
+
+	void SetFloatingText(const FEffectProperties& Props,const float Damage, const bool IsCriticalHit);
 	
 };

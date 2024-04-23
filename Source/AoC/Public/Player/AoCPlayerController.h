@@ -30,7 +30,7 @@ public:
 	AAoCPlayerController();
 
 	UFUNCTION(Client, Unreliable)
-	void ShowDamageText(float Damage, ACharacter* TargetActor);
+	void ShowDamageText(float Damage, ACharacter* TargetActor, const bool bIsCriticalHit);
 
 	
 protected:
