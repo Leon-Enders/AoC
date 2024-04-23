@@ -174,9 +174,13 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 }
 void UAoCAttributeSet::SetFloatingText(const FEffectProperties& Props, const float Damage, const bool IsCriticalHit)
 {
-	if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(Props.SourceCharacter->Controller))
+
+	if(Props.SourceCharacter != Props.TargetCharacter)
 	{
-		APC->ShowDamageText(Damage, Props.TargetCharacter, IsCriticalHit);
+		if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(Props.SourceCharacter->Controller))
+		{
+			APC->ShowDamageText(Damage, Props.TargetCharacter, IsCriticalHit);
+		}
 	}
 }
 
