@@ -111,7 +111,7 @@ protected:
 	/*Floating Health Bar End*/
 
 	//Initialize Attributes in child because of different level locations
-	virtual void InitializeAttributes();
+	virtual void InitializeAttributes() const ;
 	
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
 

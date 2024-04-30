@@ -6,7 +6,6 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
-#include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -172,9 +171,9 @@ void AAoCCharacterBase::AddCharacterAbilities()
 
 
 
-void AAoCCharacterBase::InitializeAttributes()
+void AAoCCharacterBase::InitializeAttributes() const
 {
-	UAoCAbilitySystemLibrary::InitializeCommonAbilities(this, AbilitySystemComponent);
+	
 }
 
 void AAoCCharacterBase::InitializeHealthBar()

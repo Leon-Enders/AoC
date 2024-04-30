@@ -27,7 +27,10 @@ void AAoCChampion::PossessedBy(AController* NewController)
 	InitAbilityActorInfo();
 	InitializeAttributes();
 	InitializeHealthBar();
+
+	// Initialize Character Abilities and common abilities
 	AddCharacterAbilities();
+	UAoCAbilitySystemLibrary::GiveStartUpAbilities(this, AbilitySystemComponent);
 }
 
 void AAoCChampion::OnRep_PlayerState()
@@ -40,16 +43,15 @@ void AAoCChampion::OnRep_PlayerState()
 	
 }
 
-int32 AAoCChampion::GetPlayerLevel()
+int32 AAoCChampion::GetPlayerLevel() const
 {
 	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
 	check(PS);
 	return PS->GetPlayerLevel();
 }
 
-void AAoCChampion::InitializeAttributes()
+void AAoCChampion::InitializeAttributes() const
 {
-	Super::InitializeAttributes();
 	
 	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
 
