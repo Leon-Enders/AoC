@@ -155,22 +155,6 @@ void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGame
 	
 }
 
-void AAoCCharacterBase::AddCharacterAbilities() 
-{
-	if(!HasAuthority())
-	{
-		return;
-	}
-	
-	UAoCAbilitySystemComponent* AoCAbilitySystemComponent = CastChecked<UAoCAbilitySystemComponent>(AbilitySystemComponent);
-	AoCAbilitySystemComponent->AddCharacterAbilities(StartUpAbilities);
-	
-}
-
-
-
-
-
 void AAoCCharacterBase::InitializeAttributes() const
 {
 	

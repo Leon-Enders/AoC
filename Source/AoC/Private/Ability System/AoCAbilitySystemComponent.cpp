@@ -36,6 +36,15 @@ void UAoCAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<
 	}
 }
 
+void UAoCAbilitySystemComponent::AddCharacterPassiveAbilities(
+	const TArray<TSubclassOf<UGameplayAbility>>& StartUpPassiveAbilities)
+{
+	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartUpPassiveAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass);
+		GiveAbility(AbilitySpec);
+	}
+}
 
 
 void UAoCAbilitySystemComponent::ActivateInputReleased(const FGameplayTag& InputTag)

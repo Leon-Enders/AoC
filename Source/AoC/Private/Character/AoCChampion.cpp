@@ -17,7 +17,6 @@ AAoCChampion::AAoCChampion()
 }
 
 
-
 void AAoCChampion::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -30,9 +29,7 @@ void AAoCChampion::PossessedBy(AController* NewController)
 
 	// Initialize Character Abilities and common abilities
 	AddCharacterAbilities();
-	UAoCAbilitySystemLibrary::GiveStartUpAbilities(this, AbilitySystemComponent);
 }
-
 void AAoCChampion::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
@@ -83,6 +80,19 @@ void AAoCChampion::InitAbilityActorInfo()
 	}
 	
 }
+
+void AAoCChampion::AddCharacterAbilities() 
+{
+	if(!HasAuthority())
+	{
+		return;
+	}
+	
+	UAoCAbilitySystemComponent* AoCAbilitySystemComponent = CastChecked<UAoCAbilitySystemComponent>(AbilitySystemComponent);
+	AoCAbilitySystemComponent->AddCharacterAbilities(StartUpAbilities);
+	AoCAbilitySystemComponent->AddCharacterPassiveAbilities(StartUpPassiveAbilities);
+}
+
 
 float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
 {

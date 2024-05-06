@@ -31,4 +31,16 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UMeleeComboInfo>MeleeComboInfo;
+
+	// Gameplay Abilities
+	void AddCharacterAbilities();
+
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category="Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category="Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartUpPassiveAbilities;
+
 };

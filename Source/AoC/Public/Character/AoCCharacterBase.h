@@ -50,6 +50,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	FName AttackSocketName;
 
+	//TODO:: Maybe remove offhand component and simply use Socket Names, Skeletal mesh components only make sense for locations on a seperate mesh
+
+
+
+	
 	// Handle Character Death for Client and Server
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
@@ -66,7 +71,7 @@ protected:
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual void die() override;
 
-
+	
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UCombatComponent> CombatComponent;
 	virtual UCombatComponent* GetCombatComponent_Implementation() override;
@@ -115,19 +120,5 @@ protected:
 	
 	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
 
-	
-	// Gameplay Abilities
-	void AddCharacterAbilities();
-
-
-
-	
-private:
-	
-	UPROPERTY(EditDefaultsOnly, Category="Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
-
-
-	
 	
 };
