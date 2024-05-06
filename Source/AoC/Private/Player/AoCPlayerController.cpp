@@ -66,7 +66,7 @@ void AAoCPlayerController::SetupInputComponent()
 	AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
 	AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
 	AoCInputComponent->BindAction(IA_OpenMenu, ETriggerEvent::Completed, this, &AAoCPlayerController::OnOpenMenu);
-	AoCInputComponent->BindAction(IA_SetSoftTarget, ETriggerEvent::Completed, this, &AAoCPlayerController::OnSetSoftTarget);
+	AoCInputComponent->BindAction(IA_SetTarget, ETriggerEvent::Completed, this, &AAoCPlayerController::OnSetTarget);
 
 
 	// GAS - Inputs
@@ -140,9 +140,9 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AAoCPlayerController::OnSetSoftTarget(const FInputActionValue& InputActionValue)
+void AAoCPlayerController::OnSetTarget(const FInputActionValue& InputActionValue)
 {
-	PlayerTargetComponent->SetSoftTarget();
+	PlayerTargetComponent->SetTarget();
 }
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)

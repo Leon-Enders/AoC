@@ -53,7 +53,7 @@ private:
 	TObjectPtr<UInputAction> IA_OpenMenu;
 
 	UPROPERTY(EditAnywhere, Category="Input");
-	TObjectPtr<UInputAction> IA_SetSoftTarget;
+	TObjectPtr<UInputAction> IA_SetTarget;
 
 
 	// InputMappingContext
@@ -68,7 +68,7 @@ private:
 	void CamRot(const FInputActionValue& InputActionValue);
 	void OnJump(const FInputActionValue& InputActionValue);
 	void OnOpenMenu(const FInputActionValue& InputActionValue);
-	void OnSetSoftTarget(const FInputActionValue& InputActionValue);
+	void OnSetTarget(const FInputActionValue& InputActionValue);
 	
 	//GAS-Inputs
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
