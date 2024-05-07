@@ -100,18 +100,25 @@ UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
 
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 {
-
 	HealthBarComponent->SetHiddenInGame(true);
-	MainHandComponent->SetSimulatePhysics(true);
-	MainHandComponent->SetEnableGravity(true);
-	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	if(IsPlayerControlled())
+	{
+		check(DeathMontage);
+		PlayAnimMontage(DeathMontage);
+	}
+	else
+	{
+		MainHandComponent->SetSimulatePhysics(true);
+		MainHandComponent->SetEnableGravity(true);
+		MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 
-	GetMesh()->SetSimulatePhysics(true);
-	GetMesh()->SetEnableGravity(true);
-	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+		GetMesh()->SetSimulatePhysics(true);
+		GetMesh()->SetEnableGravity(true);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 
-	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }
 
 UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()

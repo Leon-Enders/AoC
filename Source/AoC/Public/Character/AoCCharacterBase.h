@@ -94,6 +94,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="AvatarProperties")
 	TObjectPtr<UAnimMontage> HitReactMontage;
 
+	UPROPERTY(EditAnywhere,Category="AvatarProperties")
+	TObjectPtr<UAnimMontage> DeathMontage;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AvatarProperties")
 	float LifeSpan = 5.f;
 	
