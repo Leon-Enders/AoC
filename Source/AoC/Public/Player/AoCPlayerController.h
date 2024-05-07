@@ -68,7 +68,7 @@ private:
 	void CamRot(const FInputActionValue& InputActionValue);
 	void OnJump(const FInputActionValue& InputActionValue);
 	void OnOpenMenu(const FInputActionValue& InputActionValue);
-	void OnSetTarget(const FInputActionValue& InputActionValue);
+	void OnFindTarget(const FInputActionValue& InputActionValue);
 	
 	//GAS-Inputs
 	void AbilityInputTagPressed(FGameplayTag GameplayTag);
@@ -92,5 +92,5 @@ private:
 	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
 	
 	//Soft Target System
-	TObjectPtr<UTargetComponent> PlayerTargetComponent;
+	TObjectPtr<UTargetComponent> AvatarTargetComponent;
 };

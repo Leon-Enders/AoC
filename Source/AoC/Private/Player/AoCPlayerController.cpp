@@ -44,10 +44,13 @@ void AAoCPlayerController::BeginPlay()
 		Subsystem->AddMappingContext(IMC_Move,0);
 	}
 
-	if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetPawn()))
+	// Initialize TargetComponent of the avatar
+	if(GetPawn())
 	{
-		PlayerTargetComponent = CombatInterface->GetTargetComponent();
+		AvatarTargetComponent = ICombatInterface::Execute_GetTargetComponent(GetPawn());
 	}
+	
+	
 	
 }
 
@@ -66,7 +69,7 @@ void AAoCPlayerController::SetupInputComponent()
 	AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
 	AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
 	AoCInputComponent->BindAction(IA_OpenMenu, ETriggerEvent::Completed, this, &AAoCPlayerController::OnOpenMenu);
-	AoCInputComponent->BindAction(IA_SetTarget, ETriggerEvent::Completed, this, &AAoCPlayerController::OnSetTarget);
+	AoCInputComponent->BindAction(IA_SetTarget, ETriggerEvent::Completed, this, &AAoCPlayerController::OnFindTarget);
 
 
 	// GAS - Inputs
@@ -140,9 +143,9 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AAoCPlayerController::OnSetTarget(const FInputActionValue& InputActionValue)
+void AAoCPlayerController::OnFindTarget(const FInputActionValue& InputActionValue)
 {
-	PlayerTargetComponent->SetTarget();
+	AvatarTargetComponent->FindTarget();
 }
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)
