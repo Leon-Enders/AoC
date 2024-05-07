@@ -78,6 +78,9 @@ FVector AAoCCharacterBase::GetOffHandSocketLocation()
 
 void AAoCCharacterBase::die()
 {
+	if(bIsDead) return;
+	bIsDead = true;
+	
 	SetLifeSpan(LifeSpan);
 	
 	if(bHasWeapon)
@@ -103,6 +106,8 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	HealthBarComponent->SetHiddenInGame(true);
 	if(IsPlayerControlled())
 	{
+		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
 		check(DeathMontage);
 		PlayAnimMontage(DeathMontage);
 	}

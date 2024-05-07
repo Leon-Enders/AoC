@@ -77,8 +77,6 @@ protected:
 	/*TargetSystem End*/
 	/*Combat End*/
 	
-
-	
 	
 	// Gameplay Ability System Data
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
@@ -108,4 +106,9 @@ protected:
 	virtual void InitializeAttributes() const;
 
 	virtual void InitializeAoCComponents() const;
+
+
+private:
+
+	bool bIsDead = false;
 };
