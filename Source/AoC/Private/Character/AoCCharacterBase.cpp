@@ -128,7 +128,7 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 	return nullptr;
 }
 
-UTargetComponent* AAoCCharacterBase::GetTargetComponent()
+UTargetComponent* AAoCCharacterBase::GetTargetComponent_Implementation()
 {
 	if(!TargetComponent) return nullptr;
 	return TargetComponent;

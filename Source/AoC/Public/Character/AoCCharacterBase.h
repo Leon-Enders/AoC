@@ -81,7 +81,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="TargetSystem")
 	TObjectPtr<UTargetComponent> TargetComponent;
-	virtual UTargetComponent* GetTargetComponent() override;
+	virtual UTargetComponent* GetTargetComponent_Implementation() override;
 	
 	/*TargetSystem End*/
 	
