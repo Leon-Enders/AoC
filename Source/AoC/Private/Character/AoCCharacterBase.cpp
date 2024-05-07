@@ -18,8 +18,8 @@ AAoCCharacterBase::AAoCCharacterBase()
 {
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
-	AttackComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
-	AttackComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	MainHandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
+	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	//TODO:: Update OffhandComponent Logic
 	OffhandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("OffhandComponent");
@@ -54,7 +54,7 @@ void AAoCCharacterBase::BeginPlay()
 		HealthBar->SetHiddenInGame(true);
 	}
 	
-	AttackComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
+	MainHandComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()
@@ -62,14 +62,14 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 }
 
 
-FVector AAoCCharacterBase::GetAttackSocketLocation()
+FVector AAoCCharacterBase::GetMainHandSocketLocation()
 {
-	check(AttackComponent);
+	check(MainHandComponent);
 	if(!bHasWeapon)
 	{
-		return AttackComponent->GetComponentLocation();
+		return MainHandComponent->GetComponentLocation();
 	}
-	return AttackComponent->GetSocketLocation(AttackSocketName);
+	return MainHandComponent->GetSocketLocation(AttackSocketName);
 	
 }
 
@@ -87,7 +87,7 @@ void AAoCCharacterBase::die()
 	
 	if(bHasWeapon)
 	{
-		AttackComponent->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
+		MainHandComponent->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	}
 	MultiCastHandleDeath();
 	
@@ -107,9 +107,9 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 {
 
 	
-	AttackComponent->SetSimulatePhysics(true);
-	AttackComponent->SetEnableGravity(true);
-	AttackComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	MainHandComponent->SetSimulatePhysics(true);
+	MainHandComponent->SetEnableGravity(true);
+	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetEnableGravity(true);
@@ -141,24 +141,7 @@ UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 }
 
 
-void AAoCCharacterBase::ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const
-{
-	check(IsValid(GetAbilitySystemComponent()));
-	check(GameplayEffectToApply);
-	
-	FGameplayEffectContextHandle EffectContext = GetAbilitySystemComponent()->MakeEffectContext();
-	EffectContext.AddSourceObject(this);
-	
-	const FGameplayEffectSpecHandle EffectSpec = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectToApply, Level, EffectContext);
-	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*EffectSpec.Data.Get(), GetAbilitySystemComponent());
 
-	
-}
-
-void AAoCCharacterBase::InitializeAttributes() const
-{
-	
-}
 
 void AAoCCharacterBase::InitializeHealthBar()
 {
@@ -193,10 +176,12 @@ void AAoCCharacterBase::InitializeHealthBar()
 	
 		});
 	
-	
 		OnHealthChanged.Broadcast(AoCAs->GetHealth());
 		OnMaxHealthChanged.Broadcast(AoCAs->GetMaxHealth());
 	
-	
+}
 
+void AAoCCharacterBase::InitializeAttributes() const
+{
+	
 }

@@ -27,7 +27,9 @@ class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterf
 public:
 	AAoCCharacterBase();
 
-	// Gameplay Ability System
+	/*
+	 * Getters
+	 */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const{return AttributeSet;}
 	
@@ -37,57 +39,49 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	
-	/*Combat Start*/
+	/*Combat*/
+
+	// Handle Scene Properties
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<USkeletalMeshComponent> MainHandComponent;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<USkeletalMeshComponent> OffhandComponent;
+
 	UPROPERTY(EditAnywhere, Category="Combat")
 	bool bHasWeapon = false;
 	
 	UPROPERTY(EditAnywhere, Category="Combat")
-	TObjectPtr<USkeletalMeshComponent> AttackComponent;
-
-	UPROPERTY(EditAnywhere, Category="Combat")
-	TObjectPtr<USkeletalMeshComponent> OffhandComponent;
-	
-	UPROPERTY(EditAnywhere, Category="Combat")
 	FName AttackSocketName;
-
+	
 	//TODO:: Maybe remove offhand component and simply use Socket Names, Skeletal mesh components only make sense for locations on a seperate mesh
 
-
-
-	
-	// Handle Character Death for Client and Server
-	UFUNCTION(NetMulticast, Reliable)
-	void MultiCastHandleDeath();
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float LifeSpan = 5.f;
-
-	UPROPERTY(EditAnywhere, Category="Animation")
-	TObjectPtr<UAnimMontage> HitReactMontage;
-
 	//Combat Interface Overrides
-	virtual FVector GetAttackSocketLocation() override;
+	virtual FVector GetMainHandSocketLocation() override;
 	virtual FVector GetOffHandSocketLocation() override;
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual void die() override;
 
+	// Handle Character Death for Client and Server
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastHandleDeath();
 	
+
+	// Handle Combo
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UCombatComponent> CombatComponent;
 	virtual UCombatComponent* GetCombatComponent_Implementation() override;
 	
-	
 	/*TargetSystem*/
-
-	UPROPERTY(EditDefaultsOnly, Category="TargetSystem")
+	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UTargetComponent> TargetComponent;
 	virtual UTargetComponent* GetTargetComponent_Implementation() override;
 	
 	/*TargetSystem End*/
-	
-	
 	/*Combat End*/
+	
 
+	
 	
 	// Gameplay Ability System Data
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
@@ -96,10 +90,15 @@ protected:
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 	
-	// Attribute Setters
-	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
+	// Avatar Properties
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
 
+	UPROPERTY(EditAnywhere, Category="AvatarProperties")
+	TObjectPtr<UAnimMontage> HitReactMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AvatarProperties")
+	float LifeSpan = 5.f;
 	
 	/*Floating Health Bar Start*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -116,9 +115,5 @@ protected:
 	/*Floating Health Bar End*/
 
 	//Initialize Attributes in child because of different level locations
-	virtual void InitializeAttributes() const ;
-	
-	void ApplyGameplayEffectToSelf(float Level, TSubclassOf<UGameplayEffect> GameplayEffectToApply) const ;
-
-	
+	virtual void InitializeAttributes() const;
 };
