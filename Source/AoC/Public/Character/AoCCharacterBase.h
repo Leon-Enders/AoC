@@ -54,8 +54,8 @@ protected:
 	//TODO:: Maybe remove offhand component and simply use Socket Names, Skeletal mesh components only make sense for locations on a seperate mesh
 
 	//Combat Interface Overrides
-	virtual FVector GetMainHandSocketLocation() override;
-	virtual FVector GetOffHandSocketLocation() override;
+	virtual FVector GetMainHandSocketLocation_Implementation() override;
+	virtual FVector GetOffHandSocketLocation_Implementation() override;
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual void die() override;
 
@@ -101,8 +101,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
-
-	//Initialize Attributes in child because of different level locations
+	
 	virtual void InitializeAttributes() const;
 
 	virtual void InitializeAoCComponents() const;

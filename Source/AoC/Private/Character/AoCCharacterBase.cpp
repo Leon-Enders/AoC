@@ -57,7 +57,7 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 }
 
 
-FVector AAoCCharacterBase::GetMainHandSocketLocation()
+FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation()
 {
 	check(MainHandComponent);
 	if(!bHasWeapon)
@@ -68,7 +68,7 @@ FVector AAoCCharacterBase::GetMainHandSocketLocation()
 	
 }
 
-FVector AAoCCharacterBase::GetOffHandSocketLocation()
+FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation()
 {
 	// TODO: Properly implement OffhandSocket
 	check(OffhandComponent);
@@ -91,14 +91,6 @@ void AAoCCharacterBase::die()
 	
 }
 
-UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
-{
-	if(CombatComponent)
-	{
-		return CombatComponent;
-	}
-	return nullptr;
-}
 
 
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
@@ -131,6 +123,16 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 	if(HitReactMontage)
 	{
 		return HitReactMontage;
+	}
+	return nullptr;
+}
+
+
+UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
+{
+	if(CombatComponent)
+	{
+		return CombatComponent;
 	}
 	return nullptr;
 }
