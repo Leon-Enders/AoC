@@ -101,7 +101,7 @@ UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 {
 
-	
+	HealthBarComponent->SetHiddenInGame(true);
 	MainHandComponent->SetSimulatePhysics(true);
 	MainHandComponent->SetEnableGravity(true);
 	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
