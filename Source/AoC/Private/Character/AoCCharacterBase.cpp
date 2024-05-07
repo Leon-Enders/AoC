@@ -3,15 +3,10 @@
 
 #include "Character/AoCCharacterBase.h"
 #include "AoC/AoC.h"
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "Ability System/AoCAbilitySystemComponent.h"
-#include "Ability System/AoCAttributeSet.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/CombatComponent.h"
-#include "Components/WidgetComponent.h"
-#include "UI/UserWidget/AoCUserWidget.h"
+#include "UI/WidgetComponent/FloatingBarComponent.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -39,8 +34,8 @@ AAoCCharacterBase::AAoCCharacterBase()
 	//GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 
 	
-	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
-	HealthBar->SetupAttachment(GetRootComponent());
+	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
+	HealthBarComponent->SetupAttachment(GetRootComponent());
 	
 	
 }
@@ -51,7 +46,7 @@ void AAoCCharacterBase::BeginPlay()
 
 	if(IsLocallyControlled())
 	{
-		HealthBar->SetHiddenInGame(true);
+		HealthBarComponent->SetHiddenInGame(true);
 	}
 	
 	MainHandComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
@@ -141,47 +136,10 @@ UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 }
 
 
-
-
-void AAoCCharacterBase::InitializeHealthBar()
-{
-		const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
-
-		HealthBar->InitWidget();
-		if(UAoCUserWidget* AoCHealthBar = Cast<UAoCUserWidget>(HealthBar->GetUserWidgetObject()))
-		{
-			AoCHealthBar->SetWidgetController(this);
-		}
-	
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetHealthAttribute()).AddLambda(
-		[this](const FOnAttributeChangeData& Data)
-		{
-			OnHealthChanged.Broadcast(Data.NewValue);
-		}
-		);
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetMaxHealthAttribute()).AddLambda(
-		[this, AoCAs](const FOnAttributeChangeData& Data)
-		{
-			
-			if(HasAuthority())
-			{
-				OnMaxHealthChanged.Broadcast(Data.NewValue);
-			}
-			else
-			{
-				OnMaxHealthChanged.Broadcast(AoCAs->GetMaxHealth());
-			}
-	
-		});
-	
-		OnHealthChanged.Broadcast(AoCAs->GetHealth());
-		OnMaxHealthChanged.Broadcast(AoCAs->GetMaxHealth());
-	
-}
-
 void AAoCCharacterBase::InitializeAttributes() const
 {
-	
+}
+
+void AAoCCharacterBase::InitializeAoCComponents() const
+{
 }

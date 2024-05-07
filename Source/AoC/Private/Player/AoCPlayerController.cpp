@@ -12,7 +12,7 @@
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
-#include "UI/Widget/DamageTextComponent.h"
+#include "UI/WidgetComponent/DamageTextComponent.h"
 #include "AoCComponents/TargetComponent.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 

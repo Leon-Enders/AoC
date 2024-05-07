@@ -7,17 +7,14 @@
 #include "Ability System/Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
-#include "UI/WidgetController/OverlayWidgetController.h"
 #include "AoCCharacterBase.generated.h"
 
 
-
+class UFloatingBarComponent;
 class UGameplayAbility;
-class UGameplayEffect;
 class UAbilitySystemComponent;
 class UAttributeSet;
-class UWidgetComponent;
-struct FOnAttributeChangeData;
+
 
 UCLASS()
 class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -100,20 +97,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AvatarProperties")
 	float LifeSpan = 5.f;
 	
-	/*Floating Health Bar Start*/
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UWidgetComponent> HealthBar;
-
-	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnAttributeChangedSignature OnHealthChanged;
-
-	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnAttributeChangedSignature OnMaxHealthChanged;
 	
-	void InitializeHealthBar();
-	
-	/*Floating Health Bar End*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
 
 	//Initialize Attributes in child because of different level locations
 	virtual void InitializeAttributes() const;
+
+	virtual void InitializeAoCComponents() const;
 };

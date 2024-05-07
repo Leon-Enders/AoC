@@ -29,13 +29,16 @@ protected:
 	virtual void InitAbilityActorInfo() override;
 	virtual float GetDashDistanceForTag(const FGameplayTag& ComboTag) override;
 
+	// Initialize custom components here
+	virtual void InitializeAoCComponents() const override;
+	
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UMeleeComboInfo>MeleeComboInfo;
 
 	// Gameplay Abilities
 	void AddCharacterAbilities();
 
-
+	
 private:
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
