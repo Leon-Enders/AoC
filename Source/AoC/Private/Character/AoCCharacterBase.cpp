@@ -127,6 +127,11 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 	return nullptr;
 }
 
+bool AAoCCharacterBase::GetIsDead_Implementation()
+{
+	return bIsDead;
+}
+
 
 UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
 {

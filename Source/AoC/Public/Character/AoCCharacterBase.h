@@ -57,6 +57,7 @@ protected:
 	virtual FVector GetMainHandSocketLocation_Implementation() override;
 	virtual FVector GetOffHandSocketLocation_Implementation() override;
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
+	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
 
 	// Handle Character Death for Client and Server
