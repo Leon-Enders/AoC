@@ -2,6 +2,8 @@
 
 
 #include "Character/AoCCharacterBase.h"
+
+#include "AoCGameplayTags.h"
 #include "AoC/AoC.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -58,18 +60,30 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 }
 
 
-FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation()
+FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag)
 {
 	check(MainHandComponent);
 	if(!bHasWeapon)
 	{
-		return MainHandComponent->GetComponentLocation();
+		const FAoCGameplayTags& AoCGameplayTags = FAoCGameplayTags::Get();
+		
+		if(MontageTag == AoCGameplayTags.Event_Montage_Enemy_Attack_LeftHand)
+		{
+			return GetMesh()->GetSocketLocation(LeftHandSocketName);
+		}
+
+		if(MontageTag == AoCGameplayTags.Event_Montage_Enemy_Attack_RightHand)
+		{
+			return GetMesh()->GetSocketLocation(RightHandSocketName);
+		}
+		
+		return FVector();
 	}
 	return MainHandComponent->GetSocketLocation(AttackSocketName);
 	
 }
 
-FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation()
+FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGameplayTag GameplayTag)
 {
 	// TODO: Properly implement OffhandSocket
 	check(OffhandComponent);
@@ -127,6 +141,11 @@ UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 		return HitReactMontage;
 	}
 	return nullptr;
+}
+
+TArray<FTaggedMontages> AAoCCharacterBase::GetTaggedMontages_Implementation()
+{
+	return TaggedMontages;
 }
 
 bool AAoCCharacterBase::GetIsDead_Implementation()

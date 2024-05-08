@@ -45,23 +45,26 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> OffhandComponent;
 
-	UPROPERTY(EditAnywhere, Category="Combat")
+	UPROPERTY(EditAnywhere, Category="AvatarProperties")
 	bool bHasWeapon = false;
 	
-	UPROPERTY(EditAnywhere, Category="Combat")
+	UPROPERTY(EditAnywhere, Category="AvatarProperties")
 	FName AttackSocketName;
 
-	UPROPERTY(EditAnywhere, Category="Combat")
+	UPROPERTY(EditAnywhere, Category="AvatarProperties")
 	FName LeftHandSocketName;
 
-	UPROPERTY(EditAnywhere, Category="Combat")
-	FName RighthandSocketName;
-	
+	UPROPERTY(EditAnywhere, Category="AvatarProperties")
+	FName RightHandSocketName;
+
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TArray<FTaggedMontages> TaggedMontages;
 
 	//Combat Interface Overrides
-	virtual FVector GetMainHandSocketLocation_Implementation() override;
-	virtual FVector GetOffHandSocketLocation_Implementation() override;
+	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
+	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
+	virtual TArray<FTaggedMontages> GetTaggedMontages_Implementation() override;
 	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
 
