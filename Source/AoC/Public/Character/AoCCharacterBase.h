@@ -50,8 +50,13 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category="Combat")
 	FName AttackSocketName;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	FName LeftHandSocketName;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	FName RighthandSocketName;
 	
-	//TODO:: Maybe remove offhand component and simply use Socket Names, Skeletal mesh components only make sense for locations on a seperate mesh
 
 	//Combat Interface Overrides
 	virtual FVector GetMainHandSocketLocation_Implementation() override;

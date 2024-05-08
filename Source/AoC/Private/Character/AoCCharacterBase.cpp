@@ -6,6 +6,7 @@
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/CombatComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 
 // Sets default values
@@ -102,6 +103,7 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
 		check(DeathMontage);
 		PlayAnimMontage(DeathMontage);
+		GetCharacterMovement()->DisableMovement();
 	}
 	else
 	{
