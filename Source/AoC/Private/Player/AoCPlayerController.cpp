@@ -22,15 +22,7 @@ AAoCPlayerController::AAoCPlayerController()
 	bReplicates = true;
 }
 
-void AAoCPlayerController::ShowDamageText_Implementation(float Damage, ACharacter* TargetCharacter, const bool bIsCriticalHit)
-{
-	UDamageTextComponent* DamageTextWidget = NewObject<UDamageTextComponent>(TargetCharacter,DamageTextWidgetComponentClass);
-	DamageTextWidget->RegisterComponent();
-	DamageTextWidget->AttachToComponent(TargetCharacter->GetRootComponent(),FAttachmentTransformRules::KeepRelativeTransform);
-	DamageTextWidget->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-	DamageTextWidget->UpdateDamageText(Damage, bIsCriticalHit);
-	
-}
+
 
 void AAoCPlayerController::BeginPlay()
 {
@@ -181,4 +173,15 @@ UAoCAbilitySystemComponent* AAoCPlayerController::GetASC()
 	}
 	return ASC;
 
+}
+
+
+void AAoCPlayerController::ShowDamageText_Implementation(float Damage, ACharacter* TargetCharacter, const bool bIsCriticalHit)
+{
+	UDamageTextComponent* DamageTextWidget = NewObject<UDamageTextComponent>(TargetCharacter,DamageTextWidgetComponentClass);
+	DamageTextWidget->RegisterComponent();
+	DamageTextWidget->AttachToComponent(TargetCharacter->GetRootComponent(),FAttachmentTransformRules::KeepRelativeTransform);
+	DamageTextWidget->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	DamageTextWidget->UpdateDamageText(Damage, bIsCriticalHit);
+	
 }

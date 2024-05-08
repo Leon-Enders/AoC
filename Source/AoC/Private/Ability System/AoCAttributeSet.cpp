@@ -181,6 +181,10 @@ void UAoCAttributeSet::SetFloatingText(const FEffectProperties& Props, const flo
 		{
 			APC->ShowDamageText(Damage, Props.TargetCharacter, IsCriticalHit);
 		}
+		if(AAoCPlayerController* APC = Cast<AAoCPlayerController>(Props.TargetCharacter->Controller))
+		{
+			APC->ShowDamageText(Damage, Props.TargetCharacter, IsCriticalHit);
+		}
 	}
 }
 
