@@ -7,6 +7,7 @@
 #include "Ability System/Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
+#include "Interaction/CombatSystemInterface.h"
 #include "AoCCharacterBase.generated.h"
 
 
@@ -18,7 +19,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatSystemInterface
 {
 	GENERATED_BODY()
 
@@ -29,65 +30,26 @@ public:
 	 * Getters
 	 */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UCombatComponent* GetCombatComponent()const  override;
 	UAttributeSet* GetAttributeSet() const{return AttributeSet;}
 	
+	// Handle Character Death for Client and Server
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastHandleDeath();
 	
 protected:
 	
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
+
 	
-	/*Combat*/
-
-	// Handle Scene Properties
-	UPROPERTY(EditAnywhere, Category="Combat")
-	TObjectPtr<USkeletalMeshComponent> MainHandComponent;
-
-	UPROPERTY(EditAnywhere, Category="Combat")
-	TObjectPtr<USkeletalMeshComponent> OffhandComponent;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	bool bHasWeapon = false;
 	
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	FName AttackSocketName;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	FName LeftHandSocketName;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	FName RightHandSocketName;
-
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	TArray<FTaggedMontages> TaggedMontages;
-
-	//Combat Interface Overrides
-	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
-	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
-	virtual UAnimMontage* GetHitMontage_Implementation() override;
-	virtual TArray<FTaggedMontages> GetTaggedMontages_Implementation() override;
-	virtual bool GetIsDead_Implementation() override;
-	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
-	virtual void die() override;
-
-	// Handle Character Death for Client and Server
-	UFUNCTION(NetMulticast, Reliable)
-	void MultiCastHandleDeath();
+	
+	
 	
 
-	// Handle Combo
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UCombatComponent> CombatComponent;
-	virtual UCombatComponent* GetCombatComponent_Implementation() override;
-	
-	/*TargetSystem*/
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UTargetComponent> TargetComponent;
-	virtual UTargetComponent* GetTargetComponent_Implementation() override;
-	
-	/*TargetSystem End*/
-	/*Combat End*/
-	
 	
 	// Gameplay Ability System Data
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
@@ -96,20 +58,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 	
-	// Avatar Properties
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	TObjectPtr<UAnimMontage> HitReactMontage;
-
-	UPROPERTY(EditAnywhere,Category="AvatarProperties")
-	TObjectPtr<UAnimMontage> DeathMontage;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AvatarProperties")
-	float LifeSpan = 5.f;
-	
-	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
 	
@@ -117,10 +65,5 @@ protected:
 
 	virtual void InitializeAoCComponents() const;
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UNiagaraSystem* BloodEffect;
-private:
-
-	bool bIsDead = false;
+	
 };

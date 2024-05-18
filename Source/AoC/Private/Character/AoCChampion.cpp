@@ -41,17 +41,17 @@ void AAoCChampion::OnRep_PlayerState()
 	
 }
 
-int32 AAoCChampion::GetPlayerLevel() const
-{
-	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
-	check(PS);
-	return PS->GetPlayerLevel();
-}
+//int32 AAoCChampion::GetPlayerLevel() const
+//{
+//	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
+//	check(PS);
+//	return PS->GetPlayerLevel();
+//}
 
 void AAoCChampion::InitializeAttributes() const
 {
 	
-	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
+	//UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
 
 }
 
@@ -93,13 +93,13 @@ void AAoCChampion::AddCharacterAbilities()
 }
 
 
-float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
-{
-	return MeleeComboInfo->GetAttackDistanceForTag(ComboTag);
-}
+//float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
+//{
+//	return MeleeComboInfo->GetAttackDistanceForTag(ComboTag);
+//}
 
 void AAoCChampion::InitializeAoCComponents() const
 {
-	CombatComponent->InitCombatComponent(AbilitySystemComponent);
+	CombatComponent->InitializeCombatComponents(AbilitySystemComponent);
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 }

@@ -22,12 +22,12 @@ public:
 	virtual void OnRep_PlayerState() override;
 
 	/* Combat Interface*/
-	virtual int32 GetPlayerLevel()const override;
+	//virtual int32 GetPlayerLevel()const override;
 	virtual void InitializeAttributes() const override;
 	/* End Combat Interface*/
 protected:
 	virtual void InitAbilityActorInfo() override;
-	virtual float GetDashDistanceForTag(const FGameplayTag& ComboTag) override;
+	//virtual float GetDashDistanceForTag(const FGameplayTag& ComboTag) override;
 
 	// Initialize custom components here
 	virtual void InitializeAoCComponents() const override;

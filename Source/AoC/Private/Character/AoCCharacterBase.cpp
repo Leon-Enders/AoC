@@ -3,9 +3,7 @@
 
 #include "Character/AoCCharacterBase.h"
 
-#include "AoCGameplayTags.h"
 #include "AoC/AoC.h"
-#include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/CombatComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -16,16 +14,8 @@ AAoCCharacterBase::AAoCCharacterBase()
 {
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
-	MainHandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
-	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-	//TODO:: Update OffhandComponent Logic
-	OffhandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("OffhandComponent");
-	OffhandComponent->SetupAttachment(GetMesh(),"Weapon_LSocket");
-	OffhandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	
-	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
 	CombatComponent = CreateDefaultSubobject<UCombatComponent>("CombatComponent");
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
@@ -40,8 +30,10 @@ AAoCCharacterBase::AAoCCharacterBase()
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
 	
-	
 }
+
+
+
 
 void AAoCCharacterBase::BeginPlay()
 {
@@ -51,63 +43,14 @@ void AAoCCharacterBase::BeginPlay()
 	{
 		HealthBarComponent->SetHiddenInGame(true);
 	}
-	
-	MainHandComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()
 {
 }
 
-
-FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag)
-{
-	check(MainHandComponent);
-	if(!bHasWeapon)
-	{
-		const FAoCGameplayTags& AoCGameplayTags = FAoCGameplayTags::Get();
-		
-		if(MontageTag == AoCGameplayTags.Event_Montage_Enemy_Attack_LeftHand)
-		{
-			return GetMesh()->GetSocketLocation(LeftHandSocketName);
-		}
-
-		if(MontageTag == AoCGameplayTags.Event_Montage_Enemy_Attack_RightHand)
-		{
-			return GetMesh()->GetSocketLocation(RightHandSocketName);
-		}
-		
-		return FVector();
-	}
-	return MainHandComponent->GetSocketLocation(AttackSocketName);
-	
-}
-
-FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGameplayTag GameplayTag)
-{
-	// TODO: Properly implement OffhandSocket
-	check(OffhandComponent);
-	
-	return GetMesh()->GetSocketLocation("Weapon_LSocket");
-}
-
-void AAoCCharacterBase::die()
-{
-	if(bIsDead) return;
-	bIsDead = true;
-	
-	SetLifeSpan(LifeSpan);
-	
-	if(bHasWeapon)
-	{
-		MainHandComponent->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
-	}
-	MultiCastHandleDeath();
-	
-}
-
-
-
+//
+//
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 {
 	HealthBarComponent->SetHiddenInGame(true);
@@ -115,15 +58,15 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
-		check(DeathMontage);
-		PlayAnimMontage(DeathMontage);
+		//check(DeathMontage);
+		//PlayAnimMontage(DeathMontage);
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
 	{
-		MainHandComponent->SetSimulatePhysics(true);
-		MainHandComponent->SetEnableGravity(true);
-		MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+		//MainHandComponent->SetSimulatePhysics(true);
+		//MainHandComponent->SetEnableGravity(true);
+		//MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetEnableGravity(true);
@@ -134,50 +77,39 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	}
 }
 
-UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
-{
-	if(HitReactMontage)
-	{
-		return HitReactMontage;
-	}
-	return nullptr;
-}
-
-TArray<FTaggedMontages> AAoCCharacterBase::GetTaggedMontages_Implementation()
-{
-	return TaggedMontages;
-}
-
-bool AAoCCharacterBase::GetIsDead_Implementation()
-{
-	return bIsDead;
-}
-
-UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
-{
-	return BloodEffect;
-}
-
-
-UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
-{
-	if(CombatComponent)
-	{
-		return CombatComponent;
-	}
-	return nullptr;
-}
-
-UTargetComponent* AAoCCharacterBase::GetTargetComponent_Implementation()
-{
-	if(!TargetComponent) return nullptr;
-	return TargetComponent;
-}
-
-
+//UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
+//{
+//	if(HitReactMontage)
+//	{
+//		return HitReactMontage;
+//	}
+//	return nullptr;
+//}
+//
+//TArray<FTaggedMontages> AAoCCharacterBase::GetTaggedMontages_Implementation()
+//{
+//	return TaggedMontages;
+//}
+//
+//bool AAoCCharacterBase::GetIsDead_Implementation()
+//{
+//	return bIsDead;
+//}
+//
+//UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
+//{
+//	return BloodEffect;
+//}
+//
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+UCombatComponent* AAoCCharacterBase::GetCombatComponent() const
+{
+	check(CombatComponent);
+	return CombatComponent;
 }
 
 
