@@ -22,7 +22,7 @@ public:
 	virtual void OnRep_PlayerState() override;
 
 	/* Combat Interface*/
-	//virtual int32 GetPlayerLevel()const override;
+	virtual int32 GetPlayerLevel()const override;
 	virtual void InitializeAttributes() const override;
 	/* End Combat Interface*/
 protected:

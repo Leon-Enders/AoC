@@ -29,7 +29,8 @@ AAoCCharacterBase::AAoCCharacterBase()
 	
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
-	
+
+	OnDieDelegate.AddDynamic(this, &AAoCCharacterBase::MultiCastHandleDeath);
 }
 
 
@@ -48,6 +49,7 @@ void AAoCCharacterBase::BeginPlay()
 void AAoCCharacterBase::InitAbilityActorInfo()
 {
 }
+
 
 //
 //

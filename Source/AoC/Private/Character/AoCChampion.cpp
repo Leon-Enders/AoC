@@ -4,11 +4,9 @@
 #include "Character/AoCChampion.h"
 
 
-#include "AoCGameplayTags.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
-#include "Ability System/Data/MeleeComboInfo.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 #include "AoCComponents/CombatComponent.h"
@@ -41,17 +39,17 @@ void AAoCChampion::OnRep_PlayerState()
 	
 }
 
-//int32 AAoCChampion::GetPlayerLevel() const
-//{
-//	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
-//	check(PS);
-//	return PS->GetPlayerLevel();
-//}
+int32 AAoCChampion::GetPlayerLevel() const
+{
+	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
+	check(PS);
+	return PS->GetPlayerLevel();
+}
 
 void AAoCChampion::InitializeAttributes() const
 {
 	
-	//UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
+	UAoCAbilitySystemLibrary::InitializeAttributes(this, CombatComponent->GetCharacterClass(), GetPlayerLevel(),AbilitySystemComponent);
 
 }
 

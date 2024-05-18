@@ -17,7 +17,7 @@ class UGameplayAbility;
 class UAbilitySystemComponent;
 class UAttributeSet;
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDieDelegate);
 UCLASS()
 class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatSystemInterface
 {
@@ -33,20 +33,19 @@ public:
 	virtual UCombatComponent* GetCombatComponent()const  override;
 	UAttributeSet* GetAttributeSet() const{return AttributeSet;}
 	
-	// Handle Character Death for Client and Server
-	UFUNCTION(NetMulticast, Reliable)
-	void MultiCastHandleDeath();
+	FOnDieDelegate OnDieDelegate;
 	
 protected:
 	
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 
+
 	
+
 	
-	
-	
-	
+	UFUNCTION(NetMulticast, Reliable)
+	void MultiCastHandleDeath();
 
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UCombatComponent> CombatComponent;

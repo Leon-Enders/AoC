@@ -2,17 +2,17 @@
 
 #include "AoCComponents/CombatComponent.h"
 
-void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* OwnerActor, AActor* AvatarActor,
+void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* InOwnerActor, AActor* InAvatarActor,
                                                  UAbilitySystemComponent* InAbilitySystemComponent)
 {
-	Super::InitFromActor(OwnerActor, AvatarActor, InAbilitySystemComponent);
+	Super::InitFromActor(InOwnerActor, InAvatarActor, InAbilitySystemComponent);
  
-	CombatComponent = AvatarActor->FindComponentByClass<UCombatComponent>();
+	CombatComponent = InAvatarActor->FindComponentByClass<UCombatComponent>();
 }
 
-void FAoCGameplayAbilityActorInfo::SetAvatarActor(AActor* AvatarActor)
+void FAoCGameplayAbilityActorInfo::SetAvatarActor(AActor* InAvatarActor)
 {
-	Super::SetAvatarActor(AvatarActor);
+	Super::SetAvatarActor(InAvatarActor);
 }
 
 void FAoCGameplayAbilityActorInfo::ClearActorInfo()
