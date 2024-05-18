@@ -153,6 +153,11 @@ bool AAoCCharacterBase::GetIsDead_Implementation()
 	return bIsDead;
 }
 
+UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
+}
+
 
 UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
 {

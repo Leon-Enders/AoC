@@ -10,6 +10,7 @@
 #include "AoCCharacterBase.generated.h"
 
 
+class UNiagaraSystem;
 class UFloatingBarComponent;
 class UGameplayAbility;
 class UAbilitySystemComponent;
@@ -66,6 +67,7 @@ protected:
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual TArray<FTaggedMontages> GetTaggedMontages_Implementation() override;
 	virtual bool GetIsDead_Implementation() override;
+	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
 	virtual void die() override;
 
 	// Handle Character Death for Client and Server
@@ -116,6 +118,8 @@ protected:
 	virtual void InitializeAoCComponents() const;
 
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UNiagaraSystem* BloodEffect;
 private:
 
 	bool bIsDead = false;
