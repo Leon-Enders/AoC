@@ -10,6 +10,7 @@
  * 
  */
 
+class UCombatComponent;
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectDelegate, const FGameplayTagContainer& EffectAssetTags);
 
 UCLASS()
@@ -31,7 +32,7 @@ public:
 	
 	void ActivateInputReleased(const FGameplayTag& InputTag);
 	void ActivateInputHeld(const FGameplayTag& InputTag);
-
-protected:
 	
+protected:
+
 };

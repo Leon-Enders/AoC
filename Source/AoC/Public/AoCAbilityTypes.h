@@ -1,7 +1,33 @@
 #pragma once
 #include "GameplayEffectTypes.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "AoCAbilityTypes.generated.h"
 
+
+
+USTRUCT(BlueprintType)
+struct FAoCGameplayAbilityActorInfo : public FGameplayAbilityActorInfo
+{
+	GENERATED_USTRUCT_BODY()
+     
+		typedef Super FGameplayAbilityActorInfo;
+     
+	virtual ~FAoCGameplayAbilityActorInfo()
+	{
+	}
+	
+	
+	UPROPERTY(BlueprintReadOnly, Category = "ActorInfo")
+	TWeakObjectPtr<class UCombatComponent> CombatComponent;
+ 
+	virtual void InitFromActor(AActor* OwnerActor, AActor* AvatarActor, UAbilitySystemComponent* InAbilitySystemComponent) override;
+ 
+	virtual void SetAvatarActor(AActor* AvatarActor) override;
+ 
+	virtual void ClearActorInfo() override;
+	
+	class UCombatComponent* GetCombatComponent() const;
+};
 
 
 USTRUCT(BlueprintType)

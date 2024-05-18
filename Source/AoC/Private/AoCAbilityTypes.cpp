@@ -1,5 +1,32 @@
 #include "AoCAbilityTypes.h"
 
+#include "AoCComponents/CombatComponent.h"
+
+void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* OwnerActor, AActor* AvatarActor,
+                                                 UAbilitySystemComponent* InAbilitySystemComponent)
+{
+	Super::InitFromActor(OwnerActor, AvatarActor, InAbilitySystemComponent);
+ 
+	CombatComponent = AvatarActor->FindComponentByClass<UCombatComponent>();
+}
+
+void FAoCGameplayAbilityActorInfo::SetAvatarActor(AActor* AvatarActor)
+{
+	Super::SetAvatarActor(AvatarActor);
+}
+
+void FAoCGameplayAbilityActorInfo::ClearActorInfo()
+{
+	Super::ClearActorInfo();
+	
+	CombatComponent = nullptr;
+}
+
+UCombatComponent* FAoCGameplayAbilityActorInfo::GetCombatComponent() const
+{
+	return CombatComponent.IsValid() ? CombatComponent.Get() : nullptr;
+}
+
 bool FAoCGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bool& bOutSuccess)
 {
 	
