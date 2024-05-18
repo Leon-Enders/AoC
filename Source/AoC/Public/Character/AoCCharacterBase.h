@@ -50,6 +50,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UCombatComponent> CombatComponent;
 	
+
+	
 	// Gameplay Ability System Data
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

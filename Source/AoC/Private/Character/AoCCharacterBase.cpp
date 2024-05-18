@@ -44,6 +44,7 @@ void AAoCCharacterBase::BeginPlay()
 	{
 		HealthBarComponent->SetHiddenInGame(true);
 	}
+	
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()

@@ -152,7 +152,7 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			const bool bIsFatal = NewHealth<=0.f;
 			if(bIsFatal)
 			{
-				if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
+				if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter->GetComponentByClass<UCombatComponent>()))
 				{
 					CombatInterface->die();
 				}

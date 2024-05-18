@@ -6,7 +6,7 @@ void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* InOwnerActor, AActor* I
                                                  UAbilitySystemComponent* InAbilitySystemComponent)
 {
 	Super::InitFromActor(InOwnerActor, InAvatarActor, InAbilitySystemComponent);
- 
+	if(InAvatarActor)
 	CombatComponent = InAvatarActor->FindComponentByClass<UCombatComponent>();
 }
 

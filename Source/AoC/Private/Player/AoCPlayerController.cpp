@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
+#include "AoCComponents/CombatComponent.h"
 #include "Character/AoCCharacterBase.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
@@ -39,7 +40,7 @@ void AAoCPlayerController::BeginPlay()
 	// Initialize TargetComponent of the avatar
 	if(GetPawn())
 	{
-		AvatarTargetComponent = ICombatInterface::Execute_GetTargetComponent(GetPawn());
+		AvatarTargetComponent = ICombatInterface::Execute_GetTargetComponent(GetPawn()->GetComponentByClass<UCombatComponent>());
 	}
 	
 	
