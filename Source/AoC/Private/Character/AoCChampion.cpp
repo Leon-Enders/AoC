@@ -93,11 +93,6 @@ void AAoCChampion::AddCharacterAbilities()
 }
 
 
-//float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
-//{
-//	return MeleeComboInfo->GetAttackDistanceForTag(ComboTag);
-//}
-
 void AAoCChampion::InitializeAoCComponents() const
 {
 	CombatComponent->InitializeCombatComponents(AbilitySystemComponent);

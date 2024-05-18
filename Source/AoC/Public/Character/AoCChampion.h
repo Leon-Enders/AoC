@@ -27,7 +27,6 @@ public:
 	/* End Combat Interface*/
 protected:
 	virtual void InitAbilityActorInfo() override;
-	//virtual float GetDashDistanceForTag(const FGameplayTag& ComboTag) override;
 
 	// Initialize custom components here
 	virtual void InitializeAoCComponents() const override;

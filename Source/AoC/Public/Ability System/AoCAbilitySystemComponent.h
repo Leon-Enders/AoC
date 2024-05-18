@@ -31,5 +31,7 @@ public:
 	
 	void ActivateInputReleased(const FGameplayTag& InputTag);
 	void ActivateInputHeld(const FGameplayTag& InputTag);
+
+protected:
 	
 };
