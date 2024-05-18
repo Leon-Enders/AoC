@@ -159,15 +159,6 @@ UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
 }
 
 
-UCombatComponent* AAoCCharacterBase::GetCombatComponent_Implementation()
-{
-	if(CombatComponent)
-	{
-		return CombatComponent;
-	}
-	return nullptr;
-}
-
 UTargetComponent* AAoCCharacterBase::GetTargetComponent_Implementation()
 {
 	if(!TargetComponent) return nullptr;

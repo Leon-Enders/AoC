@@ -78,7 +78,7 @@ protected:
 	// Handle Combo
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UCombatComponent> CombatComponent;
-	virtual UCombatComponent* GetCombatComponent_Implementation() override;
+
 	
 	/*TargetSystem*/
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
