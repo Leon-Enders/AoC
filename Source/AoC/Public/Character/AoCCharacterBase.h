@@ -96,7 +96,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	FName CharacterName;
 	
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	UPROPERTY(VisibleDefaultsOnly, Category="AvatarProperties")
 	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
 	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
