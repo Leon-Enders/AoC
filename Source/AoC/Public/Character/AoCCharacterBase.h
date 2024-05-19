@@ -61,10 +61,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="AvatarProperties")
 	FName RightHandSocketName;
-
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	TArray<FTaggedMontages> TaggedMontages;
-
+	
 	//Combat Interface Overrides
 	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
 	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
@@ -75,12 +72,10 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	
-
 	// Handle Combo
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UComboComponent> ComboComponent;
 
-	
 	/*TargetSystem*/
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UTargetComponent> TargetComponent;
