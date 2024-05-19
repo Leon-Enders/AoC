@@ -7,7 +7,7 @@
 #include "AoC/AoC.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "AoCComponents/CombatComponent.h"
+#include "AoCComponents/ComboComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 
@@ -26,7 +26,7 @@ AAoCCharacterBase::AAoCCharacterBase()
 
 	
 	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
-	CombatComponent = CreateDefaultSubobject<UCombatComponent>("CombatComponent");
+	ComboComponent = CreateDefaultSubobject<UComboComponent>("ComboComponent");
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//We have to Overlap Capsule for now since its a modular character

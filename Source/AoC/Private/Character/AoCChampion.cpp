@@ -11,7 +11,7 @@
 #include "Ability System/Data/MeleeComboInfo.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
-#include "AoCComponents/CombatComponent.h"
+#include "AoCComponents/ComboComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 
 AAoCChampion::AAoCChampion()
@@ -100,6 +100,6 @@ float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
 
 void AAoCChampion::InitializeAoCComponents() const
 {
-	CombatComponent->InitCombatComponent(AbilitySystemComponent);
+	ComboComponent->InitCombatComponent(AbilitySystemComponent);
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 }

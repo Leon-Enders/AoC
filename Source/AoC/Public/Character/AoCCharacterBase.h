@@ -10,6 +10,7 @@
 #include "AoCCharacterBase.generated.h"
 
 
+class UComboComponent;
 class UNiagaraSystem;
 class UFloatingBarComponent;
 class UGameplayAbility;
@@ -77,7 +78,7 @@ protected:
 
 	// Handle Combo
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UCombatComponent> CombatComponent;
+	TObjectPtr<UComboComponent> ComboComponent;
 
 	
 	/*TargetSystem*/
