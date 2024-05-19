@@ -7,10 +7,12 @@
 #include "Ability System/Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/AoCAvatarDataInterface.h"
+#include "Interaction/AoCSocketManagerInterface.h"
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
 
+class UAoCSocketManagerComponent;
 class UAoCAvatarDataComponent;
 class UComboComponent;
 class UNiagaraSystem;
@@ -22,7 +24,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public IAoCAvatarDataInterface, public ICombatInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public IAoCAvatarDataInterface, public IAoCSocketManagerInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -41,30 +43,9 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	
-	/*Combat*/
-
-	// Handle Scene Properties
-	UPROPERTY(EditAnywhere, Category="Combat")
-	TObjectPtr<USkeletalMeshComponent> MainHandComponent;
-
-	UPROPERTY(EditAnywhere, Category="Combat")
-	TObjectPtr<USkeletalMeshComponent> OffhandComponent;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	bool bHasWeapon = false;
-	
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	FName AttackSocketName;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	FName LeftHandSocketName;
-
-	UPROPERTY(EditAnywhere, Category="AvatarProperties")
-	FName RightHandSocketName;
 	
 	//Combat Interface Overrides
-	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
-	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag MontageTag) override;
+	
 	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
 
@@ -81,37 +62,37 @@ protected:
 	TObjectPtr<UTargetComponent> TargetComponent;
 	virtual UTargetComponent* GetTargetComponent_Implementation() override;
 	
-	/*TargetSystem End*/
-	/*Combat End*/
-	
-	
-	
 
 	// Avatar Properties
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	FName CharacterName;
 	
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
+	
 	UPROPERTY()
 	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
 	
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
+	UPROPERTY()
+	TObjectPtr<UAoCSocketManagerComponent> SocketManagerComponent;
 	
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
 
 
-	//~IAoCAvatarDataInterface interface
+	//~IAoCAvatarDataInterface
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual UAnimMontage* GetDeathMontage_Implementation() override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
 	virtual TArray<FGameplayTagMontage> GetGameplayMontages_Implementation() override;
-	//~End of IAoCAvatarDataInterface interface
+	//~End of IAoCAvatarDataInterface
 	
+	//~IAoCSocketManagerInterface
+	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
+	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
+	//~End of IAoCSocketManagerInterface
 	
-
-
 	// GameplayAbilitySystem
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

@@ -6,6 +6,7 @@
 #include "AoCGameplayTags.h"
 #include "AoC/AoC.h"
 #include "AoCComponents/AoCAvatarDataComponent.h"
+#include "AoCComponents/AoCSocketManagerComponent.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/ComboComponent.h"
@@ -19,19 +20,11 @@ AAoCCharacterBase::AAoCCharacterBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	AvatarDataComponent = CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent");
-
-	
-	MainHandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
-	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-	//TODO:: Update OffhandComponent Logic
-	OffhandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("OffhandComponent");
-	OffhandComponent->SetupAttachment(GetMesh(),"Weapon_LSocket");
-	OffhandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-	
+	SocketManagerComponent = CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent");
 	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
 	ComboComponent = CreateDefaultSubobject<UComboComponent>("ComboComponent");
+	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
+	HealthBarComponent->SetupAttachment(GetRootComponent());
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//We have to Overlap Capsule for now since its a modular character
@@ -40,11 +33,6 @@ AAoCCharacterBase::AAoCCharacterBase()
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//no need to overlap with mesh yet
 	//GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
-
-	
-	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
-	HealthBarComponent->SetupAttachment(GetRootComponent());
-	
 	
 }
 
@@ -57,43 +45,7 @@ void AAoCCharacterBase::BeginPlay()
 		HealthBarComponent->SetHiddenInGame(true);
 	}
 	AvatarDataComponent->InitializeAvatarData(CharacterName);
-	MainHandComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
-}
-
-void AAoCCharacterBase::InitAbilityActorInfo()
-{
-}
-
-
-FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation(const FGameplayTag MontageTag)
-{
-	check(MainHandComponent);
-	if(!bHasWeapon)
-	{
-		const FAoCGameplayTags& AoCGameplayTags = FAoCGameplayTags::Get();
-		
-		if(MontageTag == AoCGameplayTags.Event_Montage_Enemy_Attack_LeftHand)
-		{
-			return GetMesh()->GetSocketLocation(LeftHandSocketName);
-		}
-
-		if(MontageTag == AoCGameplayTags.Event_Montage_Enemy_Attack_RightHand)
-		{
-			return GetMesh()->GetSocketLocation(RightHandSocketName);
-		}
-		
-		return FVector();
-	}
-	return MainHandComponent->GetSocketLocation(AttackSocketName);
-	
-}
-
-FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGameplayTag GameplayTag)
-{
-	// TODO: Properly implement OffhandSocket
-	check(OffhandComponent);
-	
-	return GetMesh()->GetSocketLocation("Weapon_LSocket");
+	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
 }
 
 void AAoCCharacterBase::die()
@@ -102,11 +54,6 @@ void AAoCCharacterBase::die()
 	bIsDead = true;
 	
 	SetLifeSpan(AvatarDataComponent->GetAvatarLifeSpan());
-	
-	if(bHasWeapon)
-	{
-		MainHandComponent->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
-	}
 	MultiCastHandleDeath();
 	
 }
@@ -125,10 +72,7 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	}
 	else
 	{
-		MainHandComponent->SetSimulatePhysics(true);
-		MainHandComponent->SetEnableGravity(true);
-		MainHandComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-
+		SocketManagerComponent->HandleDeath();
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetEnableGravity(true);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
@@ -144,6 +88,16 @@ bool AAoCCharacterBase::GetIsDead_Implementation()
 	return bIsDead;
 }
 
+
+FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation(const FGameplayTag& MontageTag)
+{
+	return SocketManagerComponent->GetMainHandSocketLocation(MontageTag);
+}
+
+FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGameplayTag& MontageTag)
+{
+	return SocketManagerComponent->GetOffHandSocketLocation(MontageTag);
+}
 
 UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 {
@@ -187,3 +141,8 @@ void AAoCCharacterBase::InitializeAttributes() const
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
 }
+
+void AAoCCharacterBase::InitAbilityActorInfo()
+{
+}
+
