@@ -5,6 +5,7 @@
 
 #include "AoCGameplayTags.h"
 #include "AoC/AoC.h"
+#include "AoCComponents/AoCAvatarDataComponent.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/ComboComponent.h"
@@ -16,6 +17,10 @@ AAoCCharacterBase::AAoCCharacterBase()
 {
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
+
+	AvatarDataComponent = CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent");
+
+	
 	MainHandComponent = CreateDefaultSubobject<USkeletalMeshComponent>("AttackComponent");
 	MainHandComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
@@ -51,7 +56,7 @@ void AAoCCharacterBase::BeginPlay()
 	{
 		HealthBarComponent->SetHiddenInGame(true);
 	}
-	
+	AvatarDataComponent->InitializeAvatarData(CharacterClass);
 	MainHandComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
 }
 
@@ -96,7 +101,7 @@ void AAoCCharacterBase::die()
 	if(bIsDead) return;
 	bIsDead = true;
 	
-	SetLifeSpan(LifeSpan);
+	SetLifeSpan(AvatarDataComponent->GetAvatarLifeSpan());
 	
 	if(bHasWeapon)
 	{
@@ -115,8 +120,7 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
-		check(DeathMontage);
-		PlayAnimMontage(DeathMontage);
+		PlayAnimMontage(AvatarDataComponent->GetDeathMontage());
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
@@ -134,28 +138,32 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	}
 }
 
-UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
-{
-	if(HitReactMontage)
-	{
-		return HitReactMontage;
-	}
-	return nullptr;
-}
-
-TArray<FTaggedMontages> AAoCCharacterBase::GetTaggedMontages_Implementation()
-{
-	return TaggedMontages;
-}
 
 bool AAoCCharacterBase::GetIsDead_Implementation()
 {
 	return bIsDead;
 }
 
+
+UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
+{
+	return AvatarDataComponent->GetHitMontage();
+}
+
+UAnimMontage* AAoCCharacterBase::GetDeathMontage_Implementation()
+{
+	return AvatarDataComponent->GetDeathMontage();
+}
+
+TArray<FGameplayTagMontage> AAoCCharacterBase::GetGameplayMontages_Implementation()
+{
+	return AvatarDataComponent->GetGameplayTagMontages();
+}
+
+
 UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
 {
-	return BloodEffect;
+	return AvatarDataComponent->GetBloodEffect();
 }
 
 
