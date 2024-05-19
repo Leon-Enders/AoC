@@ -7,6 +7,7 @@
 #include "AoCGameModeBase.generated.h"
 
 
+class UAoCAvatarDataInfo;
 class UCharacterClassInfo;
 /**
  * 
@@ -18,7 +19,9 @@ class AOC_API AAoCGameModeBase : public AGameModeBase
 	
 public:
 
-	UPROPERTY(EditDefaultsOnly, Category="Character Class Defaults")
+	UPROPERTY(EditDefaultsOnly, Category="AoCDataInfo")
 	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
 
+	UPROPERTY(EditDefaultsOnly, Category="AoCDataInfo")
+	TObjectPtr<UAoCAvatarDataInfo> AoCAvatarDataInfo;
 };
