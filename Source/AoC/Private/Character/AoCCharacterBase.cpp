@@ -56,7 +56,7 @@ void AAoCCharacterBase::BeginPlay()
 	{
 		HealthBarComponent->SetHiddenInGame(true);
 	}
-	AvatarDataComponent->InitializeAvatarData(CharacterClass);
+	AvatarDataComponent->InitializeAvatarData(CharacterName);
 	MainHandComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::SnapToTargetIncludingScale, "Weapon_RSocket");
 }
 
