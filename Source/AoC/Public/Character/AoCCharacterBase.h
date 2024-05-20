@@ -15,9 +15,7 @@
 class UAoCSocketManagerComponent;
 class UAoCAvatarDataComponent;
 class UComboComponent;
-class UNiagaraSystem;
 class UFloatingBarComponent;
-class UGameplayAbility;
 class UAbilitySystemComponent;
 class UAttributeSet;
 

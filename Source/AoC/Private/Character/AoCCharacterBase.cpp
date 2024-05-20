@@ -44,8 +44,7 @@ void AAoCCharacterBase::BeginPlay()
 	{
 		HealthBarComponent->SetHiddenInGame(true);
 	}
-	AvatarDataComponent->InitializeAvatarData(CharacterName);
-	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
+	
 }
 
 void AAoCCharacterBase::die()
@@ -62,6 +61,7 @@ void AAoCCharacterBase::die()
 
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 {
+	
 	HealthBarComponent->SetHiddenInGame(true);
 	if(IsPlayerControlled())
 	{
@@ -140,6 +140,8 @@ void AAoCCharacterBase::InitializeAttributes() const
 
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
+	AvatarDataComponent->InitializeAvatarData(CharacterName);
+	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()
