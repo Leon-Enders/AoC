@@ -21,25 +21,23 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 
-	/* Combat Interface*/
-	virtual int32 GetPlayerLevel()const override;
+	
+	virtual int32 GetPlayerLevel_Implementation()const override;
 	virtual void InitializeAttributes() const override;
-	/* End Combat Interface*/
+
 protected:
 	virtual void InitAbilityActorInfo() override;
-	virtual float GetDashDistanceForTag(const FGameplayTag& ComboTag) override;
+	virtual float GetDashDistance_Implementation(const FGameplayTag& ComboTag) override;
 
 	// Initialize custom components here
 	virtual void InitializeAoCComponents() const override;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UMeleeComboInfo>MeleeComboInfo;
 
 	// Gameplay Abilities
-	void AddCharacterAbilities();
+	void AddCharacterAbilities()const;
 
-	
 private:
+	//TODO: Move this also to data asset, create an data asset for champion abilities + passive abilities and one for enemies
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
 

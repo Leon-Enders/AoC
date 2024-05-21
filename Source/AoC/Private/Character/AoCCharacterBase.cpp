@@ -4,6 +4,8 @@
 #include "Character/AoCCharacterBase.h"
 
 #include "AoCGameplayTags.h"
+#include "Ability System/AoCAbilitySystemComponent.h"
+#include "Ability System/AoCAttributeSet.h"
 #include "AoC/AoC.h"
 #include "AoCComponents/AoCAvatarDataComponent.h"
 #include "AoCComponents/AoCSocketManagerComponent.h"
@@ -140,6 +142,7 @@ void AAoCCharacterBase::InitializeAttributes() const
 
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
+	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 	AvatarDataComponent->InitializeAvatarData(CharacterName);
 	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
 }

@@ -8,13 +8,9 @@
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
-#include "Ability System/Data/MeleeComboInfo.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 #include "AoCComponents/ComboComponent.h"
-#include "AoCComponents/AoCAvatarDataComponent.h"
-#include "AoCComponents/AoCSocketManagerComponent.h"
-#include "UI/WidgetComponent/FloatingBarComponent.h"
 
 AAoCChampion::AAoCChampion()
 {
@@ -43,7 +39,7 @@ void AAoCChampion::OnRep_PlayerState()
 	
 }
 
-int32 AAoCChampion::GetPlayerLevel() const
+int32 AAoCChampion::GetPlayerLevel_Implementation() const
 {
 	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
 	check(PS);
@@ -53,7 +49,7 @@ int32 AAoCChampion::GetPlayerLevel() const
 void AAoCChampion::InitializeAttributes() const
 {
 	
-	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
+	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, IAoCAvatarDataInterface::Execute_GetPlayerLevel(this),AbilitySystemComponent);
 
 }
 
@@ -82,7 +78,12 @@ void AAoCChampion::InitAbilityActorInfo()
 	
 }
 
-void AAoCChampion::AddCharacterAbilities() 
+float AAoCChampion::GetDashDistance_Implementation(const FGameplayTag& ComboTag)
+{
+	return ComboComponent->GetDashDistance(ComboTag);
+}
+
+void AAoCChampion::AddCharacterAbilities()const
 {
 	if(!HasAuthority())
 	{
@@ -94,15 +95,8 @@ void AAoCChampion::AddCharacterAbilities()
 	AoCAbilitySystemComponent->AddCharacterPassiveAbilities(StartUpPassiveAbilities);
 }
 
-
-float AAoCChampion::GetDashDistanceForTag(const FGameplayTag& ComboTag)
-{
-	return MeleeComboInfo->GetAttackDistanceForTag(ComboTag);
-}
-
 void AAoCChampion::InitializeAoCComponents() const
 {
 	Super::InitializeAoCComponents();
 	ComboComponent->InitCombatComponent(AbilitySystemComponent);
-	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 }
