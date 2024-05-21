@@ -101,6 +101,26 @@ FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGamepl
 	return SocketManagerComponent->GetOffHandSocketLocation(MontageTag);
 }
 
+bool AAoCCharacterBase::GetIsTargeting_Implementation() const
+{
+	return TargetComponent->GetIsTargeting();
+}
+
+AActor* AAoCCharacterBase::GetTarget_Implementation()
+{
+	return TargetComponent->GetTarget();
+}
+
+void AAoCCharacterBase::SetTarget_Implementation(AActor* TargetToSet)
+{
+	TargetComponent->SetTarget(TargetToSet);
+}
+
+void AAoCCharacterBase::FindTarget_Implementation()
+{
+	return TargetComponent->FindTarget();
+}
+
 UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 {
 	return AvatarDataComponent->GetHitMontage();
@@ -123,13 +143,6 @@ UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
 }
 
 
-UTargetComponent* AAoCCharacterBase::GetTargetComponent_Implementation()
-{
-	if(!TargetComponent) return nullptr;
-	return TargetComponent;
-}
-
-
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
@@ -145,6 +158,7 @@ void AAoCCharacterBase::InitializeAoCComponents() const
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 	AvatarDataComponent->InitializeAvatarData(CharacterName);
 	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
+	TargetComponent->InitializeTargetComponent(CharacterName);
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()

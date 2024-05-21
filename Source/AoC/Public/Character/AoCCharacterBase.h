@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "Interaction/AoCAvatarDataInterface.h"
 #include "Interaction/AoCSocketManagerInterface.h"
+#include "Interaction/AoCTargetingInterface.h"
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
@@ -22,7 +23,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public IAoCAvatarDataInterface, public IAoCSocketManagerInterface, public ICombatInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public IAoCAvatarDataInterface, public IAoCSocketManagerInterface,public IAoCTargetingInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -55,18 +56,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UComboComponent> ComboComponent;
 
-	/*TargetSystem*/
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UTargetComponent> TargetComponent;
-	virtual UTargetComponent* GetTargetComponent_Implementation() override;
-	
-
 	// Avatar Properties
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	FName CharacterName;
 	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
+
+	UPROPERTY()
+	TObjectPtr<UTargetComponent> TargetComponent;
 	
 	UPROPERTY()
 	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
@@ -90,6 +88,15 @@ protected:
 	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
 	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
 	//~End of IAoCSocketManagerInterface
+
+
+	//~IAoCAvatarDataInterface
+	virtual bool GetIsTargeting_Implementation() const override;
+	virtual AActor* GetTarget_Implementation() override;
+	virtual void SetTarget_Implementation(AActor* TargetToSet) override;
+	virtual void FindTarget_Implementation() override;
+	//~End of IAoCAvatarDataInterface
+
 	
 	// GameplayAbilitySystem
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")

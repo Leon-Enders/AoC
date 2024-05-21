@@ -13,7 +13,6 @@
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
 #include "UI/WidgetComponent/DamageTextComponent.h"
-#include "AoCComponents/TargetComponent.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 
 
@@ -37,13 +36,6 @@ void AAoCPlayerController::BeginPlay()
 	}
 
 	// Initialize TargetComponent of the avatar
-	if(GetPawn())
-	{
-		AvatarTargetComponent = ICombatInterface::Execute_GetTargetComponent(GetPawn());
-	}
-	
-	
-	
 }
 
 void AAoCPlayerController::SetupInputComponent()
@@ -137,7 +129,7 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 
 void AAoCPlayerController::OnFindTarget(const FInputActionValue& InputActionValue)
 {
-	AvatarTargetComponent->FindTarget();
+	IAoCTargetingInterface::Execute_FindTarget(GetPawn());
 }
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)

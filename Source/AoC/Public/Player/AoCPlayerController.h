@@ -91,6 +91,4 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
 	
-	//Soft Target System
-	TObjectPtr<UTargetComponent> AvatarTargetComponent;
 };
