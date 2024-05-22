@@ -14,6 +14,7 @@
 #include "AoCComponents/ComboComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
+#include "MotionWarpingComponent.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -27,6 +28,7 @@ AAoCCharacterBase::AAoCCharacterBase()
 	ComboComponent = CreateDefaultSubobject<UComboComponent>("ComboComponent");
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>("MotionWarpingComponent");
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//We have to Overlap Capsule for now since its a modular character
@@ -111,10 +113,17 @@ AActor* AAoCCharacterBase::GetTarget_Implementation()
 	return TargetComponent->GetTarget();
 }
 
+
 void AAoCCharacterBase::SetTarget_Implementation(AActor* TargetToSet)
 {
 	TargetComponent->SetTarget(TargetToSet);
 }
+
+void AAoCCharacterBase::UpdateWarpTargetName_Implementation(FName WarpTargetName)
+{
+	TargetComponent->UpdateWarpTargetName(WarpTargetName);
+}
+
 
 void AAoCCharacterBase::FindTarget_Implementation()
 {
@@ -158,7 +167,7 @@ void AAoCCharacterBase::InitializeAoCComponents() const
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 	AvatarDataComponent->InitializeAvatarData(CharacterName);
 	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
-	TargetComponent->InitializeTargetComponent(CharacterName);
+	TargetComponent->InitializeTargetComponent(CharacterName, MotionWarpingComponent);
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()

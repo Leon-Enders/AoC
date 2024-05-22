@@ -13,10 +13,12 @@
 #include "AoCCharacterBase.generated.h"
 
 
+class UTargetComponent;
 class UAoCSocketManagerComponent;
 class UAoCAvatarDataComponent;
 class UComboComponent;
 class UFloatingBarComponent;
+class UMotionWarpingComponent;
 class UAbilitySystemComponent;
 class UAttributeSet;
 
@@ -52,9 +54,6 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	
-	// Handle Combo
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UComboComponent> ComboComponent;
 
 	// Avatar Properties
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
@@ -63,7 +62,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UTargetComponent> TargetComponent;
 	
 	UPROPERTY()
@@ -72,11 +71,29 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAoCSocketManagerComponent> SocketManagerComponent;
 	
-	
+	UPROPERTY(EditDefaultsOnly, Category="Combat")
+	TObjectPtr<UComboComponent> ComboComponent;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
+	
+	// Handle Combo
+	UPROPERTY(EditDefaultsOnly, Category="Combat")
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 
+	// GameplayAbilitySystem
+	UPROPERTY(EditAnywhere, Category="AbilitySystem")
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
+	UPROPERTY(EditAnywhere, Category="AbilitySystem")
+	TObjectPtr<UAttributeSet> AttributeSet;
+
+	// Initialization
+	virtual void InitializeAttributes() const;
+	virtual void InitializeAoCComponents() const;
+
+protected:
+	
 	//~IAoCAvatarDataInterface
 	virtual UAnimMontage* GetHitMontage_Implementation() override;
 	virtual UAnimMontage* GetDeathMontage_Implementation() override;
@@ -90,25 +107,13 @@ protected:
 	//~End of IAoCSocketManagerInterface
 
 
-	//~IAoCAvatarDataInterface
+	//~IAoCTargetingInterface
 	virtual bool GetIsTargeting_Implementation() const override;
 	virtual AActor* GetTarget_Implementation() override;
 	virtual void SetTarget_Implementation(AActor* TargetToSet) override;
+	virtual void UpdateWarpTargetName_Implementation(FName WarpTargetName) override;
 	virtual void FindTarget_Implementation() override;
-	//~End of IAoCAvatarDataInterface
-
-	
-	// GameplayAbilitySystem
-	UPROPERTY(EditAnywhere, Category="AbilitySystem")
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-
-	UPROPERTY(EditAnywhere, Category="AbilitySystem")
-	TObjectPtr<UAttributeSet> AttributeSet;
-
-	// Initialization
-	virtual void InitializeAttributes() const;
-	virtual void InitializeAoCComponents() const;
-
+	//~End of IAoCTargetingInterface
 private:
 
 	bool bIsDead = false;
