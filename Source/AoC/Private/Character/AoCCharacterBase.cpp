@@ -93,65 +93,6 @@ bool AAoCCharacterBase::GetIsDead_Implementation()
 }
 
 
-FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation(const FGameplayTag& MontageTag)
-{
-	return SocketManagerComponent->GetMainHandSocketLocation(MontageTag);
-}
-
-FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGameplayTag& MontageTag)
-{
-	return SocketManagerComponent->GetOffHandSocketLocation(MontageTag);
-}
-
-bool AAoCCharacterBase::GetIsTargeting_Implementation() const
-{
-	return TargetComponent->GetIsTargeting();
-}
-
-AActor* AAoCCharacterBase::GetTarget_Implementation()
-{
-	return TargetComponent->GetTarget();
-}
-
-
-void AAoCCharacterBase::SetTarget_Implementation(AActor* TargetToSet)
-{
-	TargetComponent->SetTarget(TargetToSet);
-}
-
-void AAoCCharacterBase::UpdateWarpTargetName_Implementation(FName WarpTargetName)
-{
-	TargetComponent->UpdateWarpTargetName(WarpTargetName);
-}
-
-
-void AAoCCharacterBase::FindTarget_Implementation()
-{
-	return TargetComponent->FindTarget();
-}
-
-UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
-{
-	return AvatarDataComponent->GetHitMontage();
-}
-
-UAnimMontage* AAoCCharacterBase::GetDeathMontage_Implementation()
-{
-	return AvatarDataComponent->GetDeathMontage();
-}
-
-TArray<FGameplayTagMontage> AAoCCharacterBase::GetGameplayMontages_Implementation()
-{
-	return AvatarDataComponent->GetGameplayTagMontages();
-}
-
-
-UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
-{
-	return AvatarDataComponent->GetBloodEffect();
-}
-
-
 UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
@@ -165,9 +106,7 @@ void AAoCCharacterBase::InitializeAttributes() const
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
-	AvatarDataComponent->InitializeAvatarData(CharacterName);
-	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
-	TargetComponent->InitializeTargetComponent(CharacterName, MotionWarpingComponent);
+	
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()

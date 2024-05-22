@@ -13,10 +13,6 @@
 #include "AoCCharacterBase.generated.h"
 
 
-class UTargetComponent;
-class UAoCSocketManagerComponent;
-class UAoCAvatarDataComponent;
-class UComboComponent;
 class UFloatingBarComponent;
 class UMotionWarpingComponent;
 class UAbilitySystemComponent;
@@ -25,7 +21,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public IAoCAvatarDataInterface, public IAoCSocketManagerInterface,public IAoCTargetingInterface, public ICombatInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -44,7 +40,6 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	
-	
 	//Combat Interface Overrides
 	
 	virtual bool GetIsDead_Implementation() override;
@@ -54,26 +49,15 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	
-
-	// Avatar Properties
+	
+	
+	// Avatar properties
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	FName CharacterName;
 	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
-
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UTargetComponent> TargetComponent;
 	
-	UPROPERTY()
-	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
-	
-	UPROPERTY()
-	TObjectPtr<UAoCSocketManagerComponent> SocketManagerComponent;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UComboComponent> ComboComponent;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
 	
@@ -92,28 +76,6 @@ protected:
 	virtual void InitializeAttributes() const;
 	virtual void InitializeAoCComponents() const;
 
-protected:
-	
-	//~IAoCAvatarDataInterface
-	virtual UAnimMontage* GetHitMontage_Implementation() override;
-	virtual UAnimMontage* GetDeathMontage_Implementation() override;
-	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
-	virtual TArray<FGameplayTagMontage> GetGameplayMontages_Implementation() override;
-	//~End of IAoCAvatarDataInterface
-	
-	//~IAoCSocketManagerInterface
-	virtual FVector GetMainHandSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
-	virtual FVector GetOffHandSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
-	//~End of IAoCSocketManagerInterface
-
-
-	//~IAoCTargetingInterface
-	virtual bool GetIsTargeting_Implementation() const override;
-	virtual AActor* GetTarget_Implementation() override;
-	virtual void SetTarget_Implementation(AActor* TargetToSet) override;
-	virtual void UpdateWarpTargetName_Implementation(FName WarpTargetName) override;
-	virtual void FindTarget_Implementation() override;
-	//~End of IAoCTargetingInterface
 private:
 
 	bool bIsDead = false;
