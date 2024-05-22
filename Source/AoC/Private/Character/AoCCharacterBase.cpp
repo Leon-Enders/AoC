@@ -15,6 +15,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 #include "MotionWarpingComponent.h"
+#include "Interaction/AoCComponentInterface.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -22,10 +23,9 @@ AAoCCharacterBase::AAoCCharacterBase()
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 
-	AvatarDataComponent = CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent");
-	SocketManagerComponent = CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent");
-	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
-	ComboComponent = CreateDefaultSubobject<UComboComponent>("ComboComponent");
+	SetupAoCComponentsMap();
+
+	
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>("MotionWarpingComponent");
@@ -130,6 +130,8 @@ void AAoCCharacterBase::FindTarget_Implementation()
 	return TargetComponent->FindTarget();
 }
 
+
+
 UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 {
 	return AvatarDataComponent->GetHitMontage();
@@ -174,3 +176,12 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 {
 }
 
+
+
+void AAoCCharacterBase::SetupAoCComponentsMap()
+{
+	AoCComponentsMap.Add(EAoCComponents::AvatarDataComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent")));
+	AoCComponentsMap.Add(EAoCComponents::TargetComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UTargetComponent>("TargetComponent")));
+	AoCComponentsMap.Add(EAoCComponents::ComboComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UComboComponent>("ComboComponent")));
+	AoCComponentsMap.Add(EAoCComponents::SocketManagerComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent")));
+}

@@ -13,6 +13,17 @@
 #include "AoCCharacterBase.generated.h"
 
 
+class IAoCComponentInterface;
+
+enum class EAoCComponents
+{
+	TargetComponent,
+	AvatarDataComponent,
+	ComboComponent,
+	SocketManagerComponent
+};
+
+class UAoCComponentInterface;
 class UTargetComponent;
 class UAoCSocketManagerComponent;
 class UAoCAvatarDataComponent;
@@ -62,6 +73,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
 
+
+
+
+	TMap<EAoCComponents, IAoCComponentInterface*> AoCComponentsMap;
+	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UTargetComponent> TargetComponent;
 	
@@ -116,5 +132,8 @@ protected:
 	//~End of IAoCTargetingInterface
 private:
 
+
+	void SetupAoCComponentsMap();
+	
 	bool bIsDead = false;
 };
