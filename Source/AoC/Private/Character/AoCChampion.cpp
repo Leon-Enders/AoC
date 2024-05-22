@@ -14,6 +14,7 @@
 
 AAoCChampion::AAoCChampion()
 {
+	AoCComponentsMap.Add(EAoCComponents::ComboComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UComboComponent>("ComboComponent")));
 }
 
 
@@ -80,6 +81,7 @@ void AAoCChampion::InitAbilityActorInfo()
 
 float AAoCChampion::GetDashDistance_Implementation(const FGameplayTag& ComboTag)
 {
+	UComboComponent* ComboComponent = Cast<UComboComponent>(AoCComponentsMap[EAoCComponents::ComboComponent]);
 	return ComboComponent->GetDashDistance(ComboTag);
 }
 
@@ -95,8 +97,9 @@ void AAoCChampion::AddCharacterAbilities()const
 	AoCAbilitySystemComponent->AddCharacterPassiveAbilities(StartUpPassiveAbilities);
 }
 
+
+
 void AAoCChampion::InitializeAoCComponents() const
 {
 	Super::InitializeAoCComponents();
-	ComboComponent->InitCombatComponent(AbilitySystemComponent);
 }

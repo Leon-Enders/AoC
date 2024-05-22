@@ -11,7 +11,6 @@
 #include "AoCComponents/AoCSocketManagerComponent.h"
 #include "AoCComponents/TargetComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "AoCComponents/ComboComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 #include "MotionWarpingComponent.h"
@@ -22,10 +21,7 @@ AAoCCharacterBase::AAoCCharacterBase()
 {
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
-
 	SetupAoCComponentsMap();
-
-	
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>("MotionWarpingComponent");
@@ -55,7 +51,7 @@ void AAoCCharacterBase::die()
 {
 	if(bIsDead) return;
 	bIsDead = true;
-	
+	UAoCAvatarDataComponent* AvatarDataComponent = Cast<UAoCAvatarDataComponent>(AoCComponentsMap[EAoCComponents::AvatarDataComponent]);
 	SetLifeSpan(AvatarDataComponent->GetAvatarLifeSpan());
 	MultiCastHandleDeath();
 	
@@ -71,11 +67,13 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
+		UAoCAvatarDataComponent* AvatarDataComponent = Cast<UAoCAvatarDataComponent>(AoCComponentsMap[EAoCComponents::AvatarDataComponent]);
 		PlayAnimMontage(AvatarDataComponent->GetDeathMontage());
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
 	{
+		UAoCSocketManagerComponent* SocketManagerComponent = Cast<UAoCSocketManagerComponent>(AoCComponentsMap[EAoCComponents::SocketManagerComponent]);
 		SocketManagerComponent->HandleDeath();
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetEnableGravity(true);
@@ -95,38 +93,45 @@ bool AAoCCharacterBase::GetIsDead_Implementation()
 
 FVector AAoCCharacterBase::GetMainHandSocketLocation_Implementation(const FGameplayTag& MontageTag)
 {
+	UAoCSocketManagerComponent* SocketManagerComponent = Cast<UAoCSocketManagerComponent>(AoCComponentsMap[EAoCComponents::SocketManagerComponent]);
 	return SocketManagerComponent->GetMainHandSocketLocation(MontageTag);
 }
 
 FVector AAoCCharacterBase::GetOffHandSocketLocation_Implementation(const FGameplayTag& MontageTag)
 {
+	UAoCSocketManagerComponent* SocketManagerComponent = Cast<UAoCSocketManagerComponent>(AoCComponentsMap[EAoCComponents::SocketManagerComponent]);
 	return SocketManagerComponent->GetOffHandSocketLocation(MontageTag);
 }
 
 bool AAoCCharacterBase::GetIsTargeting_Implementation() const
 {
+	UTargetComponent* TargetComponent = Cast<UTargetComponent>(AoCComponentsMap[EAoCComponents::TargetComponent]);
 	return TargetComponent->GetIsTargeting();
 }
 
 AActor* AAoCCharacterBase::GetTarget_Implementation()
 {
+	UTargetComponent* TargetComponent = Cast<UTargetComponent>(AoCComponentsMap[EAoCComponents::TargetComponent]);
 	return TargetComponent->GetTarget();
 }
 
 
 void AAoCCharacterBase::SetTarget_Implementation(AActor* TargetToSet)
 {
+	UTargetComponent* TargetComponent = Cast<UTargetComponent>(AoCComponentsMap[EAoCComponents::TargetComponent]);
 	TargetComponent->SetTarget(TargetToSet);
 }
 
 void AAoCCharacterBase::UpdateWarpTargetName_Implementation(FName WarpTargetName)
 {
+	UTargetComponent* TargetComponent = Cast<UTargetComponent>(AoCComponentsMap[EAoCComponents::TargetComponent]);
 	TargetComponent->UpdateWarpTargetName(WarpTargetName);
 }
 
 
 void AAoCCharacterBase::FindTarget_Implementation()
 {
+	UTargetComponent* TargetComponent = Cast<UTargetComponent>(AoCComponentsMap[EAoCComponents::TargetComponent]);
 	return TargetComponent->FindTarget();
 }
 
@@ -134,22 +139,26 @@ void AAoCCharacterBase::FindTarget_Implementation()
 
 UAnimMontage* AAoCCharacterBase::GetHitMontage_Implementation()
 {
+	UAoCAvatarDataComponent* AvatarDataComponent = Cast<UAoCAvatarDataComponent>(AoCComponentsMap[EAoCComponents::AvatarDataComponent]);
 	return AvatarDataComponent->GetHitMontage();
 }
 
 UAnimMontage* AAoCCharacterBase::GetDeathMontage_Implementation()
 {
+	UAoCAvatarDataComponent* AvatarDataComponent = Cast<UAoCAvatarDataComponent>(AoCComponentsMap[EAoCComponents::AvatarDataComponent]);
 	return AvatarDataComponent->GetDeathMontage();
 }
 
 TArray<FGameplayTagMontage> AAoCCharacterBase::GetGameplayMontages_Implementation()
 {
+	UAoCAvatarDataComponent* AvatarDataComponent = Cast<UAoCAvatarDataComponent>(AoCComponentsMap[EAoCComponents::AvatarDataComponent]);
 	return AvatarDataComponent->GetGameplayTagMontages();
 }
 
 
 UNiagaraSystem* AAoCCharacterBase::GetBloodEffect_Implementation()
 {
+	UAoCAvatarDataComponent* AvatarDataComponent = Cast<UAoCAvatarDataComponent>(AoCComponentsMap[EAoCComponents::AvatarDataComponent]);
 	return AvatarDataComponent->GetBloodEffect();
 }
 
@@ -167,9 +176,12 @@ void AAoCCharacterBase::InitializeAttributes() const
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
-	AvatarDataComponent->InitializeAvatarData(CharacterName);
-	SocketManagerComponent->InitializeSocketManagerData(CharacterName,GetMesh());
-	TargetComponent->InitializeTargetComponent(CharacterName, MotionWarpingComponent);
+
+
+	for(const auto AoCComponentPair : AoCComponentsMap)
+	{
+		AoCComponentPair.Value->InitializeAoCComponent(CharacterName);
+	}
 }
 
 void AAoCCharacterBase::InitAbilityActorInfo()
@@ -182,6 +194,5 @@ void AAoCCharacterBase::SetupAoCComponentsMap()
 {
 	AoCComponentsMap.Add(EAoCComponents::AvatarDataComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent")));
 	AoCComponentsMap.Add(EAoCComponents::TargetComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UTargetComponent>("TargetComponent")));
-	AoCComponentsMap.Add(EAoCComponents::ComboComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UComboComponent>("ComboComponent")));
 	AoCComponentsMap.Add(EAoCComponents::SocketManagerComponent, Cast<IAoCComponentInterface>(CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent")));
 }

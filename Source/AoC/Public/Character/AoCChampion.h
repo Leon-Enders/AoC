@@ -35,7 +35,6 @@ protected:
 
 	// Gameplay Abilities
 	void AddCharacterAbilities()const;
-
 private:
 	//TODO: Move this also to data asset, create an data asset for champion abilities + passive abilities and one for enemies
 	UPROPERTY(EditDefaultsOnly, Category="Abilities")

@@ -54,10 +54,11 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
-	
+	virtual void InitializeAttributes() const;
+	virtual void InitializeAoCComponents() const;
+	virtual void SetupAoCComponentsMap();
 	
 	//Combat Interface Overrides
-	
 	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
 
@@ -65,7 +66,6 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	
-
 	// Avatar Properties
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	FName CharacterName;
@@ -73,27 +73,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
 
-
-
-
 	TMap<EAoCComponents, IAoCComponentInterface*> AoCComponentsMap;
 	
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UTargetComponent> TargetComponent;
-	
-	UPROPERTY()
-	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
-	
-	UPROPERTY()
-	TObjectPtr<UAoCSocketManagerComponent> SocketManagerComponent;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Combat")
-	TObjectPtr<UComboComponent> ComboComponent;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
 	
-	// Handle Combo
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 
@@ -103,11 +87,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
-
-	// Initialization
-	virtual void InitializeAttributes() const;
-	virtual void InitializeAoCComponents() const;
-
 protected:
 	
 	//~IAoCAvatarDataInterface
@@ -131,9 +110,6 @@ protected:
 	virtual void FindTarget_Implementation() override;
 	//~End of IAoCTargetingInterface
 private:
-
-
-	void SetupAoCComponentsMap();
 	
 	bool bIsDead = false;
 };
