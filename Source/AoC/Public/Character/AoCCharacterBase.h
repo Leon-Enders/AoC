@@ -10,6 +10,7 @@
 #include "AoCCharacterBase.generated.h"
 
 
+class UAoCComponent;
 class UFloatingBarComponent;
 class UMotionWarpingComponent;
 class UAbilitySystemComponent;
@@ -35,6 +36,8 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
+	virtual void InitializeAttributes() const;
+	virtual void InitializeAoCComponents() const;
 	
 	//Combat Interface Overrides
 	
@@ -48,6 +51,7 @@ protected:
 	
 	
 	// Avatar properties
+	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	FName CharacterName;
 	
@@ -68,11 +72,13 @@ protected:
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	// Initialization
-	virtual void InitializeAttributes() const;
-	virtual void InitializeAoCComponents() const;
+	// Add AoCComponents to this Array
+	UPROPERTY()
+	TArray<UAoCComponent*> AoCComponents;
 
 private:
-
+	void SetupCharacterComponents();
+	void SetupAoCComponents();
+	
 	bool bIsDead = false;
 };

@@ -25,7 +25,6 @@ public:
 protected:
 	virtual void InitAbilityActorInfo() override;
 	virtual void InitializeAttributes() const override;
-	virtual void InitializeAoCComponents() const override;
 	
 	virtual int32 GetPlayerLevel()const override;
 	// Gameplay Abilities

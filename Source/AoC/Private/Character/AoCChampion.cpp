@@ -5,11 +5,13 @@
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "AoCComponents/ComboComponent.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 
 AAoCChampion::AAoCChampion()
 {
+	AoCComponents.Add(CreateDefaultSubobject<UComboComponent>("ComboComponent"));
 }
 
 
@@ -87,7 +89,3 @@ void AAoCChampion::AddCharacterAbilities()const
 	AoCAbilitySystemComponent->AddCharacterPassiveAbilities(StartUpPassiveAbilities);
 }
 
-void AAoCChampion::InitializeAoCComponents() const
-{
-	Super::InitializeAoCComponents();
-}
