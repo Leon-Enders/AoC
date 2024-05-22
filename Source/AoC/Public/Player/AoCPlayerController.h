@@ -90,5 +90,6 @@ private:
 	//ShowDamage Text
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
-	
+
+	TObjectPtr<UTargetComponent> TargetComponent;
 };

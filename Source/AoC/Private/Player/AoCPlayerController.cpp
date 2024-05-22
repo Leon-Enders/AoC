@@ -8,7 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
-#include "Character/AoCCharacterBase.h"
+#include "AoCComponents/TargetComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
@@ -35,7 +35,7 @@ void AAoCPlayerController::BeginPlay()
 		Subsystem->AddMappingContext(IMC_Move,0);
 	}
 
-	// Initialize TargetComponent of the avatar
+	TargetComponent = GetPawn()->FindComponentByClass<UTargetComponent>();
 }
 
 void AAoCPlayerController::SetupInputComponent()
@@ -129,7 +129,7 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 
 void AAoCPlayerController::OnFindTarget(const FInputActionValue& InputActionValue)
 {
-	IAoCTargetingInterface::Execute_FindTarget(GetPawn());
+	TargetComponent->FindTarget();
 }
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)

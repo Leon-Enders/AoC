@@ -6,9 +6,6 @@
 #include "AbilitySystemInterface.h"
 #include "Ability System/Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
-#include "Interaction/AoCAvatarDataInterface.h"
-#include "Interaction/AoCSocketManagerInterface.h"
-#include "Interaction/AoCTargetingInterface.h"
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
@@ -17,7 +14,6 @@ class UFloatingBarComponent;
 class UMotionWarpingComponent;
 class UAbilitySystemComponent;
 class UAttributeSet;
-
 
 
 UCLASS()
@@ -44,7 +40,7 @@ protected:
 	
 	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
-
+	virtual int32 GetPlayerLevel() const override;
 	// Handle Character Death for Client and Server
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();

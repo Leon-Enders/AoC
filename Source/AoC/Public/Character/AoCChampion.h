@@ -21,18 +21,13 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 
-	
-	virtual int32 GetPlayerLevel_Implementation()const override;
-	virtual void InitializeAttributes() const override;
 
 protected:
 	virtual void InitAbilityActorInfo() override;
-	virtual float GetDashDistance_Implementation(const FGameplayTag& ComboTag) override;
-
-	// Initialize custom components here
+	virtual void InitializeAttributes() const override;
 	virtual void InitializeAoCComponents() const override;
 	
-
+	virtual int32 GetPlayerLevel()const override;
 	// Gameplay Abilities
 	void AddCharacterAbilities()const;
 

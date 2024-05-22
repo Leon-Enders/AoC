@@ -22,10 +22,7 @@ AAoCCharacterBase::AAoCCharacterBase()
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 
-	AvatarDataComponent = CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent");
-	SocketManagerComponent = CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent");
-	TargetComponent = CreateDefaultSubobject<UTargetComponent>("TargetComponent");
-	ComboComponent = CreateDefaultSubobject<UComboComponent>("ComboComponent");
+	
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>("MotionWarpingComponent");
@@ -56,10 +53,11 @@ void AAoCCharacterBase::die()
 	if(bIsDead) return;
 	bIsDead = true;
 	
-	SetLifeSpan(AvatarDataComponent->GetAvatarLifeSpan());
+	//SetLifeSpan(AvatarDataComponent->GetAvatarLifeSpan());
 	MultiCastHandleDeath();
 	
 }
+
 
 
 
@@ -71,12 +69,12 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
-		PlayAnimMontage(AvatarDataComponent->GetDeathMontage());
+		//PlayAnimMontage(AvatarDataComponent->GetDeathMontage());
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
 	{
-		SocketManagerComponent->HandleDeath();
+		//SocketManagerComponent->HandleDeath();
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetEnableGravity(true);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
@@ -113,3 +111,7 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 {
 }
 
+int32 AAoCCharacterBase::GetPlayerLevel() const
+{
+	return 0;
+}

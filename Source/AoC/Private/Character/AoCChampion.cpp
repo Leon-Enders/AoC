@@ -2,15 +2,11 @@
 
 
 #include "Character/AoCChampion.h"
-
-
-#include "AoCGameplayTags.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
-#include "AoCComponents/ComboComponent.h"
 
 AAoCChampion::AAoCChampion()
 {
@@ -39,7 +35,7 @@ void AAoCChampion::OnRep_PlayerState()
 	
 }
 
-int32 AAoCChampion::GetPlayerLevel_Implementation() const
+int32 AAoCChampion::GetPlayerLevel() const
 {
 	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
 	check(PS);
@@ -49,7 +45,7 @@ int32 AAoCChampion::GetPlayerLevel_Implementation() const
 void AAoCChampion::InitializeAttributes() const
 {
 	
-	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, IAoCAvatarDataInterface::Execute_GetPlayerLevel(this),AbilitySystemComponent);
+	UAoCAbilitySystemLibrary::InitializeAttributes(this, CharacterClass, GetPlayerLevel(),AbilitySystemComponent);
 
 }
 
@@ -78,10 +74,6 @@ void AAoCChampion::InitAbilityActorInfo()
 	
 }
 
-float AAoCChampion::GetDashDistance_Implementation(const FGameplayTag& ComboTag)
-{
-	return ComboComponent->GetDashDistance(ComboTag);
-}
 
 void AAoCChampion::AddCharacterAbilities()const
 {
@@ -98,5 +90,4 @@ void AAoCChampion::AddCharacterAbilities()const
 void AAoCChampion::InitializeAoCComponents() const
 {
 	Super::InitializeAoCComponents();
-	ComboComponent->InitCombatComponent(AbilitySystemComponent);
 }
