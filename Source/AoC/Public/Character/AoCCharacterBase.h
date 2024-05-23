@@ -11,7 +11,7 @@
 #include "AoCCharacterBase.generated.h"
 
 
-class UAoCComponent;
+
 class UFloatingBarComponent;
 class UMotionWarpingComponent;
 class UAbilitySystemComponent;
