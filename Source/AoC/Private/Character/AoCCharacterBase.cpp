@@ -85,6 +85,11 @@ UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+UAoCComponent* AAoCCharacterBase::GetAoCComponent(TSubclassOf<UAoCComponent> AoCComponentClass) const
+{
+	return AoCComponentClassesToComponent.FindRef(AoCComponentClass);
+}
+
 
 void AAoCCharacterBase::InitializeAttributes() const
 {

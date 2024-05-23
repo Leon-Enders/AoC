@@ -6,6 +6,7 @@
 #include "AbilitySystemInterface.h"
 #include "Ability System/Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
+#include "Interaction/AoCComponentInterface.h"
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
@@ -18,7 +19,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IAoCComponentInterface
 {
 	GENERATED_BODY()
 
@@ -29,6 +30,7 @@ public:
 	 * Getters
 	 */
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAoCComponent* GetAoCComponent(TSubclassOf<UAoCComponent> AoCComponentClass) const override;
 	UAttributeSet* GetAttributeSet() const{return AttributeSet;}
 	
 	
@@ -75,6 +77,9 @@ protected:
 	// Add AoCComponents to this Array
 	UPROPERTY()
 	TArray<UAoCComponent*> AoCComponents;
+
+	UPROPERTY()
+	TMap<TSubclassOf<UAoCComponent>,UAoCComponent*> AoCComponentClassesToComponent;
 
 private:
 	void SetupCharacterComponents();
