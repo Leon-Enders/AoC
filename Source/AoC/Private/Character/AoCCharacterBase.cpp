@@ -98,9 +98,11 @@ void AAoCCharacterBase::InitializeAttributes() const
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
-	for(const auto AoCComponent : AoCComponents)
+
+	// Initialize all AoCComponents in map
+	for(const auto AoCComponentPair : AoCComponentClassesToComponent)
 	{
-		AoCComponent->InitializeAoCComponent(CharacterName);
+		AoCComponentPair.Value->InitializeAoCComponent(CharacterName);
 	}
 }
 
@@ -131,7 +133,8 @@ void AAoCCharacterBase::SetupCharacterComponents()
 
 void AAoCCharacterBase::SetupAoCComponents()
 {
-	AoCComponents.Add(CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent"));
-	AoCComponents.Add(CreateDefaultSubobject<UTargetComponent>("TargetComponent"));
-	AoCComponents.Add(CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent"));
+	AoCComponentClassesToComponent.Add(UAoCAvatarDataComponent::StaticClass(), CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent"));
+	AoCComponentClassesToComponent.Add(UTargetComponent::StaticClass(),CreateDefaultSubobject<UTargetComponent>("TargetComponent"));
+	AoCComponentClassesToComponent.Add(UAoCSocketManagerComponent::StaticClass(),CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent"));
+	
 }

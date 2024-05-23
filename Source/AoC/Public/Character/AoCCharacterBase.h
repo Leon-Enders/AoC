@@ -51,7 +51,6 @@ protected:
 	void MultiCastHandleDeath();
 	
 	
-	
 	// Avatar properties
 	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
@@ -74,10 +73,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	// Add AoCComponents to this Array
-	UPROPERTY()
-	TArray<UAoCComponent*> AoCComponents;
-
+	// Add AoCComponents to this Map
+	
 	UPROPERTY()
 	TMap<TSubclassOf<UAoCComponent>,UAoCComponent*> AoCComponentClassesToComponent;
 

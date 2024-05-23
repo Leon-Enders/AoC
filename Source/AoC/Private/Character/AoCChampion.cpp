@@ -11,7 +11,7 @@
 
 AAoCChampion::AAoCChampion()
 {
-	AoCComponents.Add(CreateDefaultSubobject<UComboComponent>("ComboComponent"));
+	AoCComponentClassesToComponent.Add(UComboComponent::StaticClass(),CreateDefaultSubobject<UComboComponent>("ComboComponent"));
 }
 
 
