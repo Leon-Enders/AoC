@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
-#include "Ability System/Data/CharacterClassInfo.h"
+#include "Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/AoCComponentInterface.h"
 #include "Interaction/CombatInterface.h"
