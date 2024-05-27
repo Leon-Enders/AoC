@@ -7,6 +7,7 @@
 #include "AoCGameModeBase.generated.h"
 
 
+class UAoCComboInfo;
 class UAoCTargetingInfo;
 class UAoCSocketManagerInfo;
 class UAoCAvatarDataInfo;
@@ -33,4 +34,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="AoCDataInfo")
 	TObjectPtr<UAoCTargetingInfo> AoCTargetingInfo;
 
+	UPROPERTY(EditDefaultsOnly, Category="AoCDataInfo")
+	TObjectPtr<UAoCComboInfo> AoCComboInfo;
 };
