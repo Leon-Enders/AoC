@@ -58,7 +58,8 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
-	
+
+	//TODO: This is kind of dumb and error prone, you have to set not only the widget class the component holds but also change the type to the BP Version
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
 	
