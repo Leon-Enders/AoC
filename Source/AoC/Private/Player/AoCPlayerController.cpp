@@ -8,7 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
-#include "AoCComponents/TargetComponent.h"
+#include "AoCComponents/AoCTargetComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
@@ -35,7 +35,7 @@ void AAoCPlayerController::BeginPlay()
 		Subsystem->AddMappingContext(IMC_Move,0);
 	}
 
-	TargetComponent = GetPawn()->FindComponentByClass<UTargetComponent>();
+	OwnerTargetComponent = GetPawn()->FindComponentByClass<UAoCTargetComponent>();
 }
 
 void AAoCPlayerController::SetupInputComponent()
@@ -129,7 +129,7 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 
 void AAoCPlayerController::OnFindTarget(const FInputActionValue& InputActionValue)
 {
-	TargetComponent->FindTarget();
+	OwnerTargetComponent->FindTarget();
 }
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)

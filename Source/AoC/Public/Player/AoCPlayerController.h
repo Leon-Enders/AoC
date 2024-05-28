@@ -9,7 +9,7 @@
 #include "AoCPlayerController.generated.h"
 
 
-class UTargetComponent;
+class UAoCTargetComponent;
 class UWidgetComponent;
 class UAoCAbilitySystemComponent;
 class UAoCInputConfig;
@@ -91,5 +91,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="UI")
 	TSubclassOf<UWidgetComponent> DamageTextWidgetComponentClass;
 
-	TObjectPtr<UTargetComponent> TargetComponent;
+	TObjectPtr<UAoCTargetComponent> OwnerTargetComponent;
 };
