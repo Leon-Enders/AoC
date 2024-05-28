@@ -2,8 +2,8 @@
 
 #include "AoCComponents/AoCAvatarDataComponent.h"
 #include "AoCComponents/AoCSocketManagerComponent.h"
-#include "AoCComponents/ComboComponent.h"
-#include "AoCComponents/TargetComponent.h"
+#include "AoCComponents/AoCComboComponent.h"
+#include "AoCComponents/AoCTargetComponent.h"
 
 void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* InOwnerActor, AActor* InAvatarActor,
                                                  UAbilitySystemComponent* InAbilitySystemComponent)
@@ -12,8 +12,8 @@ void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* InOwnerActor, AActor* I
  
 	AoCAvatarDataComponent = InAvatarActor->FindComponentByClass<UAoCAvatarDataComponent>();
 	AoCSocketManagerComponent = InAvatarActor->FindComponentByClass<UAoCSocketManagerComponent>();
-	AoCTargetComponent = InAvatarActor->FindComponentByClass<UTargetComponent>();
-	AoCComboComponent = InAvatarActor->FindComponentByClass<UComboComponent>();
+	AoCTargetComponent = InAvatarActor->FindComponentByClass<UAoCTargetComponent>();
+	AoCComboComponent = InAvatarActor->FindComponentByClass<UAoCComboComponent>();
 }
 
 void FAoCGameplayAbilityActorInfo::ClearActorInfo()
@@ -36,12 +36,12 @@ UAoCSocketManagerComponent* FAoCGameplayAbilityActorInfo::GetSocketManagerCompon
 	return AoCSocketManagerComponent.IsValid() ? AoCSocketManagerComponent.Get() : nullptr;
 }
 
-UTargetComponent* FAoCGameplayAbilityActorInfo::GetTargetComponent() const
+UAoCTargetComponent* FAoCGameplayAbilityActorInfo::GetTargetComponent() const
 {
 	return AoCTargetComponent.IsValid() ? AoCTargetComponent.Get() : nullptr;
 }
 
-UComboComponent* FAoCGameplayAbilityActorInfo::GetComboComponent() const
+UAoCComboComponent* FAoCGameplayAbilityActorInfo::GetComboComponent() const
 {
 	return AoCComboComponent.IsValid() ? AoCComboComponent.Get() : nullptr;
 }

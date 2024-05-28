@@ -5,13 +5,13 @@
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "Ability System/AoCAttributeSet.h"
-#include "AoCComponents/ComboComponent.h"
+#include "AoCComponents/AoCComboComponent.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
 
 AAoCChampion::AAoCChampion()
 {
-	AoCComponentClassesToComponent.Add(UComboComponent::StaticClass(),CreateDefaultSubobject<UComboComponent>("ComboComponent"));
+	AoCComponentClassesToComponent.Add(UAoCComboComponent::StaticClass(),CreateDefaultSubobject<UAoCComboComponent>("ComboComponent"));
 }
 
 

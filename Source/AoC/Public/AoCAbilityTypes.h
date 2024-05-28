@@ -22,18 +22,18 @@ struct FAoCGameplayAbilityActorInfo : public FGameplayAbilityActorInfo
 	TWeakObjectPtr<class UAoCSocketManagerComponent> AoCSocketManagerComponent;
 
 	UPROPERTY(BlueprintReadOnly, Category = "ActorInfo")
-	TWeakObjectPtr<class UTargetComponent> AoCTargetComponent;
+	TWeakObjectPtr<class UAoCTargetComponent> AoCTargetComponent;
 
 	UPROPERTY(BlueprintReadOnly, Category = "ActorInfo")
-	TWeakObjectPtr<class UComboComponent> AoCComboComponent;
+	TWeakObjectPtr<class UAoCComboComponent> AoCComboComponent;
  
 	virtual void InitFromActor(AActor* OwnerActor, AActor* AvatarActor, UAbilitySystemComponent* InAbilitySystemComponent) override;
 	virtual void ClearActorInfo() override;
 	
 	class UAoCAvatarDataComponent* GetAvatarDataComponent() const;
 	class UAoCSocketManagerComponent* GetSocketManagerComponent() const;
-	class UTargetComponent* GetTargetComponent() const;
-	class UComboComponent* GetComboComponent() const;
+	class UAoCTargetComponent* GetTargetComponent() const;
+	class UAoCComboComponent* GetComboComponent() const;
 };
 
 

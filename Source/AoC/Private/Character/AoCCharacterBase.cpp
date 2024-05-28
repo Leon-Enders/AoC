@@ -9,7 +9,7 @@
 #include "AoC/AoC.h"
 #include "AoCComponents/AoCAvatarDataComponent.h"
 #include "AoCComponents/AoCSocketManagerComponent.h"
-#include "AoCComponents/TargetComponent.h"
+#include "AoCComponents/AoCTargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/AoCComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -134,7 +134,7 @@ void AAoCCharacterBase::SetupCharacterComponents()
 void AAoCCharacterBase::SetupAoCComponents()
 {
 	AoCComponentClassesToComponent.Add(UAoCAvatarDataComponent::StaticClass(), CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent"));
-	AoCComponentClassesToComponent.Add(UTargetComponent::StaticClass(),CreateDefaultSubobject<UTargetComponent>("TargetComponent"));
+	AoCComponentClassesToComponent.Add(UAoCTargetComponent::StaticClass(),CreateDefaultSubobject<UAoCTargetComponent>("TargetComponent"));
 	AoCComponentClassesToComponent.Add(UAoCSocketManagerComponent::StaticClass(),CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent"));
 	
 }
