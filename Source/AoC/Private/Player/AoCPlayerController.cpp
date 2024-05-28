@@ -34,8 +34,7 @@ void AAoCPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(IMC_Move,0);
 	}
-
-	OwnerTargetComponent = GetPawn()->FindComponentByClass<UAoCTargetComponent>();
+	
 }
 
 void AAoCPlayerController::SetupInputComponent()
@@ -129,7 +128,11 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 
 void AAoCPlayerController::OnFindTarget(const FInputActionValue& InputActionValue)
 {
-	OwnerTargetComponent->FindTarget();
+
+	if(UAoCTargetComponent* TargetComponent = UAoCAbilitySystemLibrary::GetTargetComponent(GetPawn()))
+	{
+		TargetComponent->FindTarget();
+	}
 }
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)

@@ -9,7 +9,9 @@ void FAoCGameplayAbilityActorInfo::InitFromActor(AActor* InOwnerActor, AActor* I
                                                  UAbilitySystemComponent* InAbilitySystemComponent)
 {
 	Super::InitFromActor(InOwnerActor, InAvatarActor, InAbilitySystemComponent);
- 
+
+	//TODO: I have no clue why I this works, but it does, maybe understand it at some point
+	if(InAvatarActor== NULL)return;
 	AoCAvatarDataComponent = InAvatarActor->FindComponentByClass<UAoCAvatarDataComponent>();
 	AoCSocketManagerComponent = InAvatarActor->FindComponentByClass<UAoCSocketManagerComponent>();
 	AoCTargetComponent = InAvatarActor->FindComponentByClass<UAoCTargetComponent>();

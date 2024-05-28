@@ -10,7 +10,7 @@
 /**
  * 
  */
-class UMeleeComboInfo;
+
 UCLASS()
 class AOC_API AAoCChampion : public AAoCCharacterBase
 {
