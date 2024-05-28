@@ -42,9 +42,9 @@ void AAoCCharacterBase::die()
 	if(bIsDead) return;
 	bIsDead = true;
 
-	//TODO: Get Lifespan and remove comments in handle death
-	//const auto data = GetAoCComponent(UAoCAvatarDataComponent::StaticClass());
-	//SetLifeSpan;
+
+	const float LifeSpan = Cast<UAoCAvatarDataComponent>(GetAoCComponent(UAoCAvatarDataComponent::StaticClass()))->GetAvatarLifeSpan();
+	SetLifeSpan(LifeSpan);
 	MultiCastHandleDeath();
 	
 }
@@ -60,12 +60,15 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
-		//PlayAnimMontage(AvatarDataComponent->GetDeathMontage());
+
+		const auto DeathMontage = Cast<UAoCAvatarDataComponent>(GetAoCComponent(UAoCAvatarDataComponent::StaticClass()))->GetDeathMontage();
+		PlayAnimMontage(DeathMontage);
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
 	{
-		//SocketManagerComponent->HandleDeath();
+		
+		Cast<UAoCSocketManagerComponent>(GetAoCComponent(UAoCSocketManagerComponent::StaticClass()))->HandleDeath();
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetEnableGravity(true);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
