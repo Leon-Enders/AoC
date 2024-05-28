@@ -41,8 +41,10 @@ void AAoCCharacterBase::die()
 {
 	if(bIsDead) return;
 	bIsDead = true;
-	
-	//SetLifeSpan(AvatarDataComponent->GetAvatarLifeSpan());
+
+	//TODO: Get Lifespan and remove comments in handle death
+	//const auto data = GetAoCComponent(UAoCAvatarDataComponent::StaticClass());
+	//SetLifeSpan;
 	MultiCastHandleDeath();
 	
 }
