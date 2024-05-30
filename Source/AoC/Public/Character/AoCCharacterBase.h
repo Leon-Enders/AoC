@@ -76,16 +76,13 @@ protected:
 
 	// AoC Components
 
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	UPROPERTY(Category="AvatarProperties", VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
-
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	TObjectPtr<UAoCComboComponent> ComboComponent;
 	
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	UPROPERTY(Category="AvatarProperties", VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAoCSocketManagerComponent> SocketManagerComponent;
 
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	UPROPERTY(Category="AvatarProperties", VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAoCTargetComponent> TargetComponent;
 	
 	TMap<TSubclassOf<UAoCComponent>, UAoCComponent*> AoCComponentsMap;
