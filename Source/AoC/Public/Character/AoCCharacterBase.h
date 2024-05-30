@@ -40,7 +40,6 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
-	virtual void PreInitializeComponents() override;
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeAttributes() const;
 	virtual void InitializeAoCComponents() const;
@@ -56,9 +55,6 @@ protected:
 	
 	
 	// Avatar properties
-	
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	FName CharacterName;
 	
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;

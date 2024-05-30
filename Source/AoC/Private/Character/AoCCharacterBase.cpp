@@ -36,11 +36,6 @@ void AAoCCharacterBase::BeginPlay()
 	}
 }
 
-void AAoCCharacterBase::PreInitializeComponents()
-{
-	Super::PreInitializeComponents();
-
-}
 
 void AAoCCharacterBase::die()
 {
@@ -111,7 +106,7 @@ void AAoCCharacterBase::InitializeAoCComponents() const
 
 	for(const auto& AoCComponent : AoCComponentsMap)
 	{
-		AoCComponent.Value->InitializeAoCComponent(CharacterName);
+		AoCComponent.Value->InitializeAoCComponent();
 	}
 }
 
