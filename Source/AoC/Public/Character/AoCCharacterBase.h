@@ -78,10 +78,19 @@ protected:
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	// Add AoCComponents to this Map
+	// AoC Components
 
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	TArray<TSubclassOf<UAoCComponent>> AoCComponentsToAdd;
+	TObjectPtr<UAoCAvatarDataComponent> AvatarDataComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TObjectPtr<UAoCComboComponent> ComboComponent;
+	
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TObjectPtr<UAoCSocketManagerComponent> SocketManagerComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TObjectPtr<UAoCTargetComponent> TargetComponent;
 	
 	TMap<TSubclassOf<UAoCComponent>, UAoCComponent*> AoCComponentsMap;
 

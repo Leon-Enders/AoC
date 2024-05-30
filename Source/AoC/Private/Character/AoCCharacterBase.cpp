@@ -14,15 +14,16 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 #include "MotionWarpingComponent.h"
+#include "AoCComponents/AoCTargetComponent.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
 {
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
-
 	
 	SetupCharacterComponents();
+	SetupAoCComponents();
 }
 
 void AAoCCharacterBase::BeginPlay()
@@ -38,7 +39,7 @@ void AAoCCharacterBase::BeginPlay()
 void AAoCCharacterBase::PreInitializeComponents()
 {
 	Super::PreInitializeComponents();
-	SetupAoCComponents();
+
 }
 
 void AAoCCharacterBase::die()
@@ -47,7 +48,7 @@ void AAoCCharacterBase::die()
 	bIsDead = true;
 
 
-	const float LifeSpan = Cast<UAoCAvatarDataComponent>(GetAoCComponent(UAoCAvatarDataComponent::StaticClass()))->GetAvatarLifeSpan();
+	const float LifeSpan = AvatarDataComponent->GetAvatarLifeSpan();
 	SetLifeSpan(LifeSpan);
 	MultiCastHandleDeath();
 	
@@ -65,14 +66,14 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
 
-		const auto DeathMontage = Cast<UAoCAvatarDataComponent>(GetAoCComponent(UAoCAvatarDataComponent::StaticClass()))->GetDeathMontage();
+		const auto DeathMontage = AvatarDataComponent->GetDeathMontage();
 		PlayAnimMontage(DeathMontage);
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
 	{
 		
-		Cast<UAoCSocketManagerComponent>(GetAoCComponent(UAoCSocketManagerComponent::StaticClass()))->HandleDeath();
+		SocketManagerComponent->HandleDeath();
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetEnableGravity(true);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
@@ -142,10 +143,10 @@ void AAoCCharacterBase::SetupCharacterComponents()
 
 void AAoCCharacterBase::SetupAoCComponents()
 {
-	for(const auto AoCComponentClass : AoCComponentsToAdd)
-	{
-		
-		UAoCComponent* NewAoCComponent = NewObject<UAoCComponent>(this, AoCComponentClass);
-		AoCComponentsMap.Add(AoCComponentClass, NewAoCComponent);
-	}
+	AvatarDataComponent = CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent");
+	AoCComponentsMap.Add(UAoCAvatarDataComponent::StaticClass(), AvatarDataComponent);
+	SocketManagerComponent = CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent");
+	AoCComponentsMap.Add(UAoCSocketManagerComponent::StaticClass(), SocketManagerComponent);
+	TargetComponent = CreateDefaultSubobject<UAoCTargetComponent>("TargetComponent");
+	AoCComponentsMap.Add(UAoCTargetComponent::StaticClass(), TargetComponent);
 }
