@@ -8,7 +8,6 @@
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
-#include "AoCComponents/AoCTargetComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Input/AoCInputComponent.h"
@@ -52,8 +51,7 @@ void AAoCPlayerController::SetupInputComponent()
 	AoCInputComponent->BindAction(IA_CamRot, ETriggerEvent::Triggered,this, &AAoCPlayerController::CamRot);
 	AoCInputComponent->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &AAoCPlayerController::OnJump);
 	AoCInputComponent->BindAction(IA_OpenMenu, ETriggerEvent::Completed, this, &AAoCPlayerController::OnOpenMenu);
-	AoCInputComponent->BindAction(IA_SetTarget, ETriggerEvent::Completed, this, &AAoCPlayerController::OnFindTarget);
-
+	
 
 	// GAS - Inputs
 	AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
@@ -126,14 +124,6 @@ void AAoCPlayerController::OnOpenMenu(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AAoCPlayerController::OnFindTarget(const FInputActionValue& InputActionValue)
-{
-
-	if(UAoCTargetComponent* TargetComponent = UAoCAbilitySystemLibrary::GetTargetComponent(GetPawn()))
-	{
-		TargetComponent->FindTarget();
-	}
-}
 
 void AAoCPlayerController::AbilityInputTagPressed(FGameplayTag GameplayTag)
 {

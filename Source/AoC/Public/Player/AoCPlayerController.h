@@ -51,9 +51,7 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_OpenMenu;
-
-	UPROPERTY(EditAnywhere, Category="Input");
-	TObjectPtr<UInputAction> IA_SetTarget;
+	
 
 
 	// InputMappingContext
