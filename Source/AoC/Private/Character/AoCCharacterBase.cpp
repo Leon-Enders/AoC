@@ -65,9 +65,8 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
-
-		const auto DeathMontage = AvatarDataComponent->GetDeathMontage();
-		PlayAnimMontage(DeathMontage);
+		
+		PlayAnimMontage(AvatarDataComponent->GetDeathMontage());
 		GetCharacterMovement()->DisableMovement();
 	}
 	else
