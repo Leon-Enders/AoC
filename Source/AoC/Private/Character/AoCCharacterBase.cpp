@@ -9,7 +9,6 @@
 #include "AoC/AoC.h"
 #include "AoCComponents/AoCAvatarDataComponent.h"
 #include "AoCComponents/AoCSocketManagerComponent.h"
-#include "AoCComponents/AoCTargetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AoCComponents/AoCComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -22,19 +21,24 @@ AAoCCharacterBase::AAoCCharacterBase()
 	bReplicates = true;
 	PrimaryActorTick.bCanEverTick = false;
 
-	SetupAoCComponents();
+	
 	SetupCharacterComponents();
 }
 
 void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	if(IsPlayerControlled())
 	{
 		HealthBarComponent->SetHiddenInGame(true);
 	}
-	
+}
+
+void AAoCCharacterBase::PreInitializeComponents()
+{
+	Super::PreInitializeComponents();
+	SetupAoCComponents();
 }
 
 void AAoCCharacterBase::die()
@@ -92,7 +96,7 @@ UAbilitySystemComponent* AAoCCharacterBase::GetAbilitySystemComponent() const
 
 UAoCComponent* AAoCCharacterBase::GetAoCComponent(TSubclassOf<UAoCComponent> AoCComponentClass) const
 {
-	return AoCComponentClassesToComponent.FindRef(AoCComponentClass);
+	return AoCComponentsMap.FindRef(AoCComponentClass);
 }
 
 
@@ -102,12 +106,12 @@ void AAoCCharacterBase::InitializeAttributes() const
 
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
+	
 	HealthBarComponent->InitializeFloatingBar(Cast<UAoCAttributeSet>(AttributeSet), Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent));
 
-	// Initialize all AoCComponents in map
-	for(const auto AoCComponentPair : AoCComponentClassesToComponent)
+	for(const auto& AoCComponent : AoCComponentsMap)
 	{
-		AoCComponentPair.Value->InitializeAoCComponent(CharacterName);
+		AoCComponent.Value->InitializeAoCComponent(CharacterName);
 	}
 }
 
@@ -138,8 +142,10 @@ void AAoCCharacterBase::SetupCharacterComponents()
 
 void AAoCCharacterBase::SetupAoCComponents()
 {
-	AoCComponentClassesToComponent.Add(UAoCAvatarDataComponent::StaticClass(), CreateDefaultSubobject<UAoCAvatarDataComponent>("AvatarDataComponent"));
-	AoCComponentClassesToComponent.Add(UAoCTargetComponent::StaticClass(),CreateDefaultSubobject<UAoCTargetComponent>("TargetComponent"));
-	AoCComponentClassesToComponent.Add(UAoCSocketManagerComponent::StaticClass(),CreateDefaultSubobject<UAoCSocketManagerComponent>("SocketManagerComponent"));
-	
+	for(const auto AoCComponentClass : AoCComponentsToAdd)
+	{
+		
+		UAoCComponent* NewAoCComponent = NewObject<UAoCComponent>(this, AoCComponentClass);
+		AoCComponentsMap.Add(AoCComponentClass, NewAoCComponent);
+	}
 }

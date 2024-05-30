@@ -11,7 +11,10 @@
 #include "AoCCharacterBase.generated.h"
 
 
-
+class UAoCComboComponent;
+class UAoCTargetComponent;
+class UAoCSocketManagerComponent;
+class UAoCAvatarDataComponent;
 class UFloatingBarComponent;
 class UMotionWarpingComponent;
 class UAbilitySystemComponent;
@@ -37,6 +40,7 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
+	virtual void PreInitializeComponents() override;
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeAttributes() const;
 	virtual void InitializeAoCComponents() const;
@@ -75,9 +79,11 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 	// Add AoCComponents to this Map
+
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TArray<TSubclassOf<UAoCComponent>> AoCComponentsToAdd;
 	
-	UPROPERTY()
-	TMap<TSubclassOf<UAoCComponent>,UAoCComponent*> AoCComponentClassesToComponent;
+	TMap<TSubclassOf<UAoCComponent>, UAoCComponent*> AoCComponentsMap;
 
 private:
 	void SetupCharacterComponents();
