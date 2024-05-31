@@ -4,7 +4,6 @@
 #include "Player/AoCPlayerController.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "AoCGameplayTags.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
@@ -34,7 +33,8 @@ void AAoCPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(IMC_Move,0);
 	}
-	
+
+	InitializePlayerInput();
 }
 
 void AAoCPlayerController::SetupInputComponent()
@@ -56,7 +56,11 @@ void AAoCPlayerController::SetupInputComponent()
 
 	// GAS - Inputs
 	AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
+}
 
+void AAoCPlayerController::InitializePlayerInput()
+{
+	UAoCInputComponent* AoCInputComponent = CastChecked<UAoCInputComponent>(InputComponent);
 	if(UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()))
 	{
 		

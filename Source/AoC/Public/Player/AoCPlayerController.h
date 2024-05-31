@@ -36,9 +36,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+	
 private:
 
-
+	void InitializePlayerInput();
 	// Input Actions
 	UPROPERTY(EditAnywhere, Category="Input");
 	TObjectPtr<UInputAction> IA_CamRot;
