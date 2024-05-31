@@ -118,6 +118,8 @@ void AAoCCharacterBase::InitializeAoCComponents() const
 
 void AAoCCharacterBase::OnTargetSet(bool bIsTargeted)
 {
+	//TODO: remove when finished testing with  listen server
+	if(IsPlayerControlled()) return;
 	if(bIsTargeted)
 	{
 		GetMesh()->SetOverlayMaterialMaxDrawDistance(0.f);
