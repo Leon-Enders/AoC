@@ -4,6 +4,7 @@
 #include "Player/AoCPlayerController.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AoCGameplayTags.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Ability System/AoCAbilitySystemComponent.h"
@@ -55,8 +56,13 @@ void AAoCPlayerController::SetupInputComponent()
 
 	// GAS - Inputs
 	AoCInputComponent->BindAbilityInputTag(AoCInputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
-	
-	
+
+	if(UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()))
+	{
+		
+		AoCInputComponent->BindAction(IA_ConfirmTargeting, ETriggerEvent::Triggered,AbilitySystemComponent, &UAbilitySystemComponent::LocalInputConfirm);
+		AoCInputComponent->BindAction(IA_CancelTargeting, ETriggerEvent::Triggered,AbilitySystemComponent, &UAbilitySystemComponent::LocalInputCancel);
+	}
 }
 
 
