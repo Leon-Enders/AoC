@@ -30,6 +30,12 @@ void AAoCCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if(IsValid(TargetOutlineMaterial))
+	{
+		
+		GetMesh()->SetOverlayMaterial(TargetOutlineMaterial);
+		GetMesh()->SetOverlayMaterialMaxDrawDistance(1.f);
+	}
 	if(IsPlayerControlled())
 	{
 		HealthBarComponent->SetHiddenInGame(true);
@@ -107,6 +113,18 @@ void AAoCCharacterBase::InitializeAoCComponents() const
 	for(const auto& AoCComponent : AoCComponentsMap)
 	{
 		AoCComponent.Value->InitializeAoCComponent();
+	}
+}
+
+void AAoCCharacterBase::OnTargetSet(bool bIsTargeted)
+{
+	if(bIsTargeted)
+	{
+		GetMesh()->SetOverlayMaterialMaxDrawDistance(0.f);
+	}
+	else
+	{
+		GetMesh()->SetOverlayMaterialMaxDrawDistance(1.f);
 	}
 }
 

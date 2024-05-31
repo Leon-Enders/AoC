@@ -7,6 +7,7 @@
 #include "Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/AoCComponentInterface.h"
+#include "Interaction/AoCTargetingInterface.h"
 #include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
@@ -22,7 +23,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IAoCComponentInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IAoCComponentInterface, public IAoCTargetingInterface
 {
 	GENERATED_BODY()
 
@@ -44,7 +45,10 @@ protected:
 	virtual void InitializeAttributes() const;
 	virtual void InitializeAoCComponents() const;
 	
-	//Combat Interface Overrides
+	//Interface Overrides
+
+
+	virtual void OnTargetSet(bool bIsTargeted) override;
 	
 	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
@@ -59,6 +63,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
 
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TObjectPtr<UMaterialInstance> TargetOutlineMaterial;
+	
 	//TODO: This is kind of dumb and error prone, you have to set not only the widget class the component holds but also change the type to the BP Version
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UFloatingBarComponent> HealthBarComponent;
