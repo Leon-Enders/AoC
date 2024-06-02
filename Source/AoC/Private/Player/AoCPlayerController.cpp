@@ -60,12 +60,14 @@ void AAoCPlayerController::SetupInputComponent()
 
 void AAoCPlayerController::InitializePlayerInput()
 {
-	UAoCInputComponent* AoCInputComponent = CastChecked<UAoCInputComponent>(InputComponent);
-	if(UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()))
+	if(UAoCInputComponent* AoCInputComponent = Cast<UAoCInputComponent>(InputComponent))
 	{
+		if(UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()))
+		{
 		
-		AoCInputComponent->BindAction(IA_ConfirmTargeting, ETriggerEvent::Triggered,AbilitySystemComponent, &UAbilitySystemComponent::LocalInputConfirm);
-		AoCInputComponent->BindAction(IA_CancelTargeting, ETriggerEvent::Triggered,AbilitySystemComponent, &UAbilitySystemComponent::LocalInputCancel);
+			AoCInputComponent->BindAction(IA_ConfirmTargeting, ETriggerEvent::Triggered,AbilitySystemComponent, &UAbilitySystemComponent::LocalInputConfirm);
+			AoCInputComponent->BindAction(IA_CancelTargeting, ETriggerEvent::Triggered,AbilitySystemComponent, &UAbilitySystemComponent::LocalInputCancel);
+		}
 	}
 }
 
