@@ -15,6 +15,7 @@
 #include "UI/WidgetComponent/FloatingBarComponent.h"
 #include "MotionWarpingComponent.h"
 #include "AoCComponents/AoCTargetComponent.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 AAoCCharacterBase::AAoCCharacterBase()
@@ -153,6 +154,12 @@ void AAoCCharacterBase::SetupCharacterComponents()
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	//no need to overlap with mesh yet
 	//GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
+	
+	TargetSystemCollision = CreateDefaultSubobject<USphereComponent>("TargetSystemCollision");
+	TargetSystemCollision->SetupAttachment(GetRootComponent());
+	TargetSystemCollision->SetCollisionResponseToChannels(ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_TargetSystem, ECR_Overlap);
+	
 }
 
 void AAoCCharacterBase::SetupAoCComponents()
