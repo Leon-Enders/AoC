@@ -1,0 +1,51 @@
+[
+	{
+		"Name": "Attributes.Primary.Strength",
+		"1": 30,
+		"4": 37,
+		"7": 49
+		
+	},
+	{
+		"Name": "Attributes.Primary.Agility",
+		"1": 15,
+		"4": 20,
+		"7": 25
+	},
+	{
+		"Name": "Attributes.Primary.Intelligence",
+		"1": 9,
+		"4": 12,
+		"7": 17
+	},
+	{
+		"Name": "Attributes.Primary.Vitality",
+		"1": 25,
+		"4": 30,
+		"7": 35
+	},
+	{
+		"Name": "Attributes.Primary.Willpower",
+		"1": 24,
+		"4": 32,
+		"7": 45
+	},
+	{
+		"Name": "Attributes.Primary.Dexterity",
+		"1": 20,
+		"4": 21,
+		"7": 26
+	},
+	{
+		"Name": "Attributes.Primary.Armor",
+		"1": 25,
+		"4": 32,
+		"7": 41
+	},
+	{
+		"Name": "Attributes.Primary.MagicResistance",
+		"1": 30,
+		"4": 38,
+		"7": 45
+	}
+]
