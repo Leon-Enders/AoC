@@ -5,6 +5,7 @@
 
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "Data/UI/AoCUIAbilityDataAsset.h"
 
 
 void UOverlayWidgetController::BroadCastInitialValue()
@@ -55,25 +56,52 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		}
 		);
 
-	Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent)->EffectDelegate.AddLambda(
-	[this](const FGameplayTagContainer& AssetTags)
+	if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent))
 	{
-		for(const auto Tag : AssetTags)
+		AoCAbilitySystemComponent->EffectDelegate.AddLambda(
+	[this](const FGameplayTagContainer& AssetTags)
 		{
-		
-			auto MessageTag = FGameplayTag::RequestGameplayTag("Message");
-			if(Tag.MatchesTag(MessageTag))
+			for(const auto Tag : AssetTags)
 			{
-				const FGameplayTagUIRow* Row = GetDataTableRowByTag<FGameplayTagUIRow>(MessageWidgetDataTable, Tag);
-				WidgetMessageDelegate.Broadcast(*Row);
-			}
-			
 		
+				auto MessageTag = FGameplayTag::RequestGameplayTag("Message");
+				if(Tag.MatchesTag(MessageTag))
+				{
+					const FGameplayTagUIRow* Row = GetDataTableRowByTag<FGameplayTagUIRow>(MessageWidgetDataTable, Tag);
+					WidgetMessageDelegate.Broadcast(*Row);
+				}
+			}
+		});
+
+		if(AoCAbilitySystemComponent->bHasStartUpAbilities)
+		{
+			InitializeAbilityData(AoCAbilitySystemComponent);
 		}
+		else
+		{
+			AoCAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::InitializeAbilityData);
+			
+		}
+
+		
 		
 	}
-	);
-	
-		
-	
+}
+
+void UOverlayWidgetController::InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent)
+{
+	if(!AoCAbilitySystemComponent->bHasStartUpAbilities) return;
+
+	FForEachAbilitySignature ForEachAbilityDelegate;
+
+
+	ForEachAbilityDelegate.BindLambda(
+		[this, AoCAbilitySystemComponent](const FGameplayAbilitySpec& AbilitySpec)
+		{
+			FAoCUIAbilityData UIAbilityData = AoCUIAbilityDataAsset->FindAoCUIAbilityDataForTag(AoCAbilitySystemComponent->GetAbilityTagBySpec(AbilitySpec));
+			UIAbilityData.InputTag = AoCAbilitySystemComponent->GetInputTagBySpec(AbilitySpec);
+			UIAbilityDataDelegate.Broadcast(UIAbilityData);
+		});
+
+	AoCAbilitySystemComponent->ExecuteForEachAbility(ForEachAbilityDelegate);
 }

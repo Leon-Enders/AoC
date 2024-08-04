@@ -10,7 +10,9 @@
  * 
  */
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FEffectDelegate, const FGameplayTagContainer& EffectAssetTags);
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectSignature, const FGameplayTagContainer& EffectAssetTags);
+DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitiesGivenSignature, UAoCAbilitySystemComponent*);
+DECLARE_DELEGATE_OneParam(FForEachAbilitySignature, const FGameplayAbilitySpec&);
 
 UCLASS()
 class AOC_API UAoCAbilitySystemComponent : public UAbilitySystemComponent
@@ -21,7 +23,8 @@ public:
 	
 	void InitAoCAbilityComponent();
 
-	FEffectDelegate EffectDelegate;
+	FEffectSignature EffectDelegate;
+	FAbilitiesGivenSignature AbilitiesGivenDelegate;
 
 	UFUNCTION(Client, Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
@@ -31,5 +34,18 @@ public:
 	
 	void ActivateInputReleased(const FGameplayTag& InputTag);
 	void ActivateInputHeld(const FGameplayTag& InputTag);
+
+
+	FGameplayTag GetAbilityTagBySpec(const FGameplayAbilitySpec& AbilitySpec)const;
+	FGameplayTag GetInputTagBySpec(const FGameplayAbilitySpec& AbilitySpec)const;
+	
+	void ExecuteForEachAbility(FForEachAbilitySignature& ForEachAbilityDelegate);
+	
+	bool bHasStartUpAbilities = false;
+
+
+protected:
+	
+	virtual void OnRep_ActivateAbilities() override;
 	
 };

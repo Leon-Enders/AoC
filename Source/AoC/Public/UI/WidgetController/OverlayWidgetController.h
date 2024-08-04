@@ -10,6 +10,9 @@
  * 
  */
 
+class UAoCAbilitySystemComponent;
+struct FAoCUIAbilityData;
+class UAoCUIAbilityDataAsset;
 struct FOnAttributeChangeData;
 
 
@@ -36,9 +39,9 @@ struct FGameplayTagUIRow : public FTableRowBase
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, Value);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWidgetMessageSignature, FGameplayTagUIRow, GameplayTagUIRow);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeMenuOpenSignature, bool, bOpened);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWidgetMessageSignature, FGameplayTagUIRow, GameplayTagUIRow);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FUIAbilityDataSignature, const FAoCUIAbilityData&, AoCUIAbilityData);
 
 
 UCLASS(BlueprintType, Blueprintable)
@@ -54,6 +57,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FWidgetMessageSignature WidgetMessageDelegate;
 
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FUIAbilityDataSignature UIAbilityDataDelegate;
+	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FAttributeMenuOpenSignature AttributeOpenDelegate;
 	
@@ -75,6 +81,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
+	TObjectPtr<UAoCUIAbilityDataAsset> AoCUIAbilityDataAsset;
+
+
+	void InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent);
+	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 };
