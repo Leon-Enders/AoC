@@ -34,10 +34,10 @@ protected:
 	TObjectPtr<UAoCComboComponent> ComboComponent;
 private:
 	//TODO: Move this also to data asset, create an data asset for champion abilities + passive abilities and one for enemies
-	UPROPERTY(EditDefaultsOnly, Category="Abilities")
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpAbilities;
 
-	UPROPERTY(EditDefaultsOnly, Category="Abilities")
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpPassiveAbilities;
 
 };
