@@ -101,7 +101,7 @@ FGameplayTag UAoCAbilitySystemComponent::GetInputTagBySpec(const FGameplayAbilit
 {
 	for( const FGameplayTag Tag : AbilitySpec.DynamicAbilityTags)
 	{
-		if(Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("InputTag"))))
+		if(Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("InputTags"))))
 		{
 			return Tag;
 		}
