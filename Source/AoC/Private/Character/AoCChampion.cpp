@@ -8,6 +8,7 @@
 #include "AoCComponents/AoCComboComponent.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
 AAoCChampion::AAoCChampion()
 {
@@ -71,7 +72,10 @@ void AAoCChampion::InitAbilityActorInfo()
 	{
 		if(AAoCHUD* AoCHUD = Cast<AAoCHUD>(APC->GetHUD()))
 		{
+			// Initialize
+			
 			AoCHUD->InitOverlay(APC, PS, AbilitySystemComponent, AttributeSet);
+			AoCHUD->GetOverlayWidgetController()->SetUIAbilityDataAsset(UIAbilityDataAsset);
 		}
 	}
 	

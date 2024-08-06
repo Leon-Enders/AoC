@@ -20,6 +20,12 @@ UOverlayWidgetController* AAoCHUD::GetOverlayWidgetController(const FWidgetContr
 	return OverlayWidgetController;
 }
 
+UOverlayWidgetController* AAoCHUD::GetOverlayWidgetController() const
+{
+	if(OverlayWidgetController)return OverlayWidgetController;
+	return nullptr;
+}
+
 UAttributeMenuWidgetController* AAoCHUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
 {
 	if(AttributeMenuWidgetController == nullptr)

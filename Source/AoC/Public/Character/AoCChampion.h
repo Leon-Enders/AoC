@@ -11,6 +11,8 @@
  * 
  */
 
+class UAoCUIAbilityDataAsset;
+
 UCLASS()
 class AOC_API AAoCChampion : public AAoCCharacterBase
 {
@@ -39,5 +41,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpPassiveAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
 
 };

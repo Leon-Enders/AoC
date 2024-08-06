@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "AoCHUD.generated.h"
 
+class UAoCUIAbilityDataAsset;
 class UAttributeMenuWidgetController;
 class UAttributeSet;
 class UAbilitySystemComponent;
@@ -15,6 +16,7 @@ struct FWidgetControllerParams;
 /**
  * 
  */
+
 UCLASS()
 class AOC_API AAoCHUD : public AHUD
 {
@@ -25,13 +27,12 @@ class AOC_API AAoCHUD : public AHUD
 public:
 
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
+	UOverlayWidgetController* GetOverlayWidgetController() const;
 	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
-
+	
 	
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 	
-	
-
 	
 protected:
 	virtual void BeginPlay() override;

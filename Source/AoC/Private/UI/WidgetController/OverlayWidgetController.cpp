@@ -17,6 +17,10 @@ void UOverlayWidgetController::BroadCastInitialValue()
 
 	OnManaChanged.Broadcast(AoCAs->GetMana());
 	OnMaxManaChanged.Broadcast(AoCAs->GetMaxMana());
+
+	// Initialize AbilityUI DataAsset
+
+	
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
@@ -88,6 +92,14 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	}
 }
 
+
+
+void UOverlayWidgetController::SetUIAbilityDataAsset(UAoCUIAbilityDataAsset* AoCUIAbilityDataAsset)
+{
+	check(AoCUIAbilityDataAsset);
+	UIAbilityDataAsset = AoCUIAbilityDataAsset;
+}
+
 void UOverlayWidgetController::InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent)
 {
 	if(!AoCAbilitySystemComponent->bHasStartUpAbilities) return;
@@ -98,7 +110,7 @@ void UOverlayWidgetController::InitializeAbilityData(UAoCAbilitySystemComponent*
 	ForEachAbilityDelegate.BindLambda(
 		[this, AoCAbilitySystemComponent](const FGameplayAbilitySpec& AbilitySpec)
 		{
-			FAoCUIAbilityData UIAbilityData = AoCUIAbilityDataAsset->FindAoCUIAbilityDataForTag(AoCAbilitySystemComponent->GetAbilityTagBySpec(AbilitySpec));
+			FAoCUIAbilityData UIAbilityData = UIAbilityDataAsset->FindAoCUIAbilityDataForTag(AoCAbilitySystemComponent->GetAbilityTagBySpec(AbilitySpec));
 			UIAbilityData.InputTag = AoCAbilitySystemComponent->GetInputTagBySpec(AbilitySpec);
 			UIAbilityDataDelegate.Broadcast(UIAbilityData);
 		});

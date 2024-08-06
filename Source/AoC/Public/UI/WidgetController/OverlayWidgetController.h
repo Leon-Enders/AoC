@@ -76,19 +76,23 @@ public:
 	FOnAttributeChangedSignature OnMaxManaChanged;
 
 	
+	void SetUIAbilityDataAsset(UAoCUIAbilityDataAsset* AoCUIAbilityDataAsset);
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
-	TObjectPtr<UAoCUIAbilityDataAsset> AoCUIAbilityDataAsset;
-
+	
 
 	void InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent);
 	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
+
+
+private:
+
+	UPROPERTY()
+	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
 };
 
 //TODO: Having to match Tag.GetTagName() with the name of the Row in the Data Table is prone to errors, find better solution
