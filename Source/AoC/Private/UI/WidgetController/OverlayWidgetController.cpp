@@ -18,6 +18,9 @@ void UOverlayWidgetController::BroadCastInitialValue()
 	OnManaChanged.Broadcast(AoCAs->GetMana());
 	OnMaxManaChanged.Broadcast(AoCAs->GetMaxMana());
 
+	if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent))
+	InitializeAbilityData(AoCAbilitySystemComponent);
+
 	// Initialize AbilityUI DataAsset
 
 	
@@ -26,6 +29,7 @@ void UOverlayWidgetController::BroadCastInitialValue()
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
+
 	
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(

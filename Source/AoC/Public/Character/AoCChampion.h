@@ -23,7 +23,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 
-
+	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
+	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
 protected:
 	virtual void InitAbilityActorInfo() override;
 	virtual void InitializeAttributes() const override;
@@ -42,7 +43,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	TArray<TSubclassOf<UGameplayAbility>> StartUpPassiveAbilities;
 
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
+	
 
 };

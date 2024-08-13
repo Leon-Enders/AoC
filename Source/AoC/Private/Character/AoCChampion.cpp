@@ -8,7 +8,6 @@
 #include "AoCComponents/AoCComboComponent.h"
 #include "Player/AoCPlayerState.h"
 #include "UI/HUD/AoCHUD.h"
-#include "UI/WidgetController/OverlayWidgetController.h"
 
 AAoCChampion::AAoCChampion()
 {
@@ -22,12 +21,18 @@ void AAoCChampion::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 	
 	// Init ability actor info for the Server
+	AAoCPlayerState* PS = GetPlayerState<AAoCPlayerState>();
+	check(PS);
+	PS->InitializePawnData();
 	InitAbilityActorInfo();
-	InitializeAttributes();
 	InitializeAoCComponents();
-
-	// Initialize Character Abilities and common abilities
-	AddCharacterAbilities();
+	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(PS->GetAbilitySystemComponent());
+	check(AoCASC);
+	AoCASC->bHasStartUpAbilities = true;
+	AoCASC->AbilitiesGivenDelegate.Broadcast(AoCASC);
+	
+	
+	
 }
 void AAoCChampion::OnRep_PlayerState()
 {
@@ -64,8 +69,13 @@ void AAoCChampion::InitAbilityActorInfo()
 	{
 		AoCASC->InitAoCAbilityComponent();
 	}
+	
 	AbilitySystemComponent = PS->GetAbilitySystemComponent();
 	AttributeSet = PS->GetAttributeSet();
+	
+	// This will initialize the ability set of the current player granting abilities + attribute effects
+	
+	
 	
 	
 	if(APlayerController* APC = Cast<APlayerController>(GetController()))
@@ -75,7 +85,6 @@ void AAoCChampion::InitAbilityActorInfo()
 			// Initialize
 			
 			AoCHUD->InitOverlay(APC, PS, AbilitySystemComponent, AttributeSet);
-			AoCHUD->GetOverlayWidgetController()->SetUIAbilityDataAsset(UIAbilityDataAsset);
 		}
 	}
 	
