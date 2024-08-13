@@ -5,6 +5,7 @@
 
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "AoCComponents/AoCXPComponent.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -15,6 +16,8 @@ AAoCPlayerState::AAoCPlayerState()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	AttributeSet = CreateDefaultSubobject<UAoCAttributeSet>("Attribute Set");
+
+	XPComponent = CreateDefaultSubobject<UAoCXPComponent>("XP Component");
 
 	NetUpdateFrequency = 100.f;
 	

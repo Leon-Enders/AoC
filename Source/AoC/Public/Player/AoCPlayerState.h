@@ -12,6 +12,7 @@
  */
 
 
+class UAoCXPComponent;
 // Gameplay Ability System
 class UAbilitySystemComponent;
 class UAttributeSet;
@@ -38,6 +39,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category="AbilitySystem")
+	TObjectPtr<UAoCXPComponent> XPComponent;
 
 private:
 
