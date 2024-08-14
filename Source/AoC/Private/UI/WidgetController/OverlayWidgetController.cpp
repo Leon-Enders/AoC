@@ -17,12 +17,6 @@ void UOverlayWidgetController::BroadCastInitialValue()
 
 	OnManaChanged.Broadcast(AoCAs->GetMana());
 	OnMaxManaChanged.Broadcast(AoCAs->GetMaxMana());
-
-	if(UAoCAbilitySystemComponent* AoCAbilitySystemComponent = Cast<UAoCAbilitySystemComponent>(AbilitySystemComponent))
-	InitializeAbilityData(AoCAbilitySystemComponent);
-
-	// Initialize AbilityUI DataAsset
-
 	
 }
 
@@ -90,24 +84,16 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			AoCAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::InitializeAbilityData);
 			
 		}
-
-		
 		
 	}
 }
 
 
-
-void UOverlayWidgetController::SetUIAbilityDataAsset(UAoCUIAbilityDataAsset* AoCUIAbilityDataAsset)
-{
-	check(AoCUIAbilityDataAsset);
-	UIAbilityDataAsset = AoCUIAbilityDataAsset;
-}
-
 void UOverlayWidgetController::InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent)
 {
 	if(!AoCAbilitySystemComponent->bHasStartUpAbilities) return;
-
+	if(!UIAbilityDataAsset) return;
+	
 	FForEachAbilitySignature ForEachAbilityDelegate;
 
 

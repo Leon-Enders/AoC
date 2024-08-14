@@ -33,14 +33,9 @@ public:
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	FORCEINLINE int32 GetPlayerLevel()const{return PlayerLevel;}
-
+	
 	// Initialization of PawnData -> AbilitySet
 	void InitializePawnData();
-	void SetPawnData(const UAoCPawnData* InPawnData);
-	
-protected:
-	UFUNCTION()
-	void OnRep_PawnData();
 	
 protected:
 
@@ -54,7 +49,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category="AbilitySystem")
 	TObjectPtr<UAoCXPComponent> XPComponent;
 	
-	UPROPERTY(EditDefaultsOnly ,ReplicatedUsing = OnRep_PawnData, Category="AbilitySystem")
+	UPROPERTY(EditDefaultsOnly, Category="AbilitySystem")
 	TObjectPtr<const UAoCPawnData> PawnData;
 private:
 

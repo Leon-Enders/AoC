@@ -24,21 +24,16 @@ AAoCPlayerState::AAoCPlayerState()
 	NetUpdateFrequency = 100.f;
 	
 }
-
 UAbilitySystemComponent* AAoCPlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
 }
-
-
 void AAoCPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AAoCPlayerState, PlayerLevel);
-	DOREPLIFETIME(AAoCPlayerState, PawnData);
 }
-
 void AAoCPlayerState::InitializePawnData()
 {
 	check(PawnData);
@@ -58,39 +53,6 @@ void AAoCPlayerState::InitializePawnData()
 	}
 	
 	ForceNetUpdate();
-}
-
-void AAoCPlayerState::SetPawnData(const UAoCPawnData* InPawnData)
-{
-	check(InPawnData);
-
-	if (GetLocalRole() != ROLE_Authority)
-	{
-		return;
-	}
-
-	if (PawnData)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Trying to set PawnData [%s] on player state [%s] that already has valid PawnData [%s]."), *GetNameSafe(InPawnData), *GetNameSafe(this), *GetNameSafe(PawnData));
-		return;
-	}
-	
-	PawnData = InPawnData;
-
-	for (const UAoCAbilitySet* AbilitySet : PawnData->AbilitySets)
-	{
-		if (AbilitySet)
-		{
-			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr);
-		}
-	}
-	
-	ForceNetUpdate();
-}
-
-void AAoCPlayerState::OnRep_PawnData()
-{
-	
 }
 
 

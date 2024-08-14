@@ -75,15 +75,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnMaxManaChanged;
 
-	
-	void SetUIAbilityDataAsset(UAoCUIAbilityDataAsset* AoCUIAbilityDataAsset);
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
-	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
 	
 	void InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent);
 	
@@ -92,8 +88,7 @@ protected:
 
 
 private:
-
-	
+	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
 };
 
 //TODO: Having to match Tag.GetTagName() with the name of the Row in the Data Table is prone to errors, find better solution
