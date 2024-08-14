@@ -26,9 +26,7 @@ void UOverlayWidgetController::BroadCastInitialValue()
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UAoCAttributeSet* AoCAS = CastChecked<UAoCAttributeSet>(AttributeSet);
-	const AAoCPlayerState* AoCPS = CastChecked<AAoCPlayerState>(PlayerState);
 	
-	UIAbilityDataAsset = AoCPS->GetPawnData()->AbilitySets[0]->UIAbilityData;
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 	AoCAS->GetHealthAttribute()).AddLambda(
@@ -78,28 +76,15 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 				}
 			}
 		});
-
-		
-		AoCAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::InitializeAbilityData);
-		
 	}
 }
 
 
-void UOverlayWidgetController::InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent)
+void UOverlayWidgetController::InitializeAbilityData()
 {
-	if(!UIAbilityDataAsset) return;
-	
-	FForEachAbilitySignature ForEachAbilityDelegate;
-
-
-	ForEachAbilityDelegate.BindLambda(
-		[this, AoCAbilitySystemComponent](const FGameplayAbilitySpec& AbilitySpec)
-		{
-			FAoCUIAbilityData UIAbilityData = UIAbilityDataAsset->FindAoCUIAbilityDataForTag(AoCAbilitySystemComponent->GetAbilityTagBySpec(AbilitySpec));
-			UIAbilityData.InputTag = AoCAbilitySystemComponent->GetInputTagBySpec(AbilitySpec);
-			UIAbilityDataDelegate.Broadcast(UIAbilityData);
-		});
-
-	AoCAbilitySystemComponent->ExecuteForEachAbility(ForEachAbilityDelegate);
+	const AAoCPlayerState* AoCPS = CastChecked<AAoCPlayerState>(PlayerState);
+	for(const auto& Pair : AoCPS->GetPawnData()->AbilitySets[0]->UIAbilityData->AbilityTagUIAbilitiesMap)
+	{
+		UIAbilityDataDelegate.Broadcast(Pair.Value);
+	}
 }

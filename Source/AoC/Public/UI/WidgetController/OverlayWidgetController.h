@@ -80,14 +80,11 @@ protected:
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
 	
 	UFUNCTION(BlueprintCallable)
-	void InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent);
+	void InitializeAbilityData();
 	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
-
-
-private:
-	TObjectPtr<const UAoCUIAbilityDataAsset> UIAbilityDataAsset;
+	
 };
 
 //TODO: Having to match Tag.GetTagName() with the name of the Row in the Data Table is prone to errors, find better solution
