@@ -43,7 +43,6 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
-	virtual void InitializeAttributes() const;
 	virtual void InitializeAoCComponents() const;
 	
 	//Interface Overrides

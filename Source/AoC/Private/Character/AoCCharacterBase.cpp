@@ -102,10 +102,6 @@ UAoCComponent* AAoCCharacterBase::GetAoCComponent(TSubclassOf<UAoCComponent> AoC
 }
 
 
-void AAoCCharacterBase::InitializeAttributes() const
-{
-}
-
 void AAoCCharacterBase::InitializeAoCComponents() const
 {
 	

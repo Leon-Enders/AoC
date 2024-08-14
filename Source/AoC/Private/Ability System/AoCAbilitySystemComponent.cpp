@@ -21,31 +21,6 @@ void UAoCAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySyst
 
 }
 
-void UAoCAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartUpAbilities)
-{
-	for(const auto& Ability : StartUpAbilities)
-	{
-		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Ability);
-		if(const UAoCGameplayAbility* AoCGameplayAbility = Cast<UAoCGameplayAbility>(AbilitySpec.Ability))
-		{
-			AbilitySpec.DynamicAbilityTags.AddTag(AoCGameplayAbility->InputTag);
-			GiveAbility(AbilitySpec);
-		}
-	}
-	
-	bHasStartUpAbilities = true;
-}
-
-void UAoCAbilitySystemComponent::AddCharacterPassiveAbilities(
-	const TArray<TSubclassOf<UGameplayAbility>>& StartUpPassiveAbilities)
-{
-	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartUpPassiveAbilities)
-	{
-		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass);
-		GiveAbility(AbilitySpec);
-	}
-}
-
 
 void UAoCAbilitySystemComponent::ActivateInputReleased(const FGameplayTag& InputTag)
 {

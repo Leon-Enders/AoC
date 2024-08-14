@@ -49,6 +49,7 @@ void AAoCChampion::InitAbilityActorInfo()
 	check(PS);
 	
 	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
+	//TODO: Create a Delegate on AbilitySystemComponent When AbilityActorInfo is Initialized and bind on playerstate on it initializing pawndata
 	PS->InitializePawnData();
 	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	if(AoCASC)
