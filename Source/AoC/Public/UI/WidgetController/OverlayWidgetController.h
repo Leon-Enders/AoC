@@ -11,7 +11,6 @@
  */
 
 class UAoCAbilitySystemComponent;
-struct FAoCUIAbilityData;
 class UAoCUIAbilityDataAsset;
 struct FOnAttributeChangeData;
 
@@ -88,7 +87,7 @@ protected:
 
 
 private:
-	TObjectPtr<UAoCUIAbilityDataAsset> UIAbilityDataAsset;
+	TObjectPtr<const UAoCUIAbilityDataAsset> UIAbilityDataAsset;
 };
 
 //TODO: Having to match Tag.GetTagName() with the name of the Row in the Data Table is prone to errors, find better solution

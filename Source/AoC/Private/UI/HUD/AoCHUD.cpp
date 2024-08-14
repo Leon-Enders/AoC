@@ -42,8 +42,8 @@ UAttributeMenuWidgetController* AAoCHUD::GetAttributeMenuWidgetController(const 
 void AAoCHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 
-	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_AuraHUD"));
-	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_AoCHUD"));
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AoCHUD"));
 	
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), TSubclassOf<UAoCUserWidget>(OverlayWidgetClass));
 	OverlayWidget = Cast<UAoCUserWidget>(Widget);

@@ -49,6 +49,7 @@ void AAoCChampion::InitAbilityActorInfo()
 	check(PS);
 	
 	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
+	PS->InitializePawnData();
 	UAoCAbilitySystemComponent* AoCASC = Cast<UAoCAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	if(AoCASC)
 	{

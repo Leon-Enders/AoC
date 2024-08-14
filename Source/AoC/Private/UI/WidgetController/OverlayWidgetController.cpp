@@ -5,7 +5,10 @@
 
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "Data/AoCPawnData.h"
 #include "Data/UI/AoCUIAbilityDataAsset.h"
+#include "Player/AoCPlayerState.h"
+#include "Data/AoCAbilitySet.h"
 
 
 void UOverlayWidgetController::BroadCastInitialValue()
@@ -22,12 +25,13 @@ void UOverlayWidgetController::BroadCastInitialValue()
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
-	const UAoCAttributeSet* AoCAs = CastChecked<UAoCAttributeSet>(AttributeSet);
-
+	const UAoCAttributeSet* AoCAS = CastChecked<UAoCAttributeSet>(AttributeSet);
+	const AAoCPlayerState* AoCPS = CastChecked<AAoCPlayerState>(PlayerState);
 	
+	UIAbilityDataAsset = AoCPS->GetPawnData()->AbilitySets[0]->UIAbilityData;
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetHealthAttribute()).AddLambda(
+	AoCAS->GetHealthAttribute()).AddLambda(
 	[this](const FOnAttributeChangeData& Data)
 	{
 		OnHealthChanged.Broadcast(Data.NewValue);
@@ -35,7 +39,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetMaxHealthAttribute()).AddLambda(
+	AoCAS->GetMaxHealthAttribute()).AddLambda(
 	[this](const FOnAttributeChangeData& Data)
 	{
 		OnMaxHealthChanged.Broadcast(Data.NewValue);
@@ -43,7 +47,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-	AoCAs->GetManaAttribute()).AddLambda(
+	AoCAS->GetManaAttribute()).AddLambda(
 	[this](const FOnAttributeChangeData& Data)
 	{
 		OnManaChanged.Broadcast(Data.NewValue);
@@ -51,7 +55,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	);
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		AoCAs->GetMaxManaAttribute()).AddLambda(
+		AoCAS->GetMaxManaAttribute()).AddLambda(
 		[this](const FOnAttributeChangeData& Data)
 		{
 			OnMaxManaChanged.Broadcast(Data.NewValue);
