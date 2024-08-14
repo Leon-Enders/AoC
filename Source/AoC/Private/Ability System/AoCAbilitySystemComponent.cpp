@@ -34,7 +34,6 @@ void UAoCAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<
 	}
 	
 	bHasStartUpAbilities = true;
-	AbilitiesGivenDelegate.Broadcast(this);
 }
 
 void UAoCAbilitySystemComponent::AddCharacterPassiveAbilities(
@@ -85,43 +84,9 @@ void UAoCAbilitySystemComponent::ActivateInputHeld(const FGameplayTag& InputTag)
 	}
 }
 
-FGameplayTag UAoCAbilitySystemComponent::GetAbilityTagBySpec(const FGameplayAbilitySpec& AbilitySpec) const
-{
-	for( const FGameplayTag Tag : AbilitySpec.Ability->AbilityTags)
-	{
-		if(Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Abilities"))))
-		{
-			return Tag;
-		}
-	}
-	return FGameplayTag();
-}
 
-FGameplayTag UAoCAbilitySystemComponent::GetInputTagBySpec(const FGameplayAbilitySpec& AbilitySpec) const
-{
-	for( const FGameplayTag Tag : AbilitySpec.DynamicAbilityTags)
-	{
-		if(Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("InputTags"))))
-		{
-			return Tag;
-		}
-	}
-	
-	return FGameplayTag();
-}
 
-void UAoCAbilitySystemComponent::ExecuteForEachAbility(FForEachAbilitySignature& ForEachAbilityDelegate)
-{
-	FScopedAbilityListLock AbilityListLock(*this);
 
-	for(const auto& AbilitySpec : GetActivatableAbilities())
-	{
-		if(!ForEachAbilityDelegate.ExecuteIfBound(AbilitySpec))
-		{
-			UE_LOG(LogTemp, Error, TEXT("Failed to execute delegate in %hs"), __FUNCTION__);
-		}
-	}
-}
 
 
 
