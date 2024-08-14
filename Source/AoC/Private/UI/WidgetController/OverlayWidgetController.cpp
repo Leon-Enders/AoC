@@ -79,15 +79,8 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		});
 
-		if(AoCAbilitySystemComponent->bHasStartUpAbilities)
-		{
-			InitializeAbilityData(AoCAbilitySystemComponent);
-		}
-		else
-		{
-			AoCAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::InitializeAbilityData);
-			
-		}
+		
+		AoCAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::InitializeAbilityData);
 		
 	}
 }
@@ -95,7 +88,6 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 void UOverlayWidgetController::InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent)
 {
-	if(!AoCAbilitySystemComponent->bHasStartUpAbilities) return;
 	if(!UIAbilityDataAsset) return;
 	
 	FForEachAbilitySignature ForEachAbilityDelegate;

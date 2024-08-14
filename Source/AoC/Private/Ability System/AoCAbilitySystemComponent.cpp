@@ -124,16 +124,4 @@ void UAoCAbilitySystemComponent::ExecuteForEachAbility(FForEachAbilitySignature&
 }
 
 
-void UAoCAbilitySystemComponent::OnRep_ActivateAbilities()
-{
-	Super::OnRep_ActivateAbilities();
-
-	if(!bHasStartUpAbilities)
-	{
-		bHasStartUpAbilities = true;
-		AbilitiesGivenDelegate.Broadcast(this);
-	}
-	
-}
-
 

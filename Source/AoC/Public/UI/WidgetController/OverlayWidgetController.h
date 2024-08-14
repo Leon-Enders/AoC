@@ -79,7 +79,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
 	
-	
+	UFUNCTION(BlueprintCallable)
 	void InitializeAbilityData(UAoCAbilitySystemComponent* AoCAbilitySystemComponent);
 	
 	template<typename T>

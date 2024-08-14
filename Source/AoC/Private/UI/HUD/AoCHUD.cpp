@@ -13,7 +13,6 @@ UOverlayWidgetController* AAoCHUD::GetOverlayWidgetController(const FWidgetContr
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
-		OverlayWidgetController->BindCallbacksToDependencies();
 		return OverlayWidgetController;
 	}
 
@@ -50,8 +49,8 @@ void AAoCHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyste
 
 	const FWidgetControllerParams WCParams(PC, PS, AS, ASC);
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WCParams);
-	
 	OverlayWidget->SetWidgetController(WidgetController);
+	OverlayWidgetController->BindCallbacksToDependencies();
 	WidgetController->BroadCastInitialValue();
 	Widget->AddToViewport();
 }

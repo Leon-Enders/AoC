@@ -42,10 +42,4 @@ public:
 	void ExecuteForEachAbility(FForEachAbilitySignature& ForEachAbilityDelegate);
 	
 	bool bHasStartUpAbilities = false;
-
-
-protected:
-	
-	virtual void OnRep_ActivateAbilities() override;
-	
 };
