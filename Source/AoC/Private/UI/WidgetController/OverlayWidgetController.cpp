@@ -8,7 +8,7 @@
 #include "Data/AoCPawnData.h"
 #include "Data/UI/AoCUIAbilityDataAsset.h"
 #include "Player/AoCPlayerState.h"
-#include "Data/AoCAbilitySet.h"
+#include "Data/AoCChampionAbilitySet.h"
 
 
 void UOverlayWidgetController::BroadCastInitialValue()
@@ -83,8 +83,11 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 void UOverlayWidgetController::InitializeAbilityData()
 {
 	const AAoCPlayerState* AoCPS = CastChecked<AAoCPlayerState>(PlayerState);
-	for(const auto& Pair : AoCPS->GetPawnData()->AbilitySets[0]->UIAbilityData->AbilityTagUIAbilitiesMap)
+	const UAoCChampionAbilitySet* AbilitySet = static_cast<const UAoCChampionAbilitySet*>(AoCPS->GetPawnData()->AbilitySets[0]);
+	
+	for(const auto& Pair : AbilitySet->UIAbilityData->AbilityTagUIAbilitiesMap)
 	{
+		
 		UIAbilityDataDelegate.Broadcast(Pair.Value);
 	}
 }
