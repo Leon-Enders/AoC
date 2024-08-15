@@ -43,8 +43,7 @@ void AAoCCharacterBase::BeginPlay()
 	}
 }
 
-
-void AAoCCharacterBase::die()
+void AAoCCharacterBase::OnAvatarDeath()
 {
 	if(bIsDead) return;
 	bIsDead = true;
@@ -53,10 +52,7 @@ void AAoCCharacterBase::die()
 	const float LifeSpan = AvatarDataComponent->GetAvatarLifeSpan();
 	SetLifeSpan(LifeSpan);
 	MultiCastHandleDeath();
-	
 }
-
-
 
 
 void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
@@ -82,12 +78,6 @@ void AAoCCharacterBase::MultiCastHandleDeath_Implementation()
 		GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic,ECR_Block);
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-}
-
-
-bool AAoCCharacterBase::GetIsDead_Implementation()
-{
-	return bIsDead;
 }
 
 
@@ -130,6 +120,14 @@ void AAoCCharacterBase::OnTargetSet(bool bIsTargeted)
 
 void AAoCCharacterBase::InitAbilityActorInfo()
 {
+}
+
+
+void AAoCCharacterBase::BindAbilitySystemDelegates()
+{
+	UAoCAttributeSet* AoCAttributeSet = CastChecked<UAoCAttributeSet>(AttributeSet);
+	
+	AoCAttributeSet->OnAvatarDeathDelegate.AddUObject(this, &AAoCCharacterBase::OnAvatarDeath);
 }
 
 void AAoCCharacterBase::SetupCharacterComponents()

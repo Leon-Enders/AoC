@@ -23,7 +23,7 @@ class UAttributeSet;
 
 
 UCLASS()
-class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IAoCComponentInterface, public IAoCTargetingInterface
+class AOC_API AAoCCharacterBase : public ACharacter, public IAbilitySystemInterface, public IAoCComponentInterface, public IAoCTargetingInterface
 {
 	GENERATED_BODY()
 
@@ -43,15 +43,12 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeAoCComponents() const;
+	void BindAbilitySystemDelegates();
 	
 	//Interface Overrides
-
-
-	virtual void OnTargetSet(bool bIsTargeted) override;
-	virtual bool GetIsDead_Implementation() override;
-	virtual void die() override;
 	
-	// Handle Character Death for Client and Server
+	virtual void OnTargetSet(bool bIsTargeted) override;
+	virtual void OnAvatarDeath();
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	
@@ -67,17 +64,11 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<USphereComponent> TargetSystemCollision;
-	// Handle Combo
+	
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 
-	// GameplayAbilitySystem
-	UPROPERTY(EditAnywhere, Category="AbilitySystem")
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-
-	UPROPERTY(EditAnywhere, Category="AbilitySystem")
-	TObjectPtr<UAttributeSet> AttributeSet;
-
+	
 	// AoC Components
 
 	UPROPERTY(Category="AvatarProperties", VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
@@ -91,9 +82,17 @@ protected:
 	
 	TMap<TSubclassOf<UAoCComponent>, UAoCComponent*> AoCComponentsMap;
 
+	// GameplayAbilitySystem
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
 private:
+	
 	void SetupCharacterComponents();
 	void SetupAoCComponents();
+
 	
 	bool bIsDead = false;
 };

@@ -40,10 +40,10 @@ public:
 protected:
 
 	// Gameplay Ability System
-	UPROPERTY(EditAnywhere, Category="AbilitySystem")
+	UPROPERTY()
 	TObjectPtr<UAoCAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY(EditAnywhere, Category="AbilitySystem")
+	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category="AbilitySystem")

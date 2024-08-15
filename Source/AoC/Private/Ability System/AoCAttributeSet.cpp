@@ -152,10 +152,7 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			if(bIsFatal)
 			{
 				//TODO Create function Die() and Delegate OnDeath which gets broadcast in Die(), bind on Character to the delegate
-				if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
-				{
-					CombatInterface->die();
-				}
+				OnAvatarDeathDelegate.Broadcast();
 			}
 			else
 			{
