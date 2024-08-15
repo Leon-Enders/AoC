@@ -26,6 +26,7 @@ using TFuncPtr = typename  TBaseStaticDelegateInstance< T, FDefaultDelegateUserP
 
 
 DECLARE_MULTICAST_DELEGATE(FOnAvatarDeath);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnXPReceived, const int32);
 
 USTRUCT()
 struct FEffectProperties
@@ -76,7 +77,7 @@ public:
 	void SetupEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 
 
-
+	FOnXPReceived OnXPReceivedDelegate;
 	FOnAvatarDeath OnAvatarDeathDelegate;
 	
 	//Map GameplayTag to Attribute
@@ -89,8 +90,8 @@ public:
 	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, IncomingDamage);
 
 	UPROPERTY(BlueprintReadOnly, Category="Meta Attributes")
-	FGameplayAttributeData XP;
-	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, XP);
+	FGameplayAttributeData IncomingXP;
+	ATTRIBUTE_ACCESSORS(UAoCAttributeSet, IncomingXP);
 	
 	/* Primary Attributes*/ 
 

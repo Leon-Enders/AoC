@@ -161,10 +161,12 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 				
 			}
 		}
-		
-
-		
-		
+	}
+	if(Data.EvaluatedData.Attribute == GetIncomingXPAttribute())
+	{
+		const float XP = GetIncomingXP();
+		SetIncomingXP(0.f);
+		OnXPReceivedDelegate.Broadcast(XP);
 	}
 	
 }

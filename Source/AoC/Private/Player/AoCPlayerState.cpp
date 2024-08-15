@@ -21,6 +21,7 @@ AAoCPlayerState::AAoCPlayerState()
 	XPComponent = CreateDefaultSubobject<UAoCXPComponent>("XP Component");
 	XPComponent->SetIsReplicated(true);
 	XPComponent->OnLevelChanged.AddUObject(this, &AAoCPlayerState::OnPlayerLevelChanged);
+	XPComponent->SetAttributeSet(AttributeSet);
 	
 	
 	NetUpdateFrequency = 100.f;
