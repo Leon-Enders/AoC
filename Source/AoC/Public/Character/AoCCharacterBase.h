@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
-#include "Data/CharacterClassInfo.h"
 #include "GameFramework/Character.h"
 #include "Interaction/AoCComponentInterface.h"
 #include "Interaction/AoCTargetingInterface.h"
@@ -60,9 +59,6 @@ protected:
 	
 	// Avatar properties
 	
-	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
-	ECharacterClass CharacterClass = ECharacterClass::E_Bruiser;
-
 	UPROPERTY(EditDefaultsOnly, Category="AvatarProperties")
 	TObjectPtr<UMaterialInstance> TargetOutlineMaterial;
 	
