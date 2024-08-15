@@ -60,5 +60,7 @@ private:
 	UFUNCTION()
 	void OnRep_PlayerLevel(int32 OldPlayerLevel);
 
+	void OnPlayerLevelChanged(int32 NewLevel);
+
 	
 };

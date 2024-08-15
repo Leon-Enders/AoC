@@ -20,7 +20,8 @@ AAoCPlayerState::AAoCPlayerState()
 	AttributeSet = CreateDefaultSubobject<UAoCAttributeSet>("Attribute Set");
 
 	XPComponent = CreateDefaultSubobject<UAoCXPComponent>("XP Component");
-
+	XPComponent->OnLevelChanged.AddUObject(this, &AAoCPlayerState::OnPlayerLevelChanged);
+	
 	NetUpdateFrequency = 100.f;
 	
 }
@@ -48,14 +49,18 @@ void AAoCPlayerState::InitializePawnData()
 	{
 		if (AbilitySet)
 		{
-			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr, AbilitySystemComponent->GetAvatarActor(), GetPlayerLevel());
+			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr, AbilitySystemComponent->GetAvatarActor(), XPComponent->GetLevel());
 		}
 	}
 	
 	ForceNetUpdate();
 }
 
-
 void AAoCPlayerState::OnRep_PlayerLevel(int32 OldPlayerLevel)
 {
+}
+
+void AAoCPlayerState::OnPlayerLevelChanged(int32 NewLevel)
+{
+	InitializePawnData();
 }
