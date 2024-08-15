@@ -8,7 +8,6 @@
 
 
 
-class UCharacterClassInfo;
 /**
  * 
  */
@@ -17,8 +16,4 @@ class AOC_API AAoCGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
-public:
-
-	UPROPERTY(EditDefaultsOnly, Category="AoCDataInfo")
-	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
 };
