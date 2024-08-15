@@ -33,7 +33,7 @@ void AAoCPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AAoCPlayerState, PlayerLevel);
+	
 }
 void AAoCPlayerState::InitializePawnData()
 {
@@ -56,9 +56,7 @@ void AAoCPlayerState::InitializePawnData()
 	ForceNetUpdate();
 }
 
-void AAoCPlayerState::OnRep_PlayerLevel(int32 OldPlayerLevel)
-{
-}
+
 
 void AAoCPlayerState::OnPlayerLevelChanged(int32 NewLevel)
 {

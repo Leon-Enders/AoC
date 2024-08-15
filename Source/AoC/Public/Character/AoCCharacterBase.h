@@ -48,10 +48,9 @@ protected:
 
 
 	virtual void OnTargetSet(bool bIsTargeted) override;
-	
 	virtual bool GetIsDead_Implementation() override;
 	virtual void die() override;
-	virtual int32 GetPlayerLevel() const override;
+	
 	// Handle Character Death for Client and Server
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();

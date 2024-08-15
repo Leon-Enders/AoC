@@ -132,12 +132,6 @@ void AAoCCharacterBase::InitAbilityActorInfo()
 {
 }
 
-int32 AAoCCharacterBase::GetPlayerLevel() const
-{
-	return 0;
-}
-
-
 void AAoCCharacterBase::SetupCharacterComponents()
 {
 	HealthBarComponent = CreateDefaultSubobject<UFloatingBarComponent>("HealthBar");

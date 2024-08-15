@@ -26,7 +26,6 @@ public:
 
 protected:
 	virtual void InitAbilityActorInfo() override;
-	virtual int32 GetPlayerLevel()const override;
 	
 	UPROPERTY(Category="AvatarProperties", VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAoCComboComponent> ComboComponent;
