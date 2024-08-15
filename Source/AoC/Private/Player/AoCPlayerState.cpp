@@ -6,7 +6,6 @@
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
 #include "AoCComponents/AoCXPComponent.h"
-#include "Data/AoCAbilitySet.h"
 #include "Data/AoCPawnData.h"
 #include "Net/UnrealNetwork.h"
 
@@ -49,16 +48,41 @@ void AAoCPlayerState::InitializePawnData()
 	{
 		if (AbilitySet)
 		{
-			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr, AbilitySystemComponent->GetAvatarActor(), XPComponent->GetLevel());
+			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, &AbilitySetHandles.AddDefaulted_GetRef(), AbilitySystemComponent->GetAvatarActor(), XPComponent->GetLevel());
 		}
 	}
 	
 	ForceNetUpdate();
 }
 
+void AAoCPlayerState::UpdateAbilitySet()
+{
+	check(PawnData);
 
+	if (GetLocalRole() != ROLE_Authority)
+	{
+		return;
+	}
+	
+	// Remove Old granted Abilities/Effects
+	for (FAoCAbilitySet_GrantedHandles& SetHandle : AbilitySetHandles)
+	{
+		SetHandle.TakeFromAbilitySystem(AbilitySystemComponent);
+	}
+	
+	// Give New ones
+	for (const UAoCAbilitySet* AbilitySet : PawnData->AbilitySets)
+	{
+		if (AbilitySet)
+		{
+			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, &AbilitySetHandles.AddDefaulted_GetRef(), AbilitySystemComponent->GetAvatarActor(), XPComponent->GetLevel());
+		}
+	}
+	
+	ForceNetUpdate();
+}
 
 void AAoCPlayerState::OnPlayerLevelChanged(int32 NewLevel)
 {
-	InitializePawnData();
+	UpdateAbilitySet();
 }

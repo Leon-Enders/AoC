@@ -5,12 +5,14 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/PlayerState.h"
+#include "Data/AoCAbilitySet.h"
 #include "AoCPlayerState.generated.h"
 
 /**
  * 
  */
 
+struct FAoCAbilitySet_GrantedHandles;
 class UAbilitySystemComponent;
 class UAoCAbilitySystemComponent;
 class UAoCPawnData;
@@ -36,7 +38,7 @@ public:
 	FORCEINLINE const UAoCXPComponent* GetXPComponent()const{return XPComponent;}
 	// Initialization of PawnData -> AbilitySet
 	void InitializePawnData();
-	
+
 protected:
 
 	// Gameplay Ability System
@@ -52,9 +54,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="AbilitySystem")
 	TObjectPtr<const UAoCPawnData> PawnData;
 private:
-
 	
+	void UpdateAbilitySet();
 	void OnPlayerLevelChanged(int32 NewLevel);
 
 	
+	TArray<FAoCAbilitySet_GrantedHandles> AbilitySetHandles;
 };
