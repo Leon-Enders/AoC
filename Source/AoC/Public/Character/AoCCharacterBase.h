@@ -7,7 +7,6 @@
 #include "GameFramework/Character.h"
 #include "Interaction/AoCComponentInterface.h"
 #include "Interaction/AoCTargetingInterface.h"
-#include "Interaction/CombatInterface.h"
 #include "AoCCharacterBase.generated.h"
 
 

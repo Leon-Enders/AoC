@@ -8,7 +8,6 @@
 #include "GameplayEffectExtension.h"
 #include "Ability System/AoCAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
-#include "Interaction/CombatInterface.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/AoCPlayerController.h"
 
