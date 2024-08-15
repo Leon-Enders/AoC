@@ -19,7 +19,9 @@ AAoCPlayerState::AAoCPlayerState()
 	AttributeSet = CreateDefaultSubobject<UAoCAttributeSet>("Attribute Set");
 
 	XPComponent = CreateDefaultSubobject<UAoCXPComponent>("XP Component");
+	XPComponent->SetIsReplicated(true);
 	XPComponent->OnLevelChanged.AddUObject(this, &AAoCPlayerState::OnPlayerLevelChanged);
+	
 	
 	NetUpdateFrequency = 100.f;
 	
@@ -32,6 +34,7 @@ void AAoCPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AAoCPlayerState, XPComponent);
 	
 }
 void AAoCPlayerState::InitializePawnData()
@@ -86,3 +89,5 @@ void AAoCPlayerState::OnPlayerLevelChanged(int32 NewLevel)
 {
 	UpdateAbilitySet();
 }
+
+

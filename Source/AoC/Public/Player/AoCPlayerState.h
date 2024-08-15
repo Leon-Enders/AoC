@@ -48,7 +48,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category="AbilitySystem")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,Replicated, meta=(AllowPrivateAccess = "true"), Category="AbilitySystem")
 	TObjectPtr<UAoCXPComponent> XPComponent;
 	
 	UPROPERTY(EditDefaultsOnly, Category="AbilitySystem")
