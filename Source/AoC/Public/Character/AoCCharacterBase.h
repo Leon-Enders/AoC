@@ -47,7 +47,7 @@ protected:
 	//Interface Overrides
 	
 	virtual void OnTargetSet(bool bIsTargeted) override;
-	virtual void OnAvatarDeath();
+	virtual void OnAvatarDeath(AActor* Killer);
 	UFUNCTION(NetMulticast, Reliable)
 	void MultiCastHandleDeath();
 	

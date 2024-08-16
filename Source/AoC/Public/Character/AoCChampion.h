@@ -27,7 +27,7 @@ public:
 protected:
 	
 	virtual void InitAbilityActorInfo() override;
-	virtual void OnAvatarDeath() override;
+	virtual void OnAvatarDeath(AActor* Killer) override;
 
 	UPROPERTY(Category="AvatarProperties", VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAoCComboComponent> ComboComponent;

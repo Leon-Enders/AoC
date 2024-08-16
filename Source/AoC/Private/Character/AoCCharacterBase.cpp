@@ -43,7 +43,7 @@ void AAoCCharacterBase::BeginPlay()
 	}
 }
 
-void AAoCCharacterBase::OnAvatarDeath()
+void AAoCCharacterBase::OnAvatarDeath(AActor* Killer)
 {
 	if(bIsDead) return;
 	bIsDead = true;

@@ -67,8 +67,8 @@ void AAoCChampion::InitAbilityActorInfo()
 	
 }
 
-void AAoCChampion::OnAvatarDeath()
+void AAoCChampion::OnAvatarDeath(AActor* Killer)
 {
-	Super::OnAvatarDeath();
+	Super::OnAvatarDeath(Killer);
 }
 

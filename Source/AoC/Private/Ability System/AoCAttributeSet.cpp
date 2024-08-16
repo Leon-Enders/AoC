@@ -150,8 +150,8 @@ void UAoCAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			const bool bIsFatal = NewHealth<=0.f;
 			if(bIsFatal)
 			{
-				//TODO Create function Die() and Delegate OnDeath which gets broadcast in Die(), bind on Character to the delegate
-				OnAvatarDeathDelegate.Broadcast();
+				
+				OnAvatarDeathDelegate.Broadcast(Props.SourceCharacter);
 			}
 			else
 			{

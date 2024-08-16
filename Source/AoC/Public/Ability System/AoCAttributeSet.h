@@ -25,7 +25,7 @@ using TFuncPtr = typename  TBaseStaticDelegateInstance< T, FDefaultDelegateUserP
 
 
 
-DECLARE_MULTICAST_DELEGATE(FOnAvatarDeath);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnAvatarDeath, AActor* Killer);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnXPReceived, const int32);
 
 USTRUCT()
