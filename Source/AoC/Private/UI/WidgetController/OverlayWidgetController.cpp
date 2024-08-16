@@ -5,6 +5,7 @@
 
 #include "Ability System/AoCAbilitySystemComponent.h"
 #include "Ability System/AoCAttributeSet.h"
+#include "AoCComponents/AoCXPComponent.h"
 #include "Data/AoCPawnData.h"
 #include "Data/UI/AoCUIAbilityDataAsset.h"
 #include "Player/AoCPlayerState.h"
@@ -20,7 +21,8 @@ void UOverlayWidgetController::BroadCastInitialValue()
 
 	OnManaChanged.Broadcast(AoCAs->GetMana());
 	OnMaxManaChanged.Broadcast(AoCAs->GetMaxMana());
-	
+
+	OnXPRatioChanged.Broadcast(0.f);
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
@@ -77,6 +79,21 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		});
 	}
+
+	const AAoCPlayerState* AoCPS = CastChecked<AAoCPlayerState>(PlayerState);
+	
+	AoCPS->GetXPComponent()->OnXPChanged.AddLambda
+		([this, AoCPS](int32 NewXP)
+		{
+			OnXPRatioChanged.Broadcast(AoCPS->GetXPComponent()->GetXPRatio());
+		});
+	
+	AoCPS->GetXPComponent()->OnLevelChanged.AddLambda
+	([this](int32 NewLevel)
+	{
+		OnLevelChanged.Broadcast(NewLevel);
+	});
+	
 }
 
 

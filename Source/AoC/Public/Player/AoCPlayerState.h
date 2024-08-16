@@ -35,7 +35,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	FORCEINLINE const UAoCPawnData* GetPawnData()const{return PawnData;};
-	FORCEINLINE const UAoCXPComponent* GetXPComponent()const{return XPComponent;}
+	FORCEINLINE UAoCXPComponent* GetXPComponent()const{return XPComponent;}
 	// Initialization of PawnData -> AbilitySet
 	void InitializePawnData();
 
