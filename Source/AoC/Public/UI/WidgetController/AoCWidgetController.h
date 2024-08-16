@@ -11,7 +11,7 @@
  */
 
 class UAttributeSet;
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChangedSignature, int32, NewValue);
 
 USTRUCT(BlueprintType)
 struct FWidgetControllerParams

@@ -78,7 +78,7 @@ public:
 	FOnAttributeChangedSignature OnXPRatioChanged;
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-	FOnAttributeChangedSignature OnLevelChanged;
+	FOnPlayerStatChangedSignature OnLevelChanged;
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WidgetData")
