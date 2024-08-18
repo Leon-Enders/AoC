@@ -1,6 +1,6 @@
 [
 	{
-		"Name": "Attributes.Primary.Strength",
+		"Name": "Attributes.Primary.Might",
 		"1": 30,
 		"4": 37,
 		"7": 49
@@ -25,7 +25,7 @@
 		"7": 35
 	},
 	{
-		"Name": "Attributes.Primary.Willpower",
+		"Name": "Attributes.Primary.Balance",
 		"1": 24,
 		"4": 32,
 		"7": 45
@@ -37,15 +37,9 @@
 		"7": 26
 	},
 	{
-		"Name": "Attributes.Primary.Armor",
+		"Name": "Attributes.Primary.Defense",
 		"1": 25,
 		"4": 32,
 		"7": 41
-	},
-	{
-		"Name": "Attributes.Primary.MagicResistance",
-		"1": 30,
-		"4": 38,
-		"7": 45
 	}
 ]
