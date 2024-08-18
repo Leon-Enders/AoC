@@ -16,31 +16,27 @@ UAoCAttributeSet::UAoCAttributeSet()
 	const FAoCGameplayTags& GameplayTags = FAoCGameplayTags::Get();
 
 	// Primary Attributes
-	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Might, GetMightAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Agility, GetAgilityAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Vitality, GetVitalityAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Willpower, GetWillpowerAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Balance, GetBalanceAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Dexterity, GetDexterityAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Primary_Armor, GetArmorAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Primary_MagicResistance, GetMagicResistanceAttribute);
 
 
 	// Secondary Attributes
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_PhysicalCritChance, GetPhysicalCritChanceAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MagicCritChance, GetMagicCritChanceAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CritChance, GetCritChanceAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Power, GetPowerAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CritDamage, GetCritDamageAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_AttackSpeed, GetAttackSpeedAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CastSpeed, GetCastSpeedAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ArmorPenetration, GetArmorPenetrationAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MagicPenetration, GetMagicPenetrationAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_PhysicalDamageReduction, GetPhysicalDamageReductionAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MagicDamageReduction, GetMagicDamageReductionAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Penetration, GetPenetrationAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_HealingPower, GetHealingPowerAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Defense, GetDefenseAttribute);
+	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_DamageReduction, GetDamageReductionAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_CooldownReduction, GetCooldownReductionAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_MovementSpeed, GetMovementSpeedAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_AirControl, GetAirControlAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_KnockbackResistance, GetKnockbackResistanceAttribute);
-	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_KnockbackPenetration, GetKnockbackPenetrationAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_Tenacity, GetTenacityAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_HealthRegeneration, GetHealthRegenerationAttribute);
 	TagsToAttribute.Add(GameplayTags.Attributes_Secondary_ManaRegeneration, GetManaRegenerationAttribute);
@@ -59,31 +55,27 @@ void UAoCAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	// Primary Attributes
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Strength, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Might, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Agility, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Vitality, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Willpower, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Balance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Dexterity, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Armor, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MagicResistance, COND_None, REPNOTIFY_Always);
 
 	// Secondary Attributes
 	
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, PhysicalCritChance, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MagicCritChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, CritChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Power, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, CritDamage, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, AttackSpeed, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, CastSpeed, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MagicPenetration, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, PhysicalDamageReduction, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MagicDamageReduction, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Penetration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealingPower, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Defense, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, DamageReduction, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, CooldownReduction, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, MovementSpeed, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, AirControl, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, KnockbackPenetration, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, KnockbackResistance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, Tenacity, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAoCAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
@@ -239,9 +231,9 @@ void UAoCAttributeSet::SetupEffectProperties(const FGameplayEffectModCallbackDat
 
 
 
-void UAoCAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
+void UAoCAttributeSet::OnRep_Might(const FGameplayAttributeData& OldMight) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Strength, OldStrength);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Might, OldMight);
 }
 
 void UAoCAttributeSet::OnRep_Agility(const FGameplayAttributeData& OldAgility) const
@@ -259,9 +251,9 @@ void UAoCAttributeSet::OnRep_Vitality(const FGameplayAttributeData& OldVitality)
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Vitality, OldVitality);
 }
 
-void UAoCAttributeSet::OnRep_Willpower(const FGameplayAttributeData& OldWillpower) const
+void UAoCAttributeSet::OnRep_Balance(const FGameplayAttributeData& OldBalance) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Willpower, OldWillpower);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Balance, OldBalance);
 }
 
 void UAoCAttributeSet::OnRep_Dexterity(const FGameplayAttributeData& OldDexterity) const
@@ -269,14 +261,14 @@ void UAoCAttributeSet::OnRep_Dexterity(const FGameplayAttributeData& OldDexterit
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Dexterity, OldDexterity);
 }
 
-void UAoCAttributeSet::OnRep_PhysicalCritChance(const FGameplayAttributeData& OldPhysicalCritChance) const
+void UAoCAttributeSet::OnRep_CritChance(const FGameplayAttributeData& OldCritChance) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, PhysicalCritChance, OldPhysicalCritChance);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, CritChance, OldCritChance);
 }
 
-void UAoCAttributeSet::OnRep_MagicCritChance(const FGameplayAttributeData& OldMagicCritChance) const
+void UAoCAttributeSet::OnRep_Power(const FGameplayAttributeData& OldPower) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MagicCritChance, OldMagicCritChance);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Power, OldPower);
 }
 
 void UAoCAttributeSet::OnRep_CritDamage(const FGameplayAttributeData& OldCritDamage) const
@@ -294,24 +286,24 @@ void UAoCAttributeSet::OnRep_CastSpeed(const FGameplayAttributeData& OldCastSpee
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, CastSpeed, OldCastSpeed);
 }
 
-void UAoCAttributeSet::OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const
+void UAoCAttributeSet::OnRep_Penetration(const FGameplayAttributeData& OldPenetration) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, ArmorPenetration, OldArmorPenetration);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Penetration, OldPenetration);
 }
 
-void UAoCAttributeSet::OnRep_MagicPenetration(const FGameplayAttributeData& OldMagicPenetration) const
+void UAoCAttributeSet::OnRep_HealingPower(const FGameplayAttributeData& OldHealingPower) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MagicPenetration, OldMagicPenetration);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, HealingPower, OldHealingPower);
 }
 
-void UAoCAttributeSet::OnRep_PhysicalDamageReduction(const FGameplayAttributeData& OldPhysicalDamageReduction) const
+void UAoCAttributeSet::OnRep_Defense(const FGameplayAttributeData& OldDefense) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, PhysicalDamageReduction, OldPhysicalDamageReduction);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Defense, OldDefense);
 }
 
-void UAoCAttributeSet::OnRep_MagicDamageReduction(const FGameplayAttributeData& OldMagicDamageReduction) const
+void UAoCAttributeSet::OnRep_DamageReduction(const FGameplayAttributeData& OldDamageReduction) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MagicDamageReduction, OldMagicDamageReduction);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, DamageReduction, OldDamageReduction);
 }
 
 void UAoCAttributeSet::OnRep_CooldownReduction(const FGameplayAttributeData& OldCooldownReduction) const
@@ -329,15 +321,6 @@ void UAoCAttributeSet::OnRep_AirControl(const FGameplayAttributeData& OldAirCont
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, AirControl, OldAirControl);
 }
 
-void UAoCAttributeSet::OnRep_KnockbackPenetration(const FGameplayAttributeData& OldKnockbackPenetration) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, KnockbackPenetration, OldKnockbackPenetration);
-}
-
-void UAoCAttributeSet::OnRep_KnockbackResistance(const FGameplayAttributeData& OldKnockbackResistance) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, KnockbackResistance, OldKnockbackResistance);
-}
 
 void UAoCAttributeSet::OnRep_Tenacity(const FGameplayAttributeData& OldTenacity) const
 {
@@ -358,17 +341,6 @@ void UAoCAttributeSet::OnRep_Vampirism(const FGameplayAttributeData& OldVampiris
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Vampirism, OldVampirism);
 }
-
-void UAoCAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, Armor, OldArmor);
-}
-
-void UAoCAttributeSet::OnRep_MagicResistance(const FGameplayAttributeData& OldMagicResistance) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UAoCAttributeSet, MagicResistance, OldMagicResistance);
-}
-
 
 void UAoCAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
 {
